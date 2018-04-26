@@ -97,6 +97,7 @@
             this.cBDecks.Name = "cBDecks";
             this.cBDecks.Size = new System.Drawing.Size(121, 21);
             this.cBDecks.TabIndex = 7;
+            this.cBDecks.SelectedIndexChanged += new System.EventHandler(this.cBDecks_SelectedIndexChanged);
             // 
             // DecSettings
             // 

@@ -7,8 +7,15 @@ namespace Client_v0._1._0
 {
     public class Spell : Card
     {
-        public Spell(string name, int cost): base(name,cost) 
+        int magicdamage;
+        public Spell(string name, int cost, int magicdamage): base(name,cost) 
         {
+            this.magicdamage = magicdamage;
+        }
+        public int MagicDamage
+        {
+            get { return magicdamage; }
+            set { magicdamage = value; }
         }
     }
 }
