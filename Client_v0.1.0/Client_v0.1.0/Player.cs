@@ -19,9 +19,5 @@ namespace Client_v0._1._0
             this.name = name;
             this.deck = deck;
         }
-        
-
-       
-
     }
 }
