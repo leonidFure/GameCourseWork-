@@ -88,18 +88,40 @@ namespace Client_v0._1._0
             if (a != "")
             {
                 lBYourDeck.Items.Add(a);
-                for (int i = 0; i < AllCards.Count; i++)
+                if (a[a.Length-1] == 'N')
                 {
-                    if (AllCards[i].Name == a.Substring(0, a.LastIndexOf('H') - 2))
+                    int count = 0;
+                    do
                     {
-                        Minion m = (Minion)AllCards[i];
-                        _cost = m.Cost;
-                        _damage = m.Damage;
-                        _health = m.Health;
-                    }
+                        if (AllCards[count].Name == a.Substring(0, a.LastIndexOf('H') - 2))
+                        {
+                            Minion m = (Minion)AllCards[count];
+                            _cost = m.Cost;
+                            _damage = m.Damage;
+                            _health = m.Health;
+                            MyDeck.Add(new Minion(AllCards[count].Name, _cost, _health, _damage));
+                        }
+                        count++;
+                    } while (AllCards[count-1].Name != a.Substring(0, a.LastIndexOf('H') - 2)) ;
                 }
-                MyDeck.Add(new Minion(a.Substring(0, a.LastIndexOf('H') - 2), _cost, _health, _damage));
-                
+                else
+                {
+                    int count = 0;
+                    do
+                    {
+                        if (AllCards[count].Name == a.Substring(0, a.LastIndexOf('D')-2))
+                        {
+                            Spell m = (Spell)AllCards[count];
+                            _cost = m.Cost;
+                            _damage = m.MagicDamage;
+                            MyDeck.Add(new Spell(AllCards[count].Name, _cost, _damage));
+                        }
+                        count++;
+                    } while (AllCards[count-1].Name != a.Substring(0, a.LastIndexOf('D') - 2));
+                    
+                        
+                    
+                }
                 if (lBYourDeck.SelectedIndex != -1)
                     if (lBYourDeck.Items[lBYourDeck.SelectedIndex] == a)
                         lBYourDeck.Items.RemoveAt(lBYourDeck.SelectedIndex);
@@ -116,6 +138,7 @@ namespace Client_v0._1._0
             this.ControlBox = false;
             ///настроить спелы и их добавление в список
             AllCards.Add(new Minion("Sad Max", 1, 1, 1));
+            AllCards.Add(new Spell("Loch", 5, 2));
             AllCards.Add(new Minion("Angry Max", 2, 4, 1));
             AllCards.Add(new Minion("Stupid Max", 5, 7, 2));
             AllCards.Add(new Minion("Funny Max", 6, 7, 5));
@@ -128,12 +151,20 @@ namespace Client_v0._1._0
             AllCards.Add(new Minion("JIR Project", 6, 7, 3));
             AllCards.Add(new Minion("Sergo", 2, 2, 1));
             AllCards.Add(new Minion("Alih roz", 3, 2, 5));
-            //AllCards.Add(new Spell("Loch", 5, 2));
+            
 
-            for (int i = 0; i < AllCards.Count; i++)
+            foreach (Card c in AllCards)
             {
-                Minion a = (Minion)AllCards[i];
-                lBAllCard.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")");
+                if (c.IsMinion())
+                {
+                    Minion a = (Minion)c;
+                    lBAllCard.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                }
+                else
+                {
+                    Spell a = (Spell)c;
+                    lBAllCard.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                }
             }
             string[] dirs = Directory.GetFiles(@"Decks");
             foreach (string dir in dirs)
@@ -181,11 +212,27 @@ namespace Client_v0._1._0
             {
                 while ((line = file.ReadLine()) != null)
                 {
-                    MyDeck.Add(JsonConvert.DeserializeObject<Minion>(line));
+                    try
+                    {
+                        MyDeck.Add(JsonConvert.DeserializeObject<Minion>(line));
+                    }
+                    catch
+                    {
+                        MyDeck.Add(JsonConvert.DeserializeObject<Spell>(line));
+                    }
                 }
-                foreach (Minion c in MyDeck)
+                foreach (Card c in MyDeck)
                 {
-                    lBYourDeck.Items.Add(c.Name + " (HP:" + c.Health + ", DMG:" + c.Damage + ", Cost:" + c.Cost + ")");
+                    if (c.IsMinion())
+                    {
+                        Minion a = (Minion)c;
+                        lBYourDeck.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")"+ " MINION");
+                    }
+                    else
+                    {
+                        Spell a = (Spell)c;
+                        lBYourDeck.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")"+ " SPELL");
+                    }
                 }
             }
         }

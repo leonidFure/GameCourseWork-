@@ -9,21 +9,19 @@ namespace Client_v0._1._0
     {
         int health;
         int damage;
+
+        public int Health { get => health; set => health = value; }
+        public int Damage { get => damage; set => damage = value; }
+
         public Minion( string name,int cost,int health, int damage): base(name,cost)
         {
             this.health = health;
             this.damage = damage;
         }
-        public int Health 
+
+        public override bool IsMinion()
         {
-            get { return health; }
-            set { health = value; }
+            return true;
         }
-        public int Damage
-        {
-            get { return damage; }
-            set { damage = value; }
-        }
-        
     }
 }
