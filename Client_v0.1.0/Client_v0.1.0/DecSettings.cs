@@ -151,7 +151,6 @@ namespace Client_v0._1._0
             AllCards.Add(new Minion("JIR Project", 6, 7, 3));
             AllCards.Add(new Minion("Sergo", 2, 2, 1));
             AllCards.Add(new Minion("Alih roz", 3, 2, 5));
-            
 
             foreach (Card c in AllCards)
             {
@@ -203,23 +202,24 @@ namespace Client_v0._1._0
 
         private void cBDecks_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            string[] lines;
             string line;
             ///настроить поэлементную сериализацию
             lBYourDeck.Items.Clear();
+            MyDeck.Clear();
             JsonSerializer serializer = new JsonSerializer();
             using (StreamReader file = new StreamReader("Decks" + (char)92 + cBDecks.SelectedItem.ToString() + ".txt"))
             {
-                while ((line = file.ReadLine()) != null)
+                
+                line = file.ReadLine();
+                line = line.Substring(0, line.Length - 1);
+                lines = line.Split(';');
+                foreach (string l in lines)
                 {
-                    try
-                    {
-                        MyDeck.Add(JsonConvert.DeserializeObject<Minion>(line));
-                    }
-                    catch
-                    {
-                        MyDeck.Add(JsonConvert.DeserializeObject<Spell>(line));
-                    }
+                    if (l[2] == 'H')
+                        MyDeck.Add(JsonConvert.DeserializeObject<Minion>(l));
+                    else
+                        MyDeck.Add(JsonConvert.DeserializeObject<Spell>(l));
                 }
                 foreach (Card c in MyDeck)
                 {

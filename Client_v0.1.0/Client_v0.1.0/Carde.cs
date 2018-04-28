@@ -29,16 +29,6 @@ namespace Client_v0._1._0
             get { return int.Parse(lDamage.Text); }
             set { lDamage.Text = value.ToString(); } 
         }
-        public Image Char 
-        {
-            get { return pictureBox1.Image; }
-            set { pictureBox1.Image = value; }
-        }
-        public Image ClassCard
-        {
-            get { return pictureBox2.Image; }
-            set { pictureBox2.Image = value; }
-        }
         public string Namee 
         {
             get { return lName.Text; }

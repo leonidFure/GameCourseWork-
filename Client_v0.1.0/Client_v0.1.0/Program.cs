@@ -16,7 +16,8 @@ namespace Client_v0._1._0
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
-            Application.Run(new MainMenu());
+            //Application.Run(new MainMenu());
+            Application.Run(new Gameform());
             //Application.Run(new DecSettings());
         }
         

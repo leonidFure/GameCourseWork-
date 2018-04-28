@@ -59,10 +59,12 @@ namespace Client_v0._1._0
             c.Health = 13;
             c.Damage = 13;
             c.Namee = a;
-            c.Char = Resource1.Max_2;
-            c.ClassCard = Resource1.Military_Sword_icon;
             YourPanel.Controls.Add(c);
         }
-        
+
+        private void Gameform_Load(object sender, EventArgs e)
+        {
+            lBCrads1.Items.Add("Lewa privet");
+        }
     }
 }

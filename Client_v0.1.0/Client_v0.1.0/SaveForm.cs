@@ -52,7 +52,7 @@ namespace Client_v0._1._0
                             serializer.Serialize(writer, (Minion)a);
                         else
                             serializer.Serialize(writer, (Spell)a);
-                        sw.WriteLine();
+                        sw.Write(';');
                     }
                 }
                 this.Close();

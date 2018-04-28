@@ -134,7 +134,7 @@
             this.bStep.UseVisualStyleBackColor = true;
             this.bStep.Click += new System.EventHandler(this.bStep_Click);
             // 
-            // Form1
+            // Gameform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -150,8 +150,9 @@
             this.Controls.Add(this.YourPanel);
             this.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.Name = "Form1";
+            this.Name = "Gameform";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Gameform_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
