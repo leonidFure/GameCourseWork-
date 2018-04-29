@@ -90,12 +90,6 @@
     <Compile Include="SaveForm.Designer.cs">
       <DependentUpon>SaveForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SpaceForCard.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SpaceForCard.Designer.cs">
-      <DependentUpon>SpaceForCard.cs</DependentUpon>
-    </Compile>
     <Compile Include="Spell.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -122,9 +116,6 @@
     </Compile>
     <EmbeddedResource Include="SaveForm.resx">
       <DependentUpon>SaveForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SpaceForCard.resx">
-      <DependentUpon>SpaceForCard.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -204,7 +204,6 @@ namespace Client_v0._1._0
         {
             string[] lines;
             string line;
-            ///настроить поэлементную сериализацию
             lBYourDeck.Items.Clear();
             MyDeck.Clear();
             JsonSerializer serializer = new JsonSerializer();

@@ -60,11 +60,14 @@
             // lName
             // 
             this.lName.AutoSize = true;
-            this.lName.Font = new System.Drawing.Font("Microsoft Sans Serif", 18.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lName.Location = new System.Drawing.Point(19, 109);
+            this.lName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lName.Location = new System.Drawing.Point(30, 119);
             this.lName.Name = "lName";
-            this.lName.Size = new System.Drawing.Size(0, 29);
+            this.lName.Size = new System.Drawing.Size(90, 20);
             this.lName.TabIndex = 3;
+            this.lName.Text = "dsdsdsads";
+            this.lName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Carde
             // 

@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace Client_v0._1._0
 {
     public partial class Gameform : Form
     {
-        Player You = new Player(0, 30, 0, "Maxurik", null);
+        Player You;
 
         public Gameform()
         {
@@ -56,15 +58,60 @@ namespace Client_v0._1._0
             p =YourPanel.PointToClient(new Point(e.X,e.Y-15));
             c.Location = p;
             c.Size = new Size(114, 173);
-            c.Health = 13;
-            c.Damage = 13;
-            c.Namee = a;
+            
+            YourPanel.Controls.Add(c);
+            if (a[a.Length - 1] == 'N')
+            {
+                int count = 0;
+                do
+                {
+                    if (You.MyDeck[count].Name == a.Substring(0, a.LastIndexOf('H') - 2))
+                    {
+                        Minion m = (Minion)You.MyDeck[count];
+                        c.Namee = m.Name;
+                        c.Damage = m.Damage;
+                        c.Health= m.Health;
+                    }
+                    count++;
+                } while (You.MyDeck[count - 1].Name != a.Substring(0, a.LastIndexOf('H') - 2));
+            }
             YourPanel.Controls.Add(c);
         }
 
         private void Gameform_Load(object sender, EventArgs e)
         {
-            lBCrads1.Items.Add("Lewa privet");
+            List<Card> MyDeck = new List<Card>();
+            
+            string[] lines;
+            string line;
+            JsonSerializer serializer = new JsonSerializer();
+            using (StreamReader file = new StreamReader("Decks" + (char)92 + "Deck#3" + ".txt"))
+            {
+                line = file.ReadLine();
+                line = line.Substring(0, line.Length - 1);
+                lines = line.Split(';');
+                foreach (string l in lines)
+                {
+                    if (l[2] == 'H')
+                        MyDeck.Add(JsonConvert.DeserializeObject<Minion>(l));
+                    else
+                        MyDeck.Add(JsonConvert.DeserializeObject<Spell>(l));
+                }
+                You = new Player(0, 30, 0, "Maxurik",MyDeck);
+                foreach (Card c in You.MyDeck)
+                {
+                    if (c.IsMinion())
+                    {
+                        Minion a = (Minion)c;
+                        lBCrads1.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                    }
+                    else
+                    {
+                        Spell a = (Spell)c;
+                        lBCrads1.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                    }
+                }
+            }
         }
     }
 }
