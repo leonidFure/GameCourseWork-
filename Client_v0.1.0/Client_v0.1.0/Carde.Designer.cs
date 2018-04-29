@@ -77,7 +77,6 @@
             this.Controls.Add(this.lHealth);
             this.Name = "Carde";
             this.Size = new System.Drawing.Size(114, 173);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Carde_MouseClick);
             this.ResumeLayout(false);
 
         }

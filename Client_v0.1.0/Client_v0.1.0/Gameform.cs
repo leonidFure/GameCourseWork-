@@ -20,7 +20,7 @@ namespace Client_v0._1._0
         {
             InitializeComponent();
         }
-        
+
         private void bStep_Click(object sender, EventArgs e)
         {
             Carde c = new Carde();
@@ -48,7 +48,7 @@ namespace Client_v0._1._0
             else
                 e.Effect = DragDropEffects.None;
         }
-        
+
         private void YourPanel_DragDrop(object sender, DragEventArgs e)
         {
             if (You.MyCardsOnBord.Count <= 7)
@@ -79,11 +79,11 @@ namespace Client_v0._1._0
                 cardX += 125;
             }
         }
-         
+
         private void Gameform_Load(object sender, EventArgs e)
         {
             List<Card> MyDeck = new List<Card>();
-            
+
             string[] lines;
             string line;
             JsonSerializer serializer = new JsonSerializer();
@@ -99,7 +99,7 @@ namespace Client_v0._1._0
                     else
                         MyDeck.Add(JsonConvert.DeserializeObject<Spell>(l));
                 }
-                You = new Player(0, 30, 0, "Maxurik",MyDeck);
+                You = new Player(0, 30, 0, "Maxurik", MyDeck);
                 foreach (Card c in You.MyDeck)
                 {
                     if (c.IsMinion())
@@ -115,11 +115,6 @@ namespace Client_v0._1._0
                 }
             }
 
-        }
-
-        private void Gameform_MouseClick(object sender, MouseEventArgs e)
-        {
-            throw new NotImplementedException();
         }
     }
 }
