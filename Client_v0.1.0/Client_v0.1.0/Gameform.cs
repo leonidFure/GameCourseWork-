@@ -76,8 +76,17 @@ namespace Client_v0._1._0
                 }
 
                 YourPanel.Controls.Add(c);
+                c.Click += new System.EventHandler(MouseClickNew);
                 cardX += 125;
             }
+        }
+        public void MouseClickNew(object sender, EventArgs e)
+        {
+            Invoke(new MethodInvoker(delegate ()
+            {
+                MessageBox.Show("qu");
+            }
+            ));
         }
 
         private void Gameform_Load(object sender, EventArgs e)

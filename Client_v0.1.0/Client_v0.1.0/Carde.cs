@@ -17,7 +17,7 @@ namespace Client_v0._1._0
         {
 
             InitializeComponent();
-            this.Click += new System.EventHandler(this.MouseClickNew);
+            //this.Click += new System.EventHandler(this.MouseClickNew);
 
         }
         public int Health
@@ -36,9 +36,9 @@ namespace Client_v0._1._0
             set { lName.Text = value; }
         }
 
-        public void MouseClickNew(object sender, EventArgs e)
-        {
-                Invoke(new MethodInvoker(delegate (){ MessageBox.Show("qu"); }));
-        }
+        //public void MouseClickNew(object sender, EventArgs e)
+        //{
+        //        Invoke(new MethodInvoker(delegate (){ MessageBox.Show("qu"); }));
+        //}
     }
 }
