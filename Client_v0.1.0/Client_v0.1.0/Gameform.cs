@@ -83,7 +83,7 @@ namespace Client_v0._1._0
         private void Gameform_Load(object sender, EventArgs e)
         {
             List<Card> MyDeck = new List<Card>();
-            
+           // if(YourPanel.Controls[0].MouseClick+= MouseEventHandler.)
             string[] lines;
             string line;
             JsonSerializer serializer = new JsonSerializer();
