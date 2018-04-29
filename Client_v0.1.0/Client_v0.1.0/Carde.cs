@@ -34,6 +34,10 @@ namespace Client_v0._1._0
             get { return lName.Text; }
             set { lName.Text = value; } 
         }
-        
+
+        private void Carde_MouseClick(object sender, MouseEventArgs e)
+        {
+            
+        }
     }
 }

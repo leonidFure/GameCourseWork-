@@ -35,7 +35,6 @@
             // 
             // lHealth
             // 
-            this.lHealth.AutoSize = true;
             this.lHealth.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.lHealth.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lHealth.ForeColor = System.Drawing.Color.White;
@@ -44,10 +43,10 @@
             this.lHealth.Size = new System.Drawing.Size(46, 31);
             this.lHealth.TabIndex = 1;
             this.lHealth.Text = "11";
+            this.lHealth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lDamage
             // 
-            this.lDamage.AutoSize = true;
             this.lDamage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.lDamage.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lDamage.ForeColor = System.Drawing.Color.White;
@@ -56,6 +55,7 @@
             this.lDamage.Size = new System.Drawing.Size(46, 31);
             this.lDamage.TabIndex = 2;
             this.lDamage.Text = "11";
+            this.lDamage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lName
             // 
@@ -77,8 +77,8 @@
             this.Controls.Add(this.lHealth);
             this.Name = "Carde";
             this.Size = new System.Drawing.Size(114, 173);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Carde_MouseClick);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

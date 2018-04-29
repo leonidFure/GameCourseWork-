@@ -14,7 +14,7 @@ namespace Client_v0._1._0
         List<Card> myDeck;
         List<Card> cardsInMyHand;
         List<Card> cardsInEnemyHand;
-        List<Card> myCardsOnBord;
+        List<Card> myCardsOnBord = new List<Card>();
         List<Card> enemyCardsOnBord;
 
         public Player(int damage, int health, int armor, string name,List<Card> myDeck) 

@@ -15,7 +15,7 @@ namespace Client_v0._1._0
     public partial class Gameform : Form
     {
         Player You;
-
+        int cardX = 11;
         public Gameform()
         {
             InitializeComponent();
@@ -29,7 +29,7 @@ namespace Client_v0._1._0
             c.Health = 13;
             c.Damage = 13;
             c.Namee = "ss";
-            VZVPanel.Controls.Add(c);
+            YourPanel.Controls.Add(c);
         }
 
         private void lBCrads1_MouseDown(object sender, MouseEventArgs e)
@@ -51,33 +51,35 @@ namespace Client_v0._1._0
         
         private void YourPanel_DragDrop(object sender, DragEventArgs e)
         {
-            string a;
-            a = e.Data.GetData(DataFormats.Text).ToString();
-            Point p = MousePosition;
-            Carde c = new Carde();
-            p =YourPanel.PointToClient(new Point(e.X,e.Y-15));
-            c.Location = p;
-            c.Size = new Size(114, 173);
-            
-            YourPanel.Controls.Add(c);
-            if (a[a.Length - 1] == 'N')
+            if (You.MyCardsOnBord.Count <= 7)
             {
-                int count = 0;
-                do
+                string a;
+                a = e.Data.GetData(DataFormats.Text).ToString();
+                Carde c = new Carde();
+                c.Location = new Point(cardX, 400);
+                c.Size = new Size(114, 173);
+                if (a[a.Length - 1] == 'N')
                 {
-                    if (You.MyDeck[count].Name == a.Substring(0, a.LastIndexOf('H') - 2))
+                    int count = 0;
+                    do
                     {
-                        Minion m = (Minion)You.MyDeck[count];
-                        c.Namee = m.Name;
-                        c.Damage = m.Damage;
-                        c.Health= m.Health;
-                    }
-                    count++;
-                } while (You.MyDeck[count - 1].Name != a.Substring(0, a.LastIndexOf('H') - 2));
-            }
-            YourPanel.Controls.Add(c);
-        }
+                        if (You.MyDeck[count].Name == a.Substring(0, a.LastIndexOf('H') - 2))
+                        {
+                            Minion m = (Minion)You.MyDeck[count];
+                            c.Namee = m.Name;
+                            c.Damage = m.Damage;
+                            c.Health = m.Health;
+                            You.MyCardsOnBord.Add(m);
+                        }
+                        count++;
+                    } while (You.MyDeck[count - 1].Name != a.Substring(0, a.LastIndexOf('H') - 2));
+                }
 
+                YourPanel.Controls.Add(c);
+                cardX += 125;
+            }
+        }
+         
         private void Gameform_Load(object sender, EventArgs e)
         {
             List<Card> MyDeck = new List<Card>();
@@ -112,6 +114,12 @@ namespace Client_v0._1._0
                     }
                 }
             }
+
+        }
+
+        private void Gameform_MouseClick(object sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
