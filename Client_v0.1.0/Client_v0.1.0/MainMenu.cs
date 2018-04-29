@@ -12,7 +12,7 @@ namespace Client_v0._1._0
         {
             InitializeComponent();
             decSettings = new DecSettings(this) { Visible = false };
-            //создаем директорию для хранения колод
+            //создаем директорию для хранения колод rere
             //папка Decks создается в корневой папке проекта
             string path = @"Decks";
             try
