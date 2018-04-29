@@ -40,25 +40,22 @@ namespace Client_v0._1._0
                 lBCrads1.DoDragDrop(list.Text, DragDropEffects.Copy | DragDropEffects.Move);
             }
         }
+
         public void MouseClickNew(object sender, EventArgs e)
         {
-            Invoke(new MethodInvoker(delegate () 
-            {
+            Invoke(new MethodInvoker(delegate () {
                 Carde carde = (Carde)sender;
                 if (carde.BackColor == Color.Gray)
                 {
                     foreach (Control c in YourPanel.Controls)
-                    {
                         c.BackColor = Color.Gray;
-                    }
                     carde.BackColor = Color.Green;
                 }
                 else
-                {
                     carde.BackColor = Color.Gray;
-                }
             }));
         }
+
         private void YourPanel_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.Text))
@@ -131,12 +128,6 @@ namespace Client_v0._1._0
                     }
                 }
             }
-
-        }
-
-        private void Gameform_MouseClick(object sender, MouseEventArgs e)
-        {
-            throw new NotImplementedException();
         }
     }
 }
