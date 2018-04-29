@@ -50,6 +50,7 @@
             this.YourPanel.TabIndex = 0;
             this.YourPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.YourPanel_DragDrop);
             this.YourPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.YourPanel_DragEnter);
+            //this.YourPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.YourPanel_Paint);
             // 
             // lOffCard2
             // 

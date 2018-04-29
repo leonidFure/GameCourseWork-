@@ -71,13 +71,12 @@
             // Carde
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.BackColor = System.Drawing.Color.Gray;
             this.Controls.Add(this.lName);
             this.Controls.Add(this.lDamage);
             this.Controls.Add(this.lHealth);
             this.Name = "Carde";
             this.Size = new System.Drawing.Size(114, 173);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Carde_MouseClick);
             this.ResumeLayout(false);
 
         }

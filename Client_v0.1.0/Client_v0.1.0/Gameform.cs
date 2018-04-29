@@ -40,7 +40,25 @@ namespace Client_v0._1._0
                 lBCrads1.DoDragDrop(list.Text, DragDropEffects.Copy | DragDropEffects.Move);
             }
         }
-
+        public void MouseClickNew(object sender, EventArgs e)
+        {
+            Invoke(new MethodInvoker(delegate () 
+            {
+                Carde carde = (Carde)sender;
+                if (carde.BackColor == Color.Gray)
+                {
+                    foreach (Control c in YourPanel.Controls)
+                    {
+                        c.BackColor = Color.Gray;
+                    }
+                    carde.BackColor = Color.Green;
+                }
+                else
+                {
+                    carde.BackColor = Color.Gray;
+                }
+            }));
+        }
         private void YourPanel_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.Text))
@@ -74,8 +92,8 @@ namespace Client_v0._1._0
                         count++;
                     } while (You.MyDeck[count - 1].Name != a.Substring(0, a.LastIndexOf('H') - 2));
                 }
-
                 YourPanel.Controls.Add(c);
+                c.Click += new System.EventHandler(this.MouseClickNew);
                 cardX += 125;
             }
         }
@@ -83,7 +101,6 @@ namespace Client_v0._1._0
         private void Gameform_Load(object sender, EventArgs e)
         {
             List<Card> MyDeck = new List<Card>();
-           // if(YourPanel.Controls[0].MouseClick+= MouseEventHandler.)
             string[] lines;
             string line;
             JsonSerializer serializer = new JsonSerializer();
