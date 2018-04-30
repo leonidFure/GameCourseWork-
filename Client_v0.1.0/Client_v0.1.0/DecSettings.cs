@@ -149,8 +149,21 @@ namespace Client_v0._1._0
             AllCards.Add(new Minion("Jojo", 7, 2, 9));
             AllCards.Add(new Minion("Kostroma", 1, 5, 5));
             AllCards.Add(new Minion("JIR Project", 6, 7, 3));
+            AllCards.Add(new Minion("Max", 3, 2, 1));
+            AllCards.Add(new Minion("Angry Lewa", 3, 5, 2));
+            AllCards.Add(new Minion("Stupid man", 1, 2, 2));
+            AllCards.Add(new Minion("Arthas", 8, 8, 8));
+            AllCards.Add(new Minion("Leonid", 2, 2, 3));
+            AllCards.Add(new Minion("St.Georgy", 2, 7, 3));
             AllCards.Add(new Minion("Sergo", 2, 2, 1));
             AllCards.Add(new Minion("Alih roz", 3, 2, 5));
+            AllCards.Add(new Spell("SuperLonya", 8, 10));
+            AllCards.Add(new Spell("Puk", 1, 2));
+            AllCards.Add(new Spell("Glina", 4, 6));
+            AllCards.Add(new Spell("Defolt", 3, 5));
+            AllCards.Add(new Spell("Imba", 10, 12));
+            AllCards.Add(new Spell("Rofl", 0, 1));
+            AllCards.Add(new Spell("StandUp", 6, 8));
 
             foreach (Card c in AllCards)
             {

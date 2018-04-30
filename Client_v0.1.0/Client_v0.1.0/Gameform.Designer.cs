@@ -36,6 +36,7 @@
             this.lHeroHeath = new System.Windows.Forms.Label();
             this.lHeroEnergy = new System.Windows.Forms.Label();
             this.bStep = new System.Windows.Forms.Button();
+            this.bExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // YourPanel
@@ -123,11 +124,22 @@
             this.bStep.UseVisualStyleBackColor = true;
             this.bStep.Click += new System.EventHandler(this.bStep_Click);
             // 
+            // bExit
+            // 
+            this.bExit.Location = new System.Drawing.Point(13, 13);
+            this.bExit.Name = "bExit";
+            this.bExit.Size = new System.Drawing.Size(105, 46);
+            this.bExit.TabIndex = 9;
+            this.bExit.Text = "Exit";
+            this.bExit.UseVisualStyleBackColor = true;
+            this.bExit.Click += new System.EventHandler(this.bExit_Click);
+            // 
             // Gameform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1097, 774);
+            this.Controls.Add(this.bExit);
             this.Controls.Add(this.bStep);
             this.Controls.Add(this.lHeroEnergy);
             this.Controls.Add(this.lHeroHeath);
@@ -156,9 +168,7 @@
         private System.Windows.Forms.Label lHeroHeath;
         private System.Windows.Forms.Label lHeroEnergy;
         private System.Windows.Forms.Button bStep;
-
-
-
+        private System.Windows.Forms.Button bExit;
     }
 }
 

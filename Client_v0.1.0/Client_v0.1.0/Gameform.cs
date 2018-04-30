@@ -9,27 +9,38 @@ using System.Windows.Forms;
 using System.Windows;
 using Newtonsoft.Json;
 using System.IO;
+using System.Threading;
+using System.Net.Sockets;
 
 namespace Client_v0._1._0
 {
     public partial class Gameform : Form
     {
+        Byte[] d = new Byte[4096];
+        static Int32 port = 103;
+        static TcpClient client = new TcpClient("127.0.0.1", port);
+        NetworkStream stream = client.GetStream();
+        String responseData = String.Empty;
         Player You;
         int cardX = 11;
-        public Gameform()
+        string path;
+        public Gameform(string path)
         {
             InitializeComponent();
+            this.path = path;
         }
         
         private void bStep_Click(object sender, EventArgs e)
         {
-            Carde c = new Carde();
-            c.Location = new Point(12, 12);
-            c.Size = new Size(114, 173);
-            c.Health = 13;
-            c.Damage = 13;
-            c.Namee = "ss";
-            YourPanel.Controls.Add(c);
+            //Carde c = new Carde();
+            //c.Location = new Point(12, 12);
+            //c.Size = new Size(114, 173);
+            //c.Health = 13;
+            //c.Damage = 13;
+            //c.Namee = "ss";
+            //YourPanel.Controls.Add(c);
+            Thread clientThread = new Thread(new ThreadStart(SendMSG));
+            clientThread.Start();
         }
 
         private void lBCrads1_MouseDown(object sender, MouseEventArgs e)
@@ -97,15 +108,42 @@ namespace Client_v0._1._0
          
         private void Gameform_Load(object sender, EventArgs e)
         {
+            Thread clientThread = new Thread(new ThreadStart(Connect));
+            clientThread.Start();
+            this.ControlBox = false;
             List<Card> MyDeck = new List<Card>();
-            string[] lines;
-            string line;
-            JsonSerializer serializer = new JsonSerializer();
-            using (StreamReader file = new StreamReader("Decks" + (char)92 + "Deck#3" + ".txt"))
+        }
+
+        private void bExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        public void Connect()
+        {
+            try
             {
-                line = file.ReadLine();
-                line = line.Substring(0, line.Length - 1);
-                lines = line.Split(';');
+                Int32 bytes = stream.Read(d, 0, d.Length);
+                responseData = System.Text.Encoding.ASCII.GetString(d, 0, bytes);
+                this.Invoke((MethodInvoker)delegate ()
+                {
+                    this.lHeroHeath.Text = "Health: " + responseData;
+                });
+                string message;
+                JsonSerializer serializer = new JsonSerializer();
+                using (StreamReader file = new StreamReader("Decks" + (char)92 + "Deck#4" + ".txt"))
+                {
+                    message = file.ReadLine();
+                }
+                Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
+                
+                stream.Write(data, 0, data.Length);
+                
+                responseData = String.Empty;
+                bytes = stream.Read(d, 0, d.Length);
+                responseData = System.Text.Encoding.ASCII.GetString(d, 0, bytes);
+                List<Card> MyDeck =new List<Card>();
+                responseData = responseData.Substring(0, responseData.Length - 1);
+                string[] lines = responseData.Split(';');
                 foreach (string l in lines)
                 {
                     if (l[2] == 'H')
@@ -113,20 +151,44 @@ namespace Client_v0._1._0
                     else
                         MyDeck.Add(JsonConvert.DeserializeObject<Spell>(l));
                 }
-                You = new Player(0, 30, 0, "Maxurik",MyDeck);
-                foreach (Card c in You.MyDeck)
+                Player You = new Player(0, 30, 0, "Maxurik", MyDeck);
+                this.Invoke((MethodInvoker)delegate ()
                 {
-                    if (c.IsMinion())
+                    foreach (Card c in You.MyDeck)
                     {
-                        Minion a = (Minion)c;
-                        lBCrads1.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                        if (c.IsMinion())
+                        {
+                            Minion a = (Minion)c;
+                            lBCrads1.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                        }
+                        else
+                        {
+                            Spell a = (Spell)c;
+                            lBCrads1.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                        }
                     }
-                    else
-                    {
-                        Spell a = (Spell)c;
-                        lBCrads1.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
-                    }
-                }
+                });
+            }
+            catch (ArgumentNullException e)
+            {
+            }
+            catch (SocketException e)
+            {
+            }
+        }
+        public void SendMSG()
+        {
+            try
+            {
+                Int32 bytes;
+                Byte[] data = System.Text.Encoding.ASCII.GetBytes("Hello");
+                stream.Write(data, 0, data.Length);
+            }
+            catch (ArgumentNullException e)
+            {
+            }
+            catch (SocketException e)
+            {
             }
         }
     }
