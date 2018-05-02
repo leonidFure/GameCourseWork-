@@ -15,7 +15,6 @@ namespace Client_v0._1._0
         public Carde()
         {
             InitializeComponent();
-
         }
 
         public int Health

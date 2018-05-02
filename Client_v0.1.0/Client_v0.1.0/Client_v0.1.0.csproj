@@ -128,8 +128,25 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Resurses\" />
+    <Content Include="Resurses\1.jpg" />
+    <Content Include="Resurses\10.jpg" />
+    <Content Include="Resurses\11.jpg" />
+    <Content Include="Resurses\12.jpg" />
+    <Content Include="Resurses\13.jpg" />
+    <Content Include="Resurses\14.jpg" />
+    <Content Include="Resurses\15.jpg" />
+    <Content Include="Resurses\16.jpg" />
+    <Content Include="Resurses\17.jpg" />
+    <Content Include="Resurses\2.jpg" />
+    <Content Include="Resurses\3.jpg" />
+    <Content Include="Resurses\4.jpg" />
+    <Content Include="Resurses\5.jpg" />
+    <Content Include="Resurses\6.jpg" />
+    <Content Include="Resurses\7.jpg" />
+    <Content Include="Resurses\8.jpg" />
+    <Content Include="Resurses\9.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
