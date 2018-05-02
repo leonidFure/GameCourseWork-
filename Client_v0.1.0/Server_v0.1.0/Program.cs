@@ -215,12 +215,12 @@ namespace Server_v0._1._0
                         string[] counts = data.Split(';');
                         count1 = int.Parse(counts[0]);
                         count2 = int.Parse(counts[1]);
-                        Minion m1 = (Minion)deckPlayer1OnBord[count1];
-                        Minion m2 = (Minion)deckPlayer2OnBord[count2];
+                        Minion m1 = (Minion)cardsbord1[count1];
+                        Minion m2 = (Minion)cardsbord2[count2];
                         m1.Health -= m2.Damage;
                         m2.Health -= m1.Damage;
-                        deckPlayer1OnBord[count1]=m1;
-                        deckPlayer2OnBord[count2] =m2;
+                        cardsbord1[count1]=m1;
+                        cardsbord2[count2] =m2;
                         mes1 += "Attac;";
                         mes2 += "Attac;";
                         mes1 += JsonConvert.SerializeObject((Minion)m1);
@@ -238,7 +238,6 @@ namespace Server_v0._1._0
                         Step(stream1, stream2, cards1, cards2, cardsbord1, cardsbord2);
                     }
                 }
-                //stream1.Dispose();
             }
         }
     }

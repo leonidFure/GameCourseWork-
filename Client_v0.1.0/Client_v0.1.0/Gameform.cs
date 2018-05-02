@@ -80,6 +80,7 @@ namespace Client_v0._1._0
                 bSelectedCard = true;
             }
         }
+
         public void MouseEnemyClickNew(object sender, EventArgs e)
         {
             if (bSelectedCard)
@@ -139,6 +140,7 @@ namespace Client_v0._1._0
                                 c.Damage = m.Damage;
                                 c.Health = m.Health;
                                 c.Index = CountCarde;
+                                c.EnIndex = -1;
                                 CountCarde++;
                                 You.MyCardsOnBord.Add(m);
                             }
@@ -287,6 +289,7 @@ namespace Client_v0._1._0
                             c.Namee = m.Name;
                             c.Damage = m.Damage;
                             c.Health = m.Health;
+                            c.Index = -1;
                             c.EnIndex = CountEnemyCarde;
                             CountEnemyCarde++;
                             c.Tag = "Enemy";
@@ -332,15 +335,11 @@ namespace Client_v0._1._0
                                     Minion minion = (Minion)You.MyCardsOnBord[count1];
                                     carde.Health = minion.Health;
                                 }
-                                else
+                                if (carde.EnIndex == count2)
                                 {
-                                    if (carde.EnIndex == count2)
-                                    {
-                                        Minion minion = (Minion)Enemy.MyCardsOnBord[count2];
-                                        carde.Health = minion.Health;
-                                    }
+                                    Minion minion = (Minion)Enemy.MyCardsOnBord[count2];
+                                    carde.Health = minion.Health;
                                 }
-                                
                             }
                         });
                     }
@@ -361,6 +360,7 @@ namespace Client_v0._1._0
             Byte[] data = System.Text.Encoding.ASCII.GetBytes(count.ToString());
             stream.Write(data, 0, data.Length);
         }
+
         public void Attac(object count1, object count2)
         {
             string msg = count1.ToString() + "," + count2.ToString();
