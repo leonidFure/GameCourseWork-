@@ -21,8 +21,9 @@ namespace Client_v0._1._0
         static TcpClient client = new TcpClient("127.0.0.1", port);
         NetworkStream stream = client.GetStream();
         String responseData = String.Empty;
-        Player You;
-        int cardX = 11;
+        Player You = new Player(0, 30, 0, "Maxurik");
+        Player Enemy = new Player(0, 30, 0, "Lewa");
+        int cardX = 11,cardX2=11;
         string path;
         public Gameform(string path)
         {
@@ -39,8 +40,9 @@ namespace Client_v0._1._0
             //c.Damage = 13;
             //c.Namee = "ss";
             //YourPanel.Controls.Add(c);
-            Thread clientThread = new Thread(new ThreadStart(SendMSG));
-            clientThread.Start();
+
+
+            
         }
 
         private void lBCrads1_MouseDown(object sender, MouseEventArgs e)
@@ -89,20 +91,22 @@ namespace Client_v0._1._0
                     int count = 0;
                     do
                     {
-                        if (You.MyDeck[count].Name == a.Substring(0, a.LastIndexOf('H') - 2))
+                        if (You.CardsInMyHand[count].Name == a.Substring(0, a.LastIndexOf('H') - 2))
                         {
-                            Minion m = (Minion)You.MyDeck[count];
+                            Minion m = (Minion)You.CardsInMyHand[count];
                             c.Namee = m.Name;
                             c.Damage = m.Damage;
                             c.Health = m.Health;
                             You.MyCardsOnBord.Add(m);
                         }
                         count++;
-                    } while (You.MyDeck[count - 1].Name != a.Substring(0, a.LastIndexOf('H') - 2));
+                    } while (You.CardsInMyHand[count - 1].Name != a.Substring(0, a.LastIndexOf('H') - 2));
+                    YourPanel.Controls.Add(c);
+                    c.Click += new System.EventHandler(this.MouseClickNew);
+                    cardX += 125;
+                    Thread clientThread = new Thread(new ParameterizedThreadStart(DropCard));
+                    clientThread.Start(count - 1);
                 }
-                YourPanel.Controls.Add(c);
-                c.Click += new System.EventHandler(this.MouseClickNew);
-                cardX += 125;
             }
         }
          
@@ -118,10 +122,12 @@ namespace Client_v0._1._0
         {
             Application.Exit();
         }
+
         public void Connect()
         {
             try
             {
+                int i;
                 Int32 bytes = stream.Read(d, 0, d.Length);
                 responseData = System.Text.Encoding.ASCII.GetString(d, 0, bytes);
                 this.Invoke((MethodInvoker)delegate ()
@@ -139,35 +145,61 @@ namespace Client_v0._1._0
                 stream.Write(data, 0, data.Length);
                 
                 responseData = String.Empty;
-                bytes = stream.Read(d, 0, d.Length);
-                responseData = System.Text.Encoding.ASCII.GetString(d, 0, bytes);
-                List<Card> MyDeck =new List<Card>();
-                responseData = responseData.Substring(0, responseData.Length - 1);
-                string[] lines = responseData.Split(';');
-                foreach (string l in lines)
+                while ((i = stream.Read(d, 0, d.Length)) != 0)
                 {
-                    if (l[2] == 'H')
-                        MyDeck.Add(JsonConvert.DeserializeObject<Minion>(l));
-                    else
-                        MyDeck.Add(JsonConvert.DeserializeObject<Spell>(l));
-                }
-                Player You = new Player(0, 30, 0, "Maxurik", MyDeck);
-                this.Invoke((MethodInvoker)delegate ()
-                {
-                    foreach (Card c in You.MyDeck)
+                    responseData = System.Text.Encoding.ASCII.GetString(d, 0, i);
+                    string[] lines = responseData.Split(';');
+
+                    for (int i1 = 0; i1 < 7; i1++)
                     {
-                        if (c.IsMinion())
-                        {
-                            Minion a = (Minion)c;
-                            lBCrads1.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
-                        }
+                        if (lines[i1][2] == 'H')
+                            You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
                         else
-                        {
-                            Spell a = (Spell)c;
-                            lBCrads1.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
-                        }
+                            You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
                     }
-                });
+
+                    for (int i1 = 7; i1 < 14; i1++)
+                    {
+                        if (lines[i1][2] == 'H')
+                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
+                        else
+                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                    }
+
+                    this.Invoke((MethodInvoker)delegate ()
+                    {
+                        foreach (Card c in You.CardsInMyHand)
+                        {
+                            if (c.IsMinion())
+                            {
+                                Minion a = (Minion)c;
+                                lBCrads1.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                            }
+                            else
+                            {
+                                Spell a = (Spell)c;
+                                lBCrads1.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                            }
+                        }
+                        foreach (Card c in Enemy.CardsInMyHand)
+                        {
+                            if (c.IsMinion())
+                            {
+                                Minion a = (Minion)c;
+                                lBCards2.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                            }
+                            else
+                            {
+                                Spell a = (Spell)c;
+                                lBCards2.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                            }
+                        }
+                        lOffCard1.Text = "Cards: " + lines[14];
+                        lOffCard2.Text = "Cards: " + lines[14];
+                    });
+                    Step();
+                }
+                
             }
             catch (ArgumentNullException e)
             {
@@ -176,20 +208,42 @@ namespace Client_v0._1._0
             {
             }
         }
-        public void SendMSG()
+
+        public void Step()
         {
-            try
+            int i;
+            while ((i = stream.Read(d, 0, d.Length)) != 0)
             {
-                Int32 bytes;
-                Byte[] data = System.Text.Encoding.ASCII.GetBytes("Hello");
-                stream.Write(data, 0, data.Length);
+                responseData = System.Text.Encoding.ASCII.GetString(d, 0, i);
+                if (responseData[2] == 'H')
+                    Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(responseData));
+                else
+                    Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(responseData));
+                this.Invoke((MethodInvoker)delegate ()
+                {
+                    Carde c = new Carde();
+                    c.Location = new Point(cardX2, 50);
+                    c.Size = new Size(114, 173);
+                    if (Enemy.MyCardsOnBord[Enemy.MyCardsOnBord.Count - 1] is Minion)
+                    {
+                        Minion m = (Minion)Enemy.MyCardsOnBord[Enemy.MyCardsOnBord.Count - 1];
+                        c.Namee = m.Name;
+                        c.Damage = m.Damage;
+                        c.Health = m.Health;
+                        YourPanel.Controls.Add(c);
+                        c.Click += new System.EventHandler(this.MouseClickNew);
+                        cardX2 += 125;
+                    }
+                });
             }
-            catch (ArgumentNullException e)
-            {
-            }
-            catch (SocketException e)
-            {
-            }
+            Step();
+        }
+
+        public void DropCard(object count)
+        {
+            
+            Byte[] data = System.Text.Encoding.ASCII.GetBytes(count.ToString());
+            stream.Write(data, 0, data.Length);
         }
     }
 }

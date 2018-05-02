@@ -30,7 +30,6 @@ namespace Server_v0._1._0
                 Game game = new Game(client1, client2);
                 Thread clientThread = new Thread(new ThreadStart(game.Process));
                 clientThread.Start();
-
             }
         }
     }
@@ -80,6 +79,7 @@ namespace Server_v0._1._0
                         data1 = System.Text.Encoding.ASCII.GetString(bytes1, 0, i1);
                         data1 = data1.Substring(0, data1.Length - 1);
                         lines = data1.Split(';');
+
                         foreach (string l in lines)
                         {
                             if (l[2] == 'H')
@@ -87,9 +87,11 @@ namespace Server_v0._1._0
                             else
                                 deckPlayer1.Add(JsonConvert.DeserializeObject<Spell>(l));
                         }
+
                         data2 = System.Text.Encoding.ASCII.GetString(bytes2, 0, i2);
                         data2 = data2.Substring(0, data2.Length - 1);
                         lines = data2.Split(';');
+
                         foreach (string l in lines)
                         {
                             if (l[2] == 'H')
@@ -97,6 +99,7 @@ namespace Server_v0._1._0
                             else
                                 deckPlayer2.Add(JsonConvert.DeserializeObject<Spell>(l));
                         }
+
                         for (int i = 0; i < 7; i++)
                         {
                             int a = rndCard.Next(20 - i);
@@ -104,18 +107,29 @@ namespace Server_v0._1._0
                             deckPlayer1InHand.Add(deckPlayer1[a]);
                             deckPlayer2InHand.Add(deckPlayer2[b]);
                             deckPlayer1.RemoveAt(a);
-                            deckPlayer1.RemoveAt(b);
+                            deckPlayer2.RemoveAt(b);
                         }
+
                         string mes1 = "";
                         string mes2 = "";
                         foreach (Card c in deckPlayer1InHand)
                         {
-                            if(c is Minion)
+                            if (c is Minion)
                                 mes1 += JsonConvert.SerializeObject((Minion)c);
                             else
                                 mes1 += JsonConvert.SerializeObject((Spell)c);
                             mes1 += ';';
                         }
+
+                        foreach (Card c in deckPlayer2InHand)
+                        {
+                            if (c is Minion)
+                                mes1 += JsonConvert.SerializeObject((Minion)c);
+                            else
+                                mes1 += JsonConvert.SerializeObject((Spell)c);
+                            mes1 += ';';
+                        }
+
                         foreach (Card c in deckPlayer2InHand)
                         {
                             if (c is Minion)
@@ -124,35 +138,23 @@ namespace Server_v0._1._0
                                 mes2 += JsonConvert.SerializeObject((Spell)c);
                             mes2 += ';';
                         }
+
+                        foreach (Card c in deckPlayer1InHand)
+                        {
+                            if (c is Minion)
+                                mes2 += JsonConvert.SerializeObject((Minion)c);
+                            else
+                                mes2 += JsonConvert.SerializeObject((Spell)c);
+                            mes2 += ';';
+                        }
+                        mes1 += deckPlayer1.Count.ToString();
+                        mes2 += deckPlayer2.Count.ToString();
                         msg = System.Text.Encoding.ASCII.GetBytes(mes1);
                         stream1.Write(msg, 0, msg.Length);
                         msg = System.Text.Encoding.ASCII.GetBytes(mes2);
                         stream2.Write(msg, 0, msg.Length);
-
-
-                        //Вызываем методы "ход" в зависимости от выбора первого шага
-
-
-
-                        //if (rnd.Next(2) == 0)
-                        //{
-                        //    Step(stream1, stream2, data1, bytes1);
-                        //}
-                        //else
-                        //{
-                        //    Step(stream2, stream1, data2, bytes2);
-                        //}
-
-
-                        while ((i1 = stream1.Read(bytes1, 0, bytes1.Length)) != 0 && (i2 = stream2.Read(bytes2, 0, bytes2.Length)) != 0)
-                        {
-                            data1 = System.Text.Encoding.ASCII.GetString(bytes1, 0, i1);
-                            data2 = System.Text.Encoding.ASCII.GetString(bytes2, 0, i2);
-                            Console.WriteLine(data1);
-                            Console.WriteLine(data2);
-                        }
+                        Step(stream1, stream2, deckPlayer1InHand, deckPlayer2InHand,deckPlayer1OnBord,deckPlayer2OnBord);
                     }
-
                 }
             }
             catch (SocketException e)
@@ -169,38 +171,30 @@ namespace Server_v0._1._0
             Console.WriteLine("\n>> " + "Hit enter to continue...");
             Console.Read();
         }
-        static void Step(NetworkStream stream1, NetworkStream stream2, String data, Byte[] bytes)
+        public void Step(NetworkStream stream1, NetworkStream stream2, List<Card> cards1, List<Card> cards2, List<Card> cardsbord1, List<Card> cardsbord2)
         {
+            int count1;
             int i;
-            int damage;
-            //отправляем игроку сообщение "Твой ход"
-            byte[] msg = System.Text.Encoding.ASCII.GetBytes("Your step");
-            stream1.Write(msg, 0, msg.Length);
-            Console.WriteLine(">> " + "Ход первого игрока");
+            Byte[] bytes = new Byte[4096];
             while ((i = stream1.Read(bytes, 0, bytes.Length)) != 0)
             {
-                //получаем значение дэмеджа от игрока А
-                data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                Console.WriteLine(">> " + "Получено от первого игрока: {0}", data);
-                //проверка на то, не закончились ли хп у одного из игроков
-                if (data != "Lose")
+                String data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+                if(int.TryParse(data, out count1))
                 {
-                    damage = int.Parse(data);
-                    //отправляем значение дэмеджа игроку Б
-                    msg = System.Text.Encoding.ASCII.GetBytes(damage.ToString());
+                    String mes = "";
+                    if (cards1[count1] is Minion)
+                        mes = JsonConvert.SerializeObject((Minion)cards1[count1]);
+                    else
+                        mes = JsonConvert.SerializeObject((Spell)cards1[count1]);
+                    cardsbord1.Add(cards1[count1]);
+                    //deckPlayer1InHand.RemoveAt(count1);
+                    
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(mes);
                     stream2.Write(msg, 0, msg.Length);
-                    //здесь переходим к следующему игроку
-                    Step(stream2, stream1, data, bytes);
+                    Step(stream2, stream1,cards2,cards1, cardsbord2, cardsbord1);
                 }
-                else
-                {
-                    //отправка игрокам сообщения об окончании партии
-                    msg = System.Text.Encoding.ASCII.GetBytes("End game");
-                    stream2.Write(msg, 0, msg.Length);
-                    stream1.Write(msg, 0, msg.Length);
-                }
+                
             }
-
         }
     }
 }
