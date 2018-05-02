@@ -17,6 +17,8 @@ namespace Client_v0._1._0
             InitializeComponent();
         }
 
+        int index;
+        int enIndex;
         public int Health
         {
             get { return int.Parse(lHealth.Text); }
@@ -34,5 +36,8 @@ namespace Client_v0._1._0
             get { return lName.Text; }
             set { lName.Text = value; }
         }
+
+        public int Index { get => index; set => index = value; }
+        public int EnIndex { get => enIndex; set => enIndex = value; }
     }
 }
