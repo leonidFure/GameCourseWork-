@@ -63,6 +63,16 @@ namespace Client_v0._1._0 {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
+        internal static byte[] bitout {
+            get {
+                object obj = ResourceManager.GetObject("bitout", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
         internal static byte[] PixelFont {
             get {
                 object obj = ResourceManager.GetObject("PixelFont", resourceCulture);

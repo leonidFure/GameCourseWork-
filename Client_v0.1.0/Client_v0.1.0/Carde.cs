@@ -27,7 +27,7 @@ namespace Client_v0._1._0
         private void LoadFont()
         {
 
-            using (MemoryStream fontStream = new MemoryStream(Fonts.PixelFont))
+            using (MemoryStream fontStream = new MemoryStream(Fonts.bitout))
             {
                 // create an unsafe memory block for the font data
                 System.IntPtr data = Marshal.AllocCoTaskMem((int)fontStream.Length);
