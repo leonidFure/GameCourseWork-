@@ -67,7 +67,7 @@ namespace Client_v0._1._0
                             c.BackColor = Color.Gray;
                         carde.BackColor = Color.Green;
                         
-                        sAttac += carde.Index.ToString()+";";
+                        sAttac = carde.Index.ToString()+";";
                     }
                     else
                     {
@@ -167,6 +167,7 @@ namespace Client_v0._1._0
 
         private void bExit_Click(object sender, EventArgs e)
         {
+            stream.Close();
             Application.Exit();
         }
 
@@ -360,7 +361,7 @@ namespace Client_v0._1._0
                                     c.Click += new System.EventHandler(this.MouseClickNew);
                                     cardX += 125;
                                 }
-                                CountCarde = You.MyCardsOnBord.Count-1;
+                                CountCarde = You.MyCardsOnBord.Count;
                             });
 
                         }
@@ -395,7 +396,7 @@ namespace Client_v0._1._0
                                     cardX2 += 125;
                                 }
 
-                                CountEnemyCarde = Enemy.MyCardsOnBord.Count-1;
+                                CountEnemyCarde = Enemy.MyCardsOnBord.Count;
 
                             });
                         }
@@ -420,13 +421,6 @@ namespace Client_v0._1._0
         public void DropCard(object count)
         {
             Byte[] data = System.Text.Encoding.ASCII.GetBytes(count.ToString());
-            stream.Write(data, 0, data.Length);
-        }
-
-        public void Attac(object count1, object count2)
-        {
-            string msg = count1.ToString() + "," + count2.ToString();
-            Byte[] data = System.Text.Encoding.ASCII.GetBytes(msg);
             stream.Write(data, 0, data.Length);
         }
     }

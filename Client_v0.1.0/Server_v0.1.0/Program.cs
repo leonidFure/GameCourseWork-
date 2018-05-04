@@ -205,7 +205,7 @@ namespace Server_v0._1._0
                     {
                         foreach (Minion m in cardsbord1)
                         {
-                                m.CanAttack = true;
+                            m.CanAttack = true;
                         }
 
                         byte[] msg = System.Text.Encoding.ASCII.GetBytes("Your step");
