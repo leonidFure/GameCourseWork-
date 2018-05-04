@@ -135,6 +135,7 @@
             this.Controls.Add(this.lBAllCard);
             this.Controls.Add(this.lBYourDeck);
             this.Name = "DecSettings";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DecSettings";
             this.Load += new System.EventHandler(this.DecSettings_Load);
             this.ResumeLayout(false);

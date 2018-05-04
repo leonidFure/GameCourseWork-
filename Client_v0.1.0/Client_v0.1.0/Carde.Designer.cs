@@ -60,7 +60,7 @@
             // lName
             // 
             this.lName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lName.Font = new System.Drawing.Font("Onyx", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lName.Location = new System.Drawing.Point(0, 110);
             this.lName.Name = "lName";
             this.lName.Size = new System.Drawing.Size(114, 29);

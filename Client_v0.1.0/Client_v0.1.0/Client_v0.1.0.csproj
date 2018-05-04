@@ -64,6 +64,11 @@
     <Compile Include="DecSettings.Designer.cs">
       <DependentUpon>DecSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Fonts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Fonts.resx</DependentUpon>
+    </Compile>
     <Compile Include="Gameform.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +104,10 @@
     <EmbeddedResource Include="DecSettings.resx">
       <DependentUpon>DecSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Fonts.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Fonts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gameform.resx">
       <DependentUpon>Gameform.cs</DependentUpon>
     </EmbeddedResource>
@@ -117,6 +126,7 @@
     <EmbeddedResource Include="SaveForm.resx">
       <DependentUpon>SaveForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Fonts\PixelFont.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

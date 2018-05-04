@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,11 @@ namespace Client_v0._1._0
 {
     public partial class Carde : UserControl
     {
+       
         public Carde()
         {
             InitializeComponent();
+            
         }
 
         int index;
