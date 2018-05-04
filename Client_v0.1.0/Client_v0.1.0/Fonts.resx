@@ -118,10 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="bitout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Pixel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>fonts\bitout.fon;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="PixelFont" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>fonts\pixelfont.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_8_BIT_WONDER" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>fonts\8-bit wonder.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

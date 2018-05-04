@@ -15,37 +15,26 @@ namespace Client_v0._1._0
 {
     public partial class Carde : UserControl
     {
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont,
+            IntPtr pdv, [System.Runtime.InteropServices.In] ref uint pcFonts);
+
+        private PrivateFontCollection fonts = new PrivateFontCollection();
+
         Font myFont;
-        PrivateFontCollection private_fonts = new PrivateFontCollection();
         public Carde()
         {
             InitializeComponent();
-            LoadFont();
-            lName.Font = new Font(private_fonts.Families[0], 22);
-            lName.UseCompatibleTextRendering = true;
-        }
-        private void LoadFont()
-        {
+            byte[] fontData = Fonts.PixelFont;
+            IntPtr fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
+            System.Runtime.InteropServices.Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
+            uint dummy = 0;
+            fonts.AddMemoryFont(fontPtr, Fonts.PixelFont.Length);
+            AddFontMemResourceEx(fontPtr, (uint)Fonts.PixelFont.Length, IntPtr.Zero, ref dummy);
+            System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
 
-            using (MemoryStream fontStream = new MemoryStream(Fonts.bitout))
-            {
-                // create an unsafe memory block for the font data
-                System.IntPtr data = Marshal.AllocCoTaskMem((int)fontStream.Length);
-                // create a buffer to read in to
-                byte[] fontdata = new byte[fontStream.Length];
-                // read the font data from the resource
-                fontStream.Read(fontdata, 0, (int)fontStream.Length);
-                // copy the bytes to the unsafe memory block
-                Marshal.Copy(fontdata, 0, data, (int)fontStream.Length);
-                // pass the font to the font collection
-                private_fonts.AddMemoryFont(data, (int)fontStream.Length);
-                // close the resource stream
-                fontStream.Close();
-                // free the unsafe memory
-                Marshal.FreeCoTaskMem(data);
-
-            }
-
+            myFont = new Font(fonts.Families[0], 9.0F);
+            lName.Font = myFont;
         }
 
         int index;

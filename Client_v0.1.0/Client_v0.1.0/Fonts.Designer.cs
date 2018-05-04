@@ -63,9 +63,19 @@ namespace Client_v0._1._0 {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
-        internal static byte[] bitout {
+        internal static byte[] _8_BIT_WONDER {
             get {
-                object obj = ResourceManager.GetObject("bitout", resourceCulture);
+                object obj = ResourceManager.GetObject("_8_BIT_WONDER", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] Pixel {
+            get {
+                object obj = ResourceManager.GetObject("Pixel", resourceCulture);
                 return ((byte[])(obj));
             }
         }

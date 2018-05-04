@@ -126,6 +126,7 @@
     <EmbeddedResource Include="SaveForm.resx">
       <DependentUpon>SaveForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Fonts\8-BIT WONDER.TTF" />
     <None Include="Fonts\bitout.fon" />
     <None Include="Fonts\PixelFont.ttf" />
     <None Include="packages.config" />
