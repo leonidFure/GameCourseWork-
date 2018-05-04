@@ -11,6 +11,8 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Threading;
 using System.Net.Sockets;
+using System.Drawing.Text;
+using System.Runtime.InteropServices;
 
 namespace Client_v0._1._0
 {
@@ -155,7 +157,7 @@ namespace Client_v0._1._0
                 }
             }
         }
-         
+        
         private void Gameform_Load(object sender, EventArgs e)
         {
             Thread clientThread = new Thread(new ThreadStart(Connect));
@@ -163,7 +165,9 @@ namespace Client_v0._1._0
             this.ControlBox = false;
             List<Card> MyDeck = new List<Card>();
             bStep.Enabled = false;
+            
         }
+        
 
         private void bExit_Click(object sender, EventArgs e)
         {
