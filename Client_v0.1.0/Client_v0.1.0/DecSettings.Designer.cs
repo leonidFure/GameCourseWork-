@@ -30,10 +30,12 @@
         {
             this.lBYourDeck = new System.Windows.Forms.ListBox();
             this.lBAllCard = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lAllDeck = new System.Windows.Forms.Label();
             this.bBack = new System.Windows.Forms.Button();
             this.bSaveDeck = new System.Windows.Forms.Button();
             this.cBDecks = new System.Windows.Forms.ComboBox();
+            this.lMyDeck = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lBYourDeck
@@ -60,15 +62,15 @@
             this.lBAllCard.DragEnter += new System.Windows.Forms.DragEventHandler(this.lBAllCard_DragEnter);
             this.lBAllCard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lBAllCard_MouseDown);
             // 
-            // label1
+            // lAllDeck
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(5, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(151, 39);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "All crads";
+            this.lAllDeck.AutoSize = true;
+            this.lAllDeck.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lAllDeck.Location = new System.Drawing.Point(5, 8);
+            this.lAllDeck.Name = "lAllDeck";
+            this.lAllDeck.Size = new System.Drawing.Size(151, 39);
+            this.lAllDeck.TabIndex = 3;
+            this.lAllDeck.Text = "All crads";
             // 
             // bBack
             // 
@@ -97,16 +99,39 @@
             this.cBDecks.Name = "cBDecks";
             this.cBDecks.Size = new System.Drawing.Size(121, 21);
             this.cBDecks.TabIndex = 7;
+            this.cBDecks.SelectedIndexChanged += new System.EventHandler(this.cBDecks_SelectedIndexChanged);
+            // 
+            // lMyDeck
+            // 
+            this.lMyDeck.AutoSize = true;
+            this.lMyDeck.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lMyDeck.Location = new System.Drawing.Point(315, 8);
+            this.lMyDeck.Name = "lMyDeck";
+            this.lMyDeck.Size = new System.Drawing.Size(158, 39);
+            this.lMyDeck.TabIndex = 8;
+            this.lMyDeck.Text = "Set Deck";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(552, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(115, 39);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Decks";
             // 
             // DecSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(692, 440);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lMyDeck);
             this.Controls.Add(this.cBDecks);
             this.Controls.Add(this.bSaveDeck);
             this.Controls.Add(this.bBack);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lAllDeck);
             this.Controls.Add(this.lBAllCard);
             this.Controls.Add(this.lBYourDeck);
             this.Name = "DecSettings";
@@ -121,9 +146,11 @@
 
         private System.Windows.Forms.ListBox lBYourDeck;
         private System.Windows.Forms.ListBox lBAllCard;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lAllDeck;
         private System.Windows.Forms.Button bBack;
         private System.Windows.Forms.Button bSaveDeck;
         private System.Windows.Forms.ComboBox cBDecks;
+        private System.Windows.Forms.Label lMyDeck;
+        private System.Windows.Forms.Label label1;
     }
 }

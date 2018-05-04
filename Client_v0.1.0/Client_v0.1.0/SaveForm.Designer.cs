@@ -42,6 +42,7 @@
             this.bOk.TabIndex = 0;
             this.bOk.Text = "Save";
             this.bOk.UseVisualStyleBackColor = true;
+            this.bOk.Click += new System.EventHandler(this.bOk_Click);
             // 
             // bCansel
             // 

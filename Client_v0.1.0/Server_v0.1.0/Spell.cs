@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Client_v0._1._0
+namespace Server_v0._1._0
 {
     public class Spell : Card
     {
@@ -15,6 +15,5 @@ namespace Client_v0._1._0
         {
             this.magicDamage = magicDamage;
         }
-
     }
 }

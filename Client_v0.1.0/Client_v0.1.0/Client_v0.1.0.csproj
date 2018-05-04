@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Resurses\Card.cs">
+    <Compile Include="Card.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Carde.cs">
@@ -84,22 +84,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource1.resx</DependentUpon>
-    </Compile>
     <Compile Include="SaveForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SaveForm.Designer.cs">
       <DependentUpon>SaveForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SpaceForCard.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SpaceForCard.Designer.cs">
-      <DependentUpon>SpaceForCard.cs</DependentUpon>
     </Compile>
     <Compile Include="Spell.cs">
       <SubType>Code</SubType>
@@ -125,15 +114,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Resource1.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="SaveForm.resx">
       <DependentUpon>SaveForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SpaceForCard.resx">
-      <DependentUpon>SpaceForCard.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -146,30 +128,25 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Content Include="Resurses\57642469-magic-spell-book-tome-or-manual-line-art-icon-for-games-and-websites-Stock-Photo.jpg" />
-    <Content Include="Resurses\Max_1.jpg" />
-    <Content Include="Resurses\Max_10.jpg" />
-    <Content Include="Resurses\Max_11.jpg" />
-    <Content Include="Resurses\Max_12.jpg" />
-    <Content Include="Resurses\Max_13.jpg" />
-    <Content Include="Resurses\Max_14.jpg" />
-    <Content Include="Resurses\Max_15.jpg" />
-    <Content Include="Resurses\Max_16.jpg" />
-    <Content Include="Resurses\Max_17.jpg" />
-    <Content Include="Resurses\Max_18.jpg" />
-    <Content Include="Resurses\Max_19.jpg" />
-    <Content Include="Resurses\Max_2.jpg" />
-    <Content Include="Resurses\Max_20.jpg" />
-    <Content Include="Resurses\Max_3.jpg" />
-    <Content Include="Resurses\Max_4.jpg" />
-    <Content Include="Resurses\Max_5.jpg" />
-    <Content Include="Resurses\Max_6.jpg" />
-    <Content Include="Resurses\Max_7.jpg" />
-    <Content Include="Resurses\Max_8.jpg" />
-    <Content Include="Resurses\Max_9.jpg" />
-    <Content Include="Resurses\Military-Sword-icon.png" />
-    <Content Include="Resurses\security-shield_icon-icons.com_55078.png" />
+    <Content Include="Resurses\1.jpg" />
+    <Content Include="Resurses\10.jpg" />
+    <Content Include="Resurses\11.jpg" />
+    <Content Include="Resurses\12.jpg" />
+    <Content Include="Resurses\13.jpg" />
+    <Content Include="Resurses\14.jpg" />
+    <Content Include="Resurses\15.jpg" />
+    <Content Include="Resurses\16.jpg" />
+    <Content Include="Resurses\17.jpg" />
+    <Content Include="Resurses\2.jpg" />
+    <Content Include="Resurses\3.jpg" />
+    <Content Include="Resurses\4.jpg" />
+    <Content Include="Resurses\5.jpg" />
+    <Content Include="Resurses\6.jpg" />
+    <Content Include="Resurses\7.jpg" />
+    <Content Include="Resurses\8.jpg" />
+    <Content Include="Resurses\9.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

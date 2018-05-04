@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Client_v0._1._0
 {
-    
+
     public partial class MainMenu : Form
     {
         DecSettings decSettings;
@@ -39,11 +33,26 @@ namespace Client_v0._1._0
         private void MainMenu_Load(object sender, EventArgs e)
         {
             this.ControlBox = false;
+            string[] dirs = Directory.GetFiles(@"Decks");
+            foreach (string dir in dirs)
+            {
+                cBSetdecks.Items.Add(dir.Substring(dir.LastIndexOf((char)92) + 1, dir.LastIndexOf('.') - dir.LastIndexOf((char)92) - 1));
+            }
         }
 
         private void bExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void bPlay_Click(object sender, EventArgs e)
+        {
+            if (cBSetdecks.SelectedIndex!=-1)
+            { 
+                Gameform gf = new Gameform(cBSetdecks.Text);
+                gf.Show();
+                this.Hide();
+            }
         }
     }
 }
