@@ -9,19 +9,16 @@ namespace Server_v0._1._0
     {
         int health;
         int damage;
-
+        bool canAttack;
         public int Health { get => health; set => health = value; }
         public int Damage { get => damage; set => damage = value; }
+        public bool CanAttack { get => canAttack; set => canAttack = value; }
 
-        public Minion( string name,int cost,int health, int damage): base(name,cost)
+        public Minion(string name, int cost, int health, int damage, bool canAttack = false) : base(name, cost)
         {
             this.health = health;
             this.damage = damage;
-        }
-
-        public override bool IsMinion()
-        {
-            return true;
+            this.canAttack = canAttack;
         }
     }
 }

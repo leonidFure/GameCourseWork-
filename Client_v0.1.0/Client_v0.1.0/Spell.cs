@@ -16,9 +16,5 @@ namespace Client_v0._1._0
             this.magicDamage = magicDamage;
         }
 
-        public override bool IsMinion()
-        {
-            return base.IsMinion();
-        }
     }
 }

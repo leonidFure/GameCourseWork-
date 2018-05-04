@@ -49,11 +49,24 @@ namespace Client_v0._1._0
             string a = e.Data.GetData(DataFormats.Text).ToString();
             if (a != "")
             {
-                for (int i = 0; i < MyDeck.Count; i++)
+                if (a[a.Length - 1] == 'N')
                 {
-                    if (MyDeck[i].Name == a.Substring(0, a.LastIndexOf('H') - 2))
-                        ind = i;
+                    for (int i = 0; i < MyDeck.Count; i++)
+                    {
+                        if (MyDeck[i].Name == a.Substring(0, a.LastIndexOf('H') - 2))
+                            ind = i;
+                    }
                 }
+                else
+                {
+                    for (int i = 0; i < MyDeck.Count; i++)
+                    {
+                        if (MyDeck[i].Name == a.Substring(0, a.LastIndexOf('D') - 2))
+                            ind = i;
+                    }
+
+                }
+                
                 if (lBYourDeck.SelectedIndex != -1)
                 {
                     lBYourDeck.Items.RemoveAt(lBYourDeck.SelectedIndex);
@@ -167,7 +180,7 @@ namespace Client_v0._1._0
 
             foreach (Card c in AllCards)
             {
-                if (c.IsMinion())
+                if (c is Minion)
                 {
                     Minion a = (Minion)c;
                     lBAllCard.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
@@ -235,7 +248,7 @@ namespace Client_v0._1._0
                 }
                 foreach (Card c in MyDeck)
                 {
-                    if (c.IsMinion())
+                    if (c is Minion)
                     {
                         Minion a = (Minion)c;
                         lBYourDeck.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")"+ " MINION");

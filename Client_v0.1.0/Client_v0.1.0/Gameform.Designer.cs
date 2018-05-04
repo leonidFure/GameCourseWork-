@@ -37,6 +37,7 @@
             this.lHeroEnergy = new System.Windows.Forms.Label();
             this.bStep = new System.Windows.Forms.Button();
             this.bExit = new System.Windows.Forms.Button();
+            this.lExeption = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // YourPanel
@@ -135,11 +136,21 @@
             this.bExit.UseVisualStyleBackColor = true;
             this.bExit.Click += new System.EventHandler(this.bExit_Click);
             // 
+            // lExeption
+            // 
+            this.lExeption.AutoSize = true;
+            this.lExeption.Location = new System.Drawing.Point(229, 22);
+            this.lExeption.Name = "lExeption";
+            this.lExeption.Size = new System.Drawing.Size(31, 15);
+            this.lExeption.TabIndex = 10;
+            this.lExeption.Text = "label1";
+            // 
             // Gameform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1097, 774);
+            this.Controls.Add(this.lExeption);
             this.Controls.Add(this.bExit);
             this.Controls.Add(this.bStep);
             this.Controls.Add(this.lHeroEnergy);
@@ -170,6 +181,7 @@
         private System.Windows.Forms.Label lHeroEnergy;
         private System.Windows.Forms.Button bStep;
         private System.Windows.Forms.Button bExit;
+        private System.Windows.Forms.Label lExeption;
     }
 }
 

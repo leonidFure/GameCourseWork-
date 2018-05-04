@@ -66,6 +66,7 @@ namespace Server_v0._1._0
                 Random rndCard = new Random(0);
                 while (true)
                 {
+                    int mana1 = 0, mana2 = 0, curMana1, curMana2;
                     byte[] msg;
                     data1 = null;
                     data2 = null;
@@ -178,6 +179,7 @@ namespace Server_v0._1._0
         {
             
             int count1,count2;
+            
             int i;
             Byte[] bytes = new Byte[4096];
             while ((i = stream1.Read(bytes, 0, bytes.Length)) != 0)
@@ -201,6 +203,11 @@ namespace Server_v0._1._0
                 {
                     if (data == "End step")
                     {
+                        foreach (Minion m in cardsbord1)
+                        {
+                                m.CanAttack = true;
+                        }
+
                         byte[] msg = System.Text.Encoding.ASCII.GetBytes("Your step");
                         stream2.Write(msg, 0, msg.Length);
                         msg = System.Text.Encoding.ASCII.GetBytes("DYour step");
@@ -217,24 +224,68 @@ namespace Server_v0._1._0
                         count2 = int.Parse(counts[1]);
                         Minion m1 = (Minion)cardsbord1[count1];
                         Minion m2 = (Minion)cardsbord2[count2];
-                        m1.Health -= m2.Damage;
-                        m2.Health -= m1.Damage;
-                        cardsbord1[count1]=m1;
-                        cardsbord2[count2] =m2;
-                        mes1 += "Attac;";
-                        mes2 += "Attac;";
-                        mes1 += JsonConvert.SerializeObject((Minion)m1);
-                        mes1 += ';';
-                        mes1 += JsonConvert.SerializeObject((Minion)m2);
-                        mes2 += JsonConvert.SerializeObject((Minion)m2);
-                        mes2 += ';';
-                        mes2 += JsonConvert.SerializeObject((Minion)m1);
-                        mes1 += ';'+count1.ToString() + ';' + count2.ToString();
-                        mes2 += ';'+count2.ToString() + ';' + count1.ToString();
-                        msg = System.Text.Encoding.ASCII.GetBytes(mes1);
-                        stream1.Write(msg, 0, msg.Length);
-                        msg = System.Text.Encoding.ASCII.GetBytes(mes2);
-                        stream2.Write(msg, 0, msg.Length);
+                        if (m1.CanAttack)
+                        {
+                            m1.Health -= m2.Damage;
+                            m2.Health -= m1.Damage;
+                            if (m1.Health > 0)
+                                cardsbord1[count1] = m1;
+                            else
+                                cardsbord1.RemoveAt(count1);
+                            if (m2.Health > 0)
+                                cardsbord2[count2] = m2;
+                            else
+                                cardsbord2.RemoveAt(count2);
+                            m1.CanAttack = false;
+                            mes1 += "Attac;";
+                            mes2 += "Attac;";
+
+                            foreach (Card c in cardsbord1)
+                            {
+                                if (c is Minion)
+                                    mes1 += JsonConvert.SerializeObject((Minion)c);
+                                else
+                                    mes1 += JsonConvert.SerializeObject((Spell)c);
+                                mes1 += ';';
+                            }
+                            mes1 += "next;";
+
+                            foreach (Card c in cardsbord2)
+                            {
+                                if (c is Minion)
+                                    mes1 += JsonConvert.SerializeObject((Minion)c);
+                                else
+                                    mes1 += JsonConvert.SerializeObject((Spell)c);
+                                mes1 += ';';
+                            }
+
+                            foreach (Card c in cardsbord2)
+                            {
+                                if (c is Minion)
+                                    mes2 += JsonConvert.SerializeObject((Minion)c);
+                                else
+                                    mes2 += JsonConvert.SerializeObject((Spell)c);
+                                mes2 += ';';
+                            }
+                            mes2 += "next;";
+                            foreach (Card c in cardsbord1)
+                            {
+                                if (c is Minion)
+                                    mes2 += JsonConvert.SerializeObject((Minion)c);
+                                else
+                                    mes2 += JsonConvert.SerializeObject((Spell)c);
+                                mes2 += ';';
+                            }
+                            msg = System.Text.Encoding.ASCII.GetBytes(mes1);
+                            stream1.Write(msg, 0, msg.Length);
+                            msg = System.Text.Encoding.ASCII.GetBytes(mes2);
+                            stream2.Write(msg, 0, msg.Length);
+                        }
+                        else
+                        {
+                            msg = System.Text.Encoding.ASCII.GetBytes("Card can not attack");
+                            stream1.Write(msg, 0, msg.Length);
+                        }
                         Step(stream1, stream2, cards1, cards2, cardsbord1, cardsbord2);
                     }
                 }

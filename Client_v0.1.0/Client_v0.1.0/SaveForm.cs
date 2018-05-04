@@ -48,7 +48,7 @@ namespace Client_v0._1._0
                 {
                     foreach (Card a in MyDeck)
                     {
-                        if (a.IsMinion())
+                        if (a is Minion)
                             serializer.Serialize(writer, (Minion)a);
                         else
                             serializer.Serialize(writer, (Spell)a);

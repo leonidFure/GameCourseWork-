@@ -8,15 +8,9 @@ namespace Client_v0._1._0
     public abstract class Card
     {
         string name;
-        int cost;//кук
-
+        int cost;
         public string Name { get => name; set => name = value; }
         public int Cost { get => cost; set => cost = value; }
-
-        public virtual bool IsMinion()
-        {
-            return false;
-        }
 
         public Card(string name, int cost) 
         {
