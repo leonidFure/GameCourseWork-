@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DecSettings));
             this.lBYourDeck = new System.Windows.Forms.ListBox();
             this.lBAllCard = new System.Windows.Forms.ListBox();
             this.lAllDeck = new System.Windows.Forms.Label();
@@ -36,15 +37,17 @@
             this.cBDecks = new System.Windows.Forms.ComboBox();
             this.lMyDeck = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.carde1 = new Client_v0._1._0.Carde();
             this.SuspendLayout();
             // 
             // lBYourDeck
             // 
             this.lBYourDeck.AllowDrop = true;
             this.lBYourDeck.FormattingEnabled = true;
-            this.lBYourDeck.Location = new System.Drawing.Point(322, 50);
+            this.lBYourDeck.Location = new System.Drawing.Point(278, 50);
             this.lBYourDeck.Name = "lBYourDeck";
-            this.lBYourDeck.Size = new System.Drawing.Size(231, 303);
+            this.lBYourDeck.Size = new System.Drawing.Size(231, 420);
             this.lBYourDeck.TabIndex = 0;
             this.lBYourDeck.DragDrop += new System.Windows.Forms.DragEventHandler(this.lBYourDeck_DragDrop);
             this.lBYourDeck.DragEnter += new System.Windows.Forms.DragEventHandler(this.lBYourDeck_DragEnter);
@@ -56,7 +59,7 @@
             this.lBAllCard.FormattingEnabled = true;
             this.lBAllCard.Location = new System.Drawing.Point(12, 50);
             this.lBAllCard.Name = "lBAllCard";
-            this.lBAllCard.Size = new System.Drawing.Size(239, 303);
+            this.lBAllCard.Size = new System.Drawing.Size(239, 420);
             this.lBAllCard.TabIndex = 2;
             this.lBAllCard.DragDrop += new System.Windows.Forms.DragEventHandler(this.lBAllCard_DragDrop);
             this.lBAllCard.DragEnter += new System.Windows.Forms.DragEventHandler(this.lBAllCard_DragEnter);
@@ -74,7 +77,7 @@
             // 
             // bBack
             // 
-            this.bBack.Location = new System.Drawing.Point(12, 359);
+            this.bBack.Location = new System.Drawing.Point(12, 473);
             this.bBack.Name = "bBack";
             this.bBack.Size = new System.Drawing.Size(239, 40);
             this.bBack.TabIndex = 4;
@@ -84,7 +87,7 @@
             // 
             // bSaveDeck
             // 
-            this.bSaveDeck.Location = new System.Drawing.Point(322, 359);
+            this.bSaveDeck.Location = new System.Drawing.Point(278, 473);
             this.bSaveDeck.Name = "bSaveDeck";
             this.bSaveDeck.Size = new System.Drawing.Size(231, 40);
             this.bSaveDeck.TabIndex = 6;
@@ -95,7 +98,7 @@
             // cBDecks
             // 
             this.cBDecks.FormattingEnabled = true;
-            this.cBDecks.Location = new System.Drawing.Point(559, 50);
+            this.cBDecks.Location = new System.Drawing.Point(515, 50);
             this.cBDecks.Name = "cBDecks";
             this.cBDecks.Size = new System.Drawing.Size(121, 21);
             this.cBDecks.TabIndex = 7;
@@ -105,7 +108,7 @@
             // 
             this.lMyDeck.AutoSize = true;
             this.lMyDeck.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lMyDeck.Location = new System.Drawing.Point(315, 8);
+            this.lMyDeck.Location = new System.Drawing.Point(271, 8);
             this.lMyDeck.Name = "lMyDeck";
             this.lMyDeck.Size = new System.Drawing.Size(158, 39);
             this.lMyDeck.TabIndex = 8;
@@ -115,17 +118,41 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(552, 8);
+            this.label1.Location = new System.Drawing.Point(508, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(115, 39);
             this.label1.TabIndex = 9;
             this.label1.Text = "Decks";
             // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(663, 304);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(256, 166);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "label2";
+            // 
+            // carde1
+            // 
+            this.carde1.BackColor = System.Drawing.Color.Gray;
+            this.carde1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("carde1.BackgroundImage")));
+            this.carde1.Damage = 11;
+            this.carde1.EnIndex = 0;
+            this.carde1.Health = 11;
+            this.carde1.Index = 0;
+            this.carde1.Location = new System.Drawing.Point(734, 130);
+            this.carde1.Name = "carde1";
+            this.carde1.Namee = "dsdsdsads";
+            this.carde1.Size = new System.Drawing.Size(114, 163);
+            this.carde1.TabIndex = 10;
+            // 
             // DecSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(692, 440);
+            this.ClientSize = new System.Drawing.Size(931, 525);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.carde1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lMyDeck);
             this.Controls.Add(this.cBDecks);
@@ -153,5 +180,7 @@
         private System.Windows.Forms.ComboBox cBDecks;
         private System.Windows.Forms.Label lMyDeck;
         private System.Windows.Forms.Label label1;
+        private Carde carde1;
+        private System.Windows.Forms.Label label2;
     }
 }

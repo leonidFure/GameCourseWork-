@@ -84,6 +84,11 @@
     <Compile Include="Minion.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Picture.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Picture.resx</DependentUpon>
+    </Compile>
     <Compile Include="Player.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -113,6 +118,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Picture.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Picture.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -159,6 +168,9 @@
     <Content Include="Resurses\7.jpg" />
     <Content Include="Resurses\8.jpg" />
     <Content Include="Resurses\9.jpg" />
+    <Content Include="Resurses\Card.png" />
+    <Content Include="Resurses\Damage.png" />
+    <Content Include="Resurses\DecSetting.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

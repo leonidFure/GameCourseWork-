@@ -129,7 +129,7 @@ namespace Client_v0._1._0
                     a = e.Data.GetData(DataFormats.Text).ToString();
                     Carde c = new Carde();
                     c.Location = new Point(cardX, 400);
-                    c.Size = new Size(114, 173);
+                    c.Size = new Size(114, 163);
                     if (a[a.Length - 1] == 'N')
                     {
                         int count = 0;
@@ -287,7 +287,7 @@ namespace Client_v0._1._0
                     {
                         Carde c = new Carde();
                         c.Location = new Point(cardX2, 50);
-                        c.Size = new Size(114, 173);
+                        c.Size = new Size(114, 163);
                         if (Enemy.MyCardsOnBord[Enemy.MyCardsOnBord.Count - 1] is Minion)
                         {
                             Minion m = (Minion)Enemy.MyCardsOnBord[Enemy.MyCardsOnBord.Count - 1];
@@ -355,7 +355,7 @@ namespace Client_v0._1._0
                                     Minion m = (Minion)You.MyCardsOnBord[j];
                                     Carde c = new Carde();
                                     c.Location = new Point(cardX, 400);
-                                    c.Size = new Size(114, 173);
+                                    c.Size = new Size(114, 163);
                                     c.Namee = m.Name;
                                     c.Damage = m.Damage;
                                     c.Health = m.Health;
@@ -388,7 +388,7 @@ namespace Client_v0._1._0
                                     Minion m = (Minion)Enemy.MyCardsOnBord[j];
                                     Carde c = new Carde();
                                     c.Location = new Point(cardX2, 50);
-                                    c.Size = new Size(114, 173);
+                                    c.Size = new Size(114, 163);
                                     c.Namee = m.Name;
                                     c.Damage = m.Damage;
                                     c.Health = m.Health;
