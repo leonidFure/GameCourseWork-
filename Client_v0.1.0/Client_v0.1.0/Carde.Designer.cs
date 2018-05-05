@@ -31,6 +31,8 @@
             this.lHealth = new System.Windows.Forms.Label();
             this.lDamage = new System.Windows.Forms.Label();
             this.lName = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // lHealth
@@ -69,17 +71,27 @@
             this.lName.Text = "dsdsdsads";
             this.lName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(6, 31);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(101, 89);
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
+            // 
             // Carde
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Gray;
             this.BackgroundImage = global::Client_v0._1._0.Picture.Card;
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lHealth);
             this.Controls.Add(this.lDamage);
             this.Controls.Add(this.lName);
             this.Name = "Carde";
             this.Size = new System.Drawing.Size(114, 163);
             this.Load += new System.EventHandler(this.Carde_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -88,5 +100,6 @@
         private System.Windows.Forms.Label lHealth;
         private System.Windows.Forms.Label lDamage;
         private System.Windows.Forms.Label lName;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

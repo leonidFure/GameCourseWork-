@@ -44,6 +44,7 @@ namespace Client_v0._1._0
 
         int index;
         int enIndex;
+        
         public int Health
         {
             get { return int.Parse(lHealth.Text); }
@@ -54,6 +55,11 @@ namespace Client_v0._1._0
         {
             get { return int.Parse(lDamage.Text); }
             set { lDamage.Text = value.ToString(); }
+        }
+
+        public Image image
+        {
+            set { pictureBox1.BackgroundImage = value; }
         }
 
         public string Namee

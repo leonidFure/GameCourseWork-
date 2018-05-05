@@ -152,25 +152,24 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Resurses\1.jpg" />
-    <Content Include="Resurses\10.jpg" />
-    <Content Include="Resurses\11.jpg" />
-    <Content Include="Resurses\12.jpg" />
-    <Content Include="Resurses\13.jpg" />
-    <Content Include="Resurses\14.jpg" />
-    <Content Include="Resurses\15.jpg" />
-    <Content Include="Resurses\16.jpg" />
-    <Content Include="Resurses\17.jpg" />
-    <Content Include="Resurses\2.jpg" />
-    <Content Include="Resurses\3.jpg" />
-    <Content Include="Resurses\4.jpg" />
-    <Content Include="Resurses\5.jpg" />
-    <Content Include="Resurses\6.jpg" />
-    <Content Include="Resurses\7.jpg" />
-    <Content Include="Resurses\8.jpg" />
-    <Content Include="Resurses\9.jpg" />
+    <Content Include="Resurses\2_chip.jpg" />
+    <Content Include="Resurses\Altered_Beast.jpg" />
+    <Content Include="Resurses\Aludin.jpg" />
+    <Content Include="Resurses\BagzBanni.jpg" />
     <Content Include="Resurses\Card.png" />
+    <Content Include="Resurses\ChervyakDzhim.jpg" />
     <Content Include="Resurses\Damage.png" />
     <Content Include="Resurses\DecSetting.png" />
+    <Content Include="Resurses\Ecco_the_Dolphin.jpg" />
+    <Content Include="Resurses\knakls.jpg" />
+    <Content Include="Resurses\MayklDzhexon.jpg" />
+    <Content Include="Resurses\obelix.jpg" />
+    <Content Include="Resurses\RedChel.jpg" />
+    <Content Include="Resurses\Robokop.jpg" />
+    <Content Include="Resurses\Skorpion.jpg" />
+    <Content Include="Resurses\Sonik.jpg" />
+    <Content Include="Resurses\Vectorman.jpg" />
+    <Content Include="Resurses\ZheltyRenzher.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -141,6 +141,7 @@ namespace Client_v0._1._0
                                 c.Namee = m.Name;
                                 c.Damage = m.Damage;
                                 c.Health = m.Health;
+                                c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
                                 c.Index = CountCarde;
                                 c.EnIndex = -1;
                                 CountCarde++;
@@ -188,7 +189,7 @@ namespace Client_v0._1._0
                 });
                 string message;
                 JsonSerializer serializer = new JsonSerializer();
-                using (StreamReader file = new StreamReader("Decks" + (char)92 + "Deck#4" + ".txt"))
+                using (StreamReader file = new StreamReader("Decks" + (char)92 + path + ".txt"))
                 {
                     message = file.ReadLine();
                 }
@@ -294,6 +295,7 @@ namespace Client_v0._1._0
                             c.Namee = m.Name;
                             c.Damage = m.Damage;
                             c.Health = m.Health;
+                            c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
                             c.Index = -1;
                             c.EnIndex = Enemy.MyCardsOnBord.Count - 1;
                             c.Tag = "Enemy";
@@ -359,6 +361,7 @@ namespace Client_v0._1._0
                                     c.Namee = m.Name;
                                     c.Damage = m.Damage;
                                     c.Health = m.Health;
+                                    c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
                                     c.Index = j;
                                     c.EnIndex = -1;
                                     YourPanel.Controls.Add(c);
@@ -392,6 +395,7 @@ namespace Client_v0._1._0
                                     c.Namee = m.Name;
                                     c.Damage = m.Damage;
                                     c.Health = m.Health;
+                                    c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
                                     c.Index = -1;
                                     c.EnIndex = j;
                                     c.Tag = "Enemy";

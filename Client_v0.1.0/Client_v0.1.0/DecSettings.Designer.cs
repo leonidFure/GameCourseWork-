@@ -49,6 +49,7 @@
             this.lBYourDeck.Name = "lBYourDeck";
             this.lBYourDeck.Size = new System.Drawing.Size(231, 420);
             this.lBYourDeck.TabIndex = 0;
+            this.lBYourDeck.Click += new System.EventHandler(this.lBYourDeck_Click);
             this.lBYourDeck.DragDrop += new System.Windows.Forms.DragEventHandler(this.lBYourDeck_DragDrop);
             this.lBYourDeck.DragEnter += new System.Windows.Forms.DragEventHandler(this.lBYourDeck_DragEnter);
             this.lBYourDeck.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lBYourDeck_MouseDown);
@@ -61,8 +62,6 @@
             this.lBAllCard.Name = "lBAllCard";
             this.lBAllCard.Size = new System.Drawing.Size(239, 420);
             this.lBAllCard.TabIndex = 2;
-            this.lBAllCard.DragDrop += new System.Windows.Forms.DragEventHandler(this.lBAllCard_DragDrop);
-            this.lBAllCard.DragEnter += new System.Windows.Forms.DragEventHandler(this.lBAllCard_DragEnter);
             this.lBAllCard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lBAllCard_MouseDown);
             // 
             // lAllDeck

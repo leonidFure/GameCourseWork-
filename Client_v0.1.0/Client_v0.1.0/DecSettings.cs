@@ -5,12 +5,14 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
 namespace Client_v0._1._0
 {
+
     public partial class DecSettings : Form
     {
         int _cost = 0;
@@ -35,55 +37,7 @@ namespace Client_v0._1._0
                 lBAllCard.DoDragDrop(list.Text, DragDropEffects.Copy | DragDropEffects.Move);
             }
         }
-
-        private void lBAllCard_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.Text))
-                e.Effect = DragDropEffects.Copy;
-            else
-                e.Effect = DragDropEffects.None;
-        }
-
-        private void lBAllCard_DragDrop(object sender, DragEventArgs e)
-        {
-            string a = e.Data.GetData(DataFormats.Text).ToString();
-            if (a != "")
-            {
-                if (a[a.Length - 1] == 'N')
-                {
-                    for (int i = 0; i < MyDeck.Count; i++)
-                    {
-                        if (MyDeck[i].Name == a.Substring(0, a.LastIndexOf('H') - 2))
-                            ind = i;
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < MyDeck.Count; i++)
-                    {
-                        if (MyDeck[i].Name == a.Substring(0, a.LastIndexOf('D') - 2))
-                            ind = i;
-                    }
-
-                }
-                
-                if (lBYourDeck.SelectedIndex != -1)
-                {
-                    lBYourDeck.Items.RemoveAt(lBYourDeck.SelectedIndex);
-                    MyDeck.RemoveAt(ind);
-                }
-            }
-        }
-
-        private void lBYourDeck_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (lBYourDeck.Items.Count > 0)
-            {
-                ListBox list = (ListBox)sender;
-                lBYourDeck.DoDragDrop(list.Text, DragDropEffects.Copy | DragDropEffects.Move);
-            }
-        }
-
+        
         private void lBYourDeck_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.Text))
@@ -149,53 +103,24 @@ namespace Client_v0._1._0
         private void DecSettings_Load(object sender, EventArgs e)
         {
             this.ControlBox = false;
-            ///настроить спелы и их добавление в список
-            ///
-            //AllCards.Add(new Minion("Sad Max", 1, 1, 1));
-            //AllCards.Add(new Spell("Loch", 5, 2));
-            //AllCards.Add(new Minion("Angry Max", 2, 4, 1));
-            //AllCards.Add(new Minion("Stupid Max", 5, 7, 2));
-            //AllCards.Add(new Minion("Funny Max", 6, 7, 5));
-            //AllCards.Add(new Minion("Dr.Mom", 3, 1, 3));
-            //AllCards.Add(new Minion("Home", 0, 1, 0));
-            //AllCards.Add(new Minion("Smerto-Max", 10, 15, 15));
-            //AllCards.Add(new Minion("Yaroslavl", 3, 2, 4));
-            //AllCards.Add(new Minion("Jojo", 7, 2, 9));
-            //AllCards.Add(new Minion("Kostroma", 1, 5, 5));
-            //AllCards.Add(new Minion("JIR Project", 6, 7, 3));
-            //AllCards.Add(new Minion("Max", 3, 2, 1));
-            //AllCards.Add(new Minion("Angry Lewa", 3, 5, 2));
-            //AllCards.Add(new Minion("Stupid man", 1, 2, 2));
-            //AllCards.Add(new Minion("Arthas", 8, 8, 8));
-            //AllCards.Add(new Minion("Leonid", 2, 2, 3));
-            //AllCards.Add(new Minion("St.Georgy", 2, 7, 3));
-            //AllCards.Add(new Minion("Sergo", 2, 2, 1));
-            //AllCards.Add(new Minion("Alih roz", 3, 2, 5));
-            //AllCards.Add(new Spell("SuperLonya", 8, 10));
-            //AllCards.Add(new Spell("Puk", 1, 2));
-            //AllCards.Add(new Spell("Glina", 4, 6));
-            //AllCards.Add(new Spell("Defolt", 3, 5));
-            //AllCards.Add(new Spell("Imba", 10, 12));
-            //AllCards.Add(new Spell("Rofl", 0, 1));
-            //AllCards.Add(new Spell("StandUp", 6, 8));
-            
-            AllCards.Add(new Minion("Earthworm Jim",7,7,8));
+
+            AllCards.Add(new Minion("Earthworm_Jim",7,7,8));
             AllCards.Add(new Minion("Sonic", 3, 2, 4));
             AllCards.Add(new Minion("Scorpion", 5, 5, 5));
             AllCards.Add(new Minion("RoboСop", 6, 6, 7));
             AllCards.Add(new Minion("Obelix", 8, 4, 12));
-            AllCards.Add(new Minion("Red Octopus", 2, 2, 3));
-            AllCards.Add(new Minion("Michael Jackson", 4, 5, 4));
+            AllCards.Add(new Minion("Red_Octopus", 2, 2, 3));
+            AllCards.Add(new Minion("Michael_Jackson", 4, 5, 4));
             AllCards.Add(new Minion("Knuckles", 4, 4, 5));
-            AllCards.Add(new Minion("Power Ranger", 6, 5, 8));
-            AllCards.Add(new Minion("Bugs Bunny", 3, 3, 4));
+            AllCards.Add(new Minion("Power_Ranger", 6, 5, 8));
+            AllCards.Add(new Minion("Bugs_Bunny", 3, 3, 4));
             AllCards.Add(new Minion("Aladdin", 5, 6, 3));
             AllCards.Add(new Minion("Vectorman", 1, 1, 2));
-            AllCards.Add(new Minion("Ecco the Dolphin", 2, 1, 4));
-            AllCards.Add(new Minion("Altered Beast", 5, 2, 8));
+            AllCards.Add(new Minion("Ecco_the_Dolphin", 2, 1, 4));
+            AllCards.Add(new Minion("Altered_Beast", 5, 2, 8));
             AllCards.Add(new Minion("Chip", 1, 2, 1));
             AllCards.Add(new Minion("Wily", 1, 1, 3));
-
+            
 
 
             foreach (Card c in AllCards)
@@ -278,6 +203,41 @@ namespace Client_v0._1._0
                         Spell a = (Spell)c;
                         lBYourDeck.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")"+ " SPELL");
                     }
+                }
+            }
+        }
+
+        private void lBYourDeck_Click(object sender, EventArgs e)
+        {
+            if (lBYourDeck.SelectedIndex != -1)
+            {
+                if (MyDeck[lBYourDeck.SelectedIndex] is Minion)
+                {
+                    Minion minion = (Minion)MyDeck[lBYourDeck.SelectedIndex];
+                    carde1.Health = minion.Health;
+                    carde1.Namee = minion.Name;
+                    carde1.Damage = minion.Damage;
+                    carde1.image = (Image)Picture.ResourceManager.GetObject(minion.Name);
+                }
+                else
+                {
+
+                }
+            }
+             
+        }
+
+        private void lBYourDeck_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                int y = e.Y / lBYourDeck.ItemHeight;
+                if (y < lBYourDeck.Items.Count)
+                    lBYourDeck.SelectedIndex = y;
+                if (lBYourDeck.SelectedIndex != -1)
+                {
+                    MyDeck.RemoveAt(lBYourDeck.SelectedIndex);
+                    lBYourDeck.Items.RemoveAt(lBYourDeck.SelectedIndex);
                 }
             }
         }
