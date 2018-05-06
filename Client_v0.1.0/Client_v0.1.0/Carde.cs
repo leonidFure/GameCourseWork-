@@ -73,6 +73,7 @@ namespace Client_v0._1._0
 
         private void Carde_Load(object sender, EventArgs e)
         {
+            //this.pictureBox1.Click += this.Click;
             lDamage.BringToFront();
             lHealth.BringToFront();
         }

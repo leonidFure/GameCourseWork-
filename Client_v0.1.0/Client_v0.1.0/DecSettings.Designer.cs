@@ -37,7 +37,6 @@
             this.cBDecks = new System.Windows.Forms.ComboBox();
             this.lMyDeck = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.carde1 = new Client_v0._1._0.Carde();
             this.SuspendLayout();
             // 
@@ -47,7 +46,7 @@
             this.lBYourDeck.FormattingEnabled = true;
             this.lBYourDeck.Location = new System.Drawing.Point(278, 50);
             this.lBYourDeck.Name = "lBYourDeck";
-            this.lBYourDeck.Size = new System.Drawing.Size(231, 420);
+            this.lBYourDeck.Size = new System.Drawing.Size(231, 342);
             this.lBYourDeck.TabIndex = 0;
             this.lBYourDeck.Click += new System.EventHandler(this.lBYourDeck_Click);
             this.lBYourDeck.DragDrop += new System.Windows.Forms.DragEventHandler(this.lBYourDeck_DragDrop);
@@ -60,7 +59,7 @@
             this.lBAllCard.FormattingEnabled = true;
             this.lBAllCard.Location = new System.Drawing.Point(12, 50);
             this.lBAllCard.Name = "lBAllCard";
-            this.lBAllCard.Size = new System.Drawing.Size(239, 420);
+            this.lBAllCard.Size = new System.Drawing.Size(239, 342);
             this.lBAllCard.TabIndex = 2;
             this.lBAllCard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lBAllCard_MouseDown);
             // 
@@ -76,7 +75,7 @@
             // 
             // bBack
             // 
-            this.bBack.Location = new System.Drawing.Point(12, 473);
+            this.bBack.Location = new System.Drawing.Point(12, 398);
             this.bBack.Name = "bBack";
             this.bBack.Size = new System.Drawing.Size(239, 40);
             this.bBack.TabIndex = 4;
@@ -86,7 +85,7 @@
             // 
             // bSaveDeck
             // 
-            this.bSaveDeck.Location = new System.Drawing.Point(278, 473);
+            this.bSaveDeck.Location = new System.Drawing.Point(278, 398);
             this.bSaveDeck.Name = "bSaveDeck";
             this.bSaveDeck.Size = new System.Drawing.Size(231, 40);
             this.bSaveDeck.TabIndex = 6;
@@ -123,14 +122,6 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Decks";
             // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(663, 304);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(256, 166);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "label2";
-            // 
             // carde1
             // 
             this.carde1.BackColor = System.Drawing.Color.Gray;
@@ -139,7 +130,7 @@
             this.carde1.EnIndex = 0;
             this.carde1.Health = 11;
             this.carde1.Index = 0;
-            this.carde1.Location = new System.Drawing.Point(734, 130);
+            this.carde1.Location = new System.Drawing.Point(645, 50);
             this.carde1.Name = "carde1";
             this.carde1.Namee = "dsdsdsads";
             this.carde1.Size = new System.Drawing.Size(114, 163);
@@ -149,8 +140,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(931, 525);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(771, 444);
             this.Controls.Add(this.carde1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lMyDeck);
@@ -180,6 +170,5 @@
         private System.Windows.Forms.Label lMyDeck;
         private System.Windows.Forms.Label label1;
         private Carde carde1;
-        private System.Windows.Forms.Label label2;
     }
 }

@@ -37,7 +37,6 @@
             this.lHeroEnergy = new System.Windows.Forms.Label();
             this.bStep = new System.Windows.Forms.Button();
             this.bExit = new System.Windows.Forms.Button();
-            this.lExeption = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // YourPanel
@@ -61,9 +60,8 @@
             this.lOffCard2.Location = new System.Drawing.Point(902, 22);
             this.lOffCard2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lOffCard2.Name = "lOffCard2";
-            this.lOffCard2.Size = new System.Drawing.Size(89, 40);
+            this.lOffCard2.Size = new System.Drawing.Size(0, 40);
             this.lOffCard2.TabIndex = 2;
-            this.lOffCard2.Text = "label1";
             // 
             // lOffCard1
             // 
@@ -72,9 +70,8 @@
             this.lOffCard1.Location = new System.Drawing.Point(902, 374);
             this.lOffCard1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lOffCard1.Name = "lOffCard1";
-            this.lOffCard1.Size = new System.Drawing.Size(132, 37);
+            this.lOffCard1.Size = new System.Drawing.Size(0, 37);
             this.lOffCard1.TabIndex = 3;
-            this.lOffCard1.Text = "Cards: 22";
             // 
             // lBCards2
             // 
@@ -136,21 +133,11 @@
             this.bExit.UseVisualStyleBackColor = true;
             this.bExit.Click += new System.EventHandler(this.bExit_Click);
             // 
-            // lExeption
-            // 
-            this.lExeption.AutoSize = true;
-            this.lExeption.Location = new System.Drawing.Point(229, 22);
-            this.lExeption.Name = "lExeption";
-            this.lExeption.Size = new System.Drawing.Size(31, 15);
-            this.lExeption.TabIndex = 10;
-            this.lExeption.Text = "label1";
-            // 
             // Gameform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1097, 774);
-            this.Controls.Add(this.lExeption);
             this.Controls.Add(this.bExit);
             this.Controls.Add(this.bStep);
             this.Controls.Add(this.lHeroEnergy);
@@ -164,7 +151,7 @@
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "Gameform";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Game";
             this.Load += new System.EventHandler(this.Gameform_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -182,7 +169,6 @@
         private System.Windows.Forms.Label lHeroEnergy;
         private System.Windows.Forms.Button bStep;
         private System.Windows.Forms.Button bExit;
-        private System.Windows.Forms.Label lExeption;
     }
 }
 

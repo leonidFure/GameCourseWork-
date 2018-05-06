@@ -38,6 +38,7 @@
             // lHealth
             // 
             this.lHealth.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(148)))), ((int)(((byte)(72)))));
+            this.lHealth.Enabled = false;
             this.lHealth.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lHealth.ForeColor = System.Drawing.Color.Black;
             this.lHealth.Location = new System.Drawing.Point(71, 133);
@@ -50,6 +51,7 @@
             // lDamage
             // 
             this.lDamage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(148)))), ((int)(((byte)(72)))));
+            this.lDamage.Enabled = false;
             this.lDamage.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lDamage.ForeColor = System.Drawing.Color.Black;
             this.lDamage.Location = new System.Drawing.Point(10, 133);
@@ -62,6 +64,7 @@
             // lName
             // 
             this.lName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(148)))), ((int)(((byte)(72)))));
+            this.lName.Enabled = false;
             this.lName.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.lName.Font = new System.Drawing.Font("Wingdings 3", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.lName.Location = new System.Drawing.Point(6, 6);
@@ -73,6 +76,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Enabled = false;
             this.pictureBox1.Location = new System.Drawing.Point(6, 31);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(101, 89);

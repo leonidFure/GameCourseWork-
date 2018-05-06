@@ -10,6 +10,7 @@ using System.Windows;
 using Newtonsoft.Json;
 using System.IO;
 using System.Threading;
+using System.Net;
 using System.Net.Sockets;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
@@ -24,7 +25,7 @@ namespace Client_v0._1._0
         bool bSelectedCard = false;
         bool sStep =false ;
         Byte[] d = new Byte[4096];
-        static Int32 port = 103;
+        static Int32 port = 22222;
         static TcpClient client = new TcpClient("127.0.0.1", port);
         NetworkStream stream = client.GetStream();
         String responseData = String.Empty;
@@ -127,33 +128,26 @@ namespace Client_v0._1._0
                 {
                     string a;
                     a = e.Data.GetData(DataFormats.Text).ToString();
+                    int count = lBCrads1.SelectedIndex;
                     Carde c = new Carde();
                     c.Location = new Point(cardX, 400);
                     c.Size = new Size(114, 163);
-                    if (a[a.Length - 1] == 'N')
+                    if (You.CardsInMyHand[count] is Minion)
                     {
-                        int count = 0;
-                        do
-                        {
-                            if (You.CardsInMyHand[count].Name == a.Substring(0, a.LastIndexOf('H') - 2))
-                            {
-                                Minion m = (Minion)You.CardsInMyHand[count];
-                                c.Namee = m.Name;
-                                c.Damage = m.Damage;
-                                c.Health = m.Health;
-                                c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
-                                c.Index = CountCarde;
-                                c.EnIndex = -1;
-                                CountCarde++;
-                                You.MyCardsOnBord.Add(m);
-                            }
-                            count++;
-                        } while (You.CardsInMyHand[count - 1].Name != a.Substring(0, a.LastIndexOf('H') - 2));
+                        Minion m = (Minion)You.CardsInMyHand[count];
+                        c.Namee = m.Name;
+                        c.Damage = m.Damage;
+                        c.Health = m.Health;
+                        c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
+                        c.Index = CountCarde;
+                        c.EnIndex = -1;
+                        CountCarde++;
+                        You.MyCardsOnBord.Add(m);
                         YourPanel.Controls.Add(c);
                         c.Click += new System.EventHandler(this.MouseClickNew);
                         cardX += 125;
                         Thread clientThread = new Thread(new ParameterizedThreadStart(DropCard));
-                        clientThread.Start(count - 1);
+                        clientThread.Start(count);
                     }
                 }
             }
@@ -173,6 +167,7 @@ namespace Client_v0._1._0
         private void bExit_Click(object sender, EventArgs e)
         {
             stream.Close();
+            client.Close();
             Application.Exit();
         }
 
@@ -278,17 +273,23 @@ namespace Client_v0._1._0
             while ((i = stream.Read(d, 0, d.Length)) != 0)
             {
                 responseData = System.Text.Encoding.ASCII.GetString(d, 0, i);
+                string[] lines = responseData.Split(';');
                 if (responseData[0] =='{' )
                 {
-                    if (responseData[2] == 'H')
-                        Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(responseData));
+                    if (lines[0][2] == 'H')
+                    {
+                        Minion minion = JsonConvert.DeserializeObject<Minion>(lines[0]);
+                        Enemy.MyCardsOnBord.Add(minion);
+                    }
                     else
-                        Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(responseData));
+                    {
+                        Spell spell = JsonConvert.DeserializeObject<Spell>(lines[0]);
+                        Enemy.MyCardsOnBord.Add(spell);
+                    }
                     this.Invoke((MethodInvoker)delegate ()
                     {
                         Carde c = new Carde();
                         c.Location = new Point(cardX2, 50);
-                        c.Size = new Size(114, 163);
                         if (Enemy.MyCardsOnBord[Enemy.MyCardsOnBord.Count - 1] is Minion)
                         {
                             Minion m = (Minion)Enemy.MyCardsOnBord[Enemy.MyCardsOnBord.Count - 1];
@@ -304,116 +305,233 @@ namespace Client_v0._1._0
                             cardX2 += 125;
                         }
                     });
-                }
-                else
-                {
-                    if(responseData=="Your step")
+                    Enemy.CardsInMyHand.Clear();
+                    for (int i1 = 1; i1 < lines.Length; i1++)
                     {
-                        sStep = true;
-                        this.Invoke((MethodInvoker)delegate ()
-                        {
-                            bStep.Enabled = true;
-                        });
-                    }
-                        
-                    if (responseData == "DYour step")
-                    {
-                        sStep = false;
-                        this.Invoke((MethodInvoker)delegate ()
-                        {
-                            bStep.Enabled = false;
-                        });
-                    }
-                    if (responseData[0] == 'A')
-                    {
-                        int n=0;
-                        responseData = responseData.Substring(0, responseData.Length - 1);
-                        string[] lines = responseData.Split(';');
-                        You.MyCardsOnBord.Clear();
-                        Enemy.MyCardsOnBord.Clear();
-                        for (int i1 = 0; i1 < lines.Length; i1++)
-                        {
-                            if (lines[i1] == "next")
-                                n = i1;
-                        }
-                        this.Invoke((MethodInvoker)delegate () 
-                        {
-                            YourPanel.Controls.Clear();
-                        });
-                        if (n != 1)
-                        {
-                            for (int i1 = 1; i1 < n; i1++)
-                            {
-                                if (lines[i1][2] == 'H')
-                                    You.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                                else
-                                    You.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
-                            }
-                            this.Invoke((MethodInvoker)delegate ()
-                            {
-                                cardX = 11;
-                                for (int j = 0; j < You.MyCardsOnBord.Count; j++)
-                                {
-                                    Minion m = (Minion)You.MyCardsOnBord[j];
-                                    Carde c = new Carde();
-                                    c.Location = new Point(cardX, 400);
-                                    c.Size = new Size(114, 163);
-                                    c.Namee = m.Name;
-                                    c.Damage = m.Damage;
-                                    c.Health = m.Health;
-                                    c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
-                                    c.Index = j;
-                                    c.EnIndex = -1;
-                                    YourPanel.Controls.Add(c);
-                                    c.Click += new System.EventHandler(this.MouseClickNew);
-                                    cardX += 125;
-                                }
-                                CountCarde = You.MyCardsOnBord.Count;
-                            });
-
-                        }
+                        if (lines[i1][2] == 'H')
+                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
                         else
-                        { CountCarde = 0; cardX = 11; }
-                        if (n != lines.Length - 1)
-                        {
-                            for (int i1 = n + 1; i1 < lines.Length; i1++)
-                            {
-                                if (lines[i1][2] == 'H')
-                                    Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                                else
-                                    Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
-                            }
-                            this.Invoke((MethodInvoker)delegate ()
-                            {
-                                cardX2 = 11;
-                                for (int j = 0; j < Enemy.MyCardsOnBord.Count; j++)
-                                {
-                                    Minion m = (Minion)Enemy.MyCardsOnBord[j];
-                                    Carde c = new Carde();
-                                    c.Location = new Point(cardX2, 50);
-                                    c.Size = new Size(114, 163);
-                                    c.Namee = m.Name;
-                                    c.Damage = m.Damage;
-                                    c.Health = m.Health;
-                                    c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
-                                    c.Index = -1;
-                                    c.EnIndex = j;
-                                    c.Tag = "Enemy";
-                                    YourPanel.Controls.Add(c);
-                                    c.Click += new System.EventHandler(this.MouseEnemyClickNew);
-                                    cardX2 += 125;
-                                }
-
-                                CountEnemyCarde = Enemy.MyCardsOnBord.Count;
-
-                            });
-                        }
-                        else { CountEnemyCarde = 0; cardX2 = 11; }
+                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
                     }
-                    if (responseData == "Card can not attack")
+                    this.Invoke((MethodInvoker)delegate ()
                     {
-                        this.Invoke((MethodInvoker)delegate () { lExeption.Text = responseData; });
+                        lBCards2.Items.Clear();
+                        foreach (Card c in Enemy.CardsInMyHand)
+                        {
+                            if (c is Minion)
+                            {
+                                Minion a = (Minion)c;
+                                lBCards2.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                            }
+                            else
+                            {
+                                Spell a = (Spell)c;
+                                lBCards2.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                            }
+                        }
+                    });
+                }
+
+                if (lines[0] == "Your step")
+                {
+                    sStep = true;
+                    this.Invoke((MethodInvoker)delegate ()
+                    {
+                        bStep.Enabled = true;
+                    });
+                    int next = 0;
+                    for (int i1 = 0; i1 < lines.Length; i1++)
+                    {
+                        if (lines[i1] == "next")
+                            next = i1;
                     }
+                    You.CardsInMyHand.Clear();
+                    for (int i1 = 1; i1 < next; i1++)
+                    {
+                        if (lines[i1][2] == 'H')
+                            You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
+                        else
+                            You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                    }
+                    this.Invoke((MethodInvoker)delegate ()
+                    {
+                        lBCrads1.Items.Clear();
+                        foreach (Card c in You.CardsInMyHand)
+                        {
+                            if (c is Minion)
+                            {
+                                Minion a = (Minion)c;
+                                lBCrads1.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                            }
+                            else
+                            {
+                                Spell a = (Spell)c;
+                                lBCrads1.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                            }
+                        }
+                        int countCards = lines.Length - next - 1;
+                        lOffCard1.Text = "Cards: " + countCards.ToString();
+                    });
+                }
+
+                if (lines[0] == "DYour step")
+                {
+                    sStep = false;
+                    this.Invoke((MethodInvoker)delegate ()
+                    {
+                        bStep.Enabled = false;
+                    });
+                    int next = 0;
+                    for (int i1 = 0; i1 < lines.Length; i1++)
+                    {
+                        if (lines[i1] == "next")
+                            next = i1;
+                    }
+                    Enemy.CardsInMyHand.Clear();
+                    for (int i1 = 1; i1 < next; i1++)
+                    {
+                        if (lines[i1][2] == 'H')
+                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
+                        else
+                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                    }
+                    this.Invoke((MethodInvoker)delegate ()
+                    {
+                        lBCards2.Items.Clear();
+                        foreach (Card c in Enemy.CardsInMyHand)
+                        {
+                            if (c is Minion)
+                            {
+                                Minion a = (Minion)c;
+                                lBCards2.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                            }
+                            else
+                            {
+                                Spell a = (Spell)c;
+                                lBCards2.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                            }
+                        }
+                        int countCards = lines.Length - next - 1;
+                        lOffCard2.Text = "Cards: " + countCards.ToString();
+                    });
+                }
+
+                if (responseData[0] == 'A')
+                {
+                    int n = 0;
+                    responseData = responseData.Substring(0, responseData.Length - 1);
+                    You.MyCardsOnBord.Clear();
+                    Enemy.MyCardsOnBord.Clear();
+                    for (int i1 = 0; i1 < lines.Length; i1++)
+                    {
+                        if (lines[i1] == "next")
+                            n = i1;
+                    }
+                    this.Invoke((MethodInvoker)delegate () { YourPanel.Controls.Clear(); });
+                    if (n != 1)
+                    {
+                        for (int i1 = 1; i1 < n; i1++)
+                        {
+                            if (lines[i1][2] == 'H')
+                                You.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
+                            else
+                                You.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                        }
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+                            cardX = 11;
+                            for (int j = 0; j < You.MyCardsOnBord.Count; j++)
+                            {
+                                Minion m = (Minion)You.MyCardsOnBord[j];
+                                Carde c = new Carde();
+                                c.Location = new Point(cardX, 400);
+                                c.Namee = m.Name;
+                                c.Damage = m.Damage;
+                                c.Health = m.Health;
+                                c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
+                                c.Index = j;
+                                c.EnIndex = -1;
+                                YourPanel.Controls.Add(c);
+                                c.Click += new System.EventHandler(this.MouseClickNew);
+                                cardX += 125;
+                            }
+                            CountCarde = You.MyCardsOnBord.Count;
+                        });
+
+                    }
+                    else { CountCarde = 0; cardX = 11; }
+
+                    if (n != lines.Length - 1)
+                    {
+                        for (int i1 = n + 1; i1 < lines.Length; i1++)
+                        {
+                            if (lines[i1][2] == 'H')
+                                Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
+                            else
+                                Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                        }
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+                            cardX2 = 11;
+                            for (int j = 0; j < Enemy.MyCardsOnBord.Count; j++)
+                            {
+                                Minion m = (Minion)Enemy.MyCardsOnBord[j];
+                                Carde c = new Carde();
+                                c.Location = new Point(cardX2, 50);
+                                c.Namee = m.Name;
+                                c.Damage = m.Damage;
+                                c.Health = m.Health;
+                                c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
+                                c.Index = -1;
+                                c.EnIndex = j;
+                                c.Tag = "Enemy";
+                                YourPanel.Controls.Add(c);
+                                c.Click += new System.EventHandler(this.MouseEnemyClickNew);
+                                cardX2 += 125;
+                            }
+                            CountEnemyCarde = Enemy.MyCardsOnBord.Count;
+                        });
+                    }
+                    else { CountEnemyCarde = 0; cardX2 = 11; }
+                }
+
+                if (responseData == "Card can not attack")
+                {
+                    this.Invoke((MethodInvoker)delegate () { MessageBox.Show(responseData); });
+                }
+
+                if (responseData == "Exeption have not mana")
+                {
+                    this.Invoke((MethodInvoker)delegate () { MessageBox.Show(responseData); });
+                }
+
+                if (lines[0][0] == 'H')
+                {
+                    You.CardsInMyHand.Clear();
+                    for (int i1 = 1; i1 < lines.Length; i1++)
+                    {
+                        if (lines[i1][2] == 'H')
+                            You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
+                        else
+                            You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                    }
+                    this.Invoke((MethodInvoker)delegate ()
+                    {
+                        lBCrads1.Items.Clear();
+                        foreach (Card c in You.CardsInMyHand)
+                        {
+                            if (c is Minion)
+                            {
+                                Minion a = (Minion)c;
+                                lBCrads1.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                            }
+                            else
+                            {
+                                Spell a = (Spell)c;
+                                lBCrads1.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                            }
+                        }
+                    });
                 }
             }
             Step();
