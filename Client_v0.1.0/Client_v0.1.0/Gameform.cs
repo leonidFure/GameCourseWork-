@@ -142,8 +142,6 @@ namespace Client_v0._1._0
                     string a;
                     a = e.Data.GetData(DataFormats.Text).ToString();
                     int count = lBCrads1.SelectedIndex;
-                    
-                    
                     Thread clientThread = new Thread(new ParameterizedThreadStart(DropCard));
                     clientThread.Start(count);
                 }
@@ -337,40 +335,43 @@ namespace Client_v0._1._0
                     {
                         bStep.Enabled = true;
                     });
-                    int next = 0;
-                    for (int i1 = 0; i1 < lines.Length; i1++)
+                    if (lines.Length > 2)
                     {
-                        if (lines[i1] == "next")
-                            next = i1;
-                    }
-                    You.CardsInMyHand.Clear();
-                    for (int i1 = 1; i1 < next; i1++)
-                    {
-                        if (lines[i1][2] == 'H')
-                            You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                        else
-                            You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
-                    }
-                    this.Invoke((MethodInvoker)delegate ()
-                    {
-                        lBCrads1.Items.Clear();
-                        foreach (Card c in You.CardsInMyHand)
+                        int next = 0;
+                        for (int i1 = 0; i1 < lines.Length; i1++)
                         {
-                            if (c is Minion)
-                            {
-                                Minion a = (Minion)c;
-                                lBCrads1.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
-                            }
-                            else
-                            {
-                                Spell a = (Spell)c;
-                                lBCrads1.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
-                            }
+                            if (lines[i1] == "next")
+                                next = i1;
                         }
-                        int countCards = lines.Length - next - 2;
-                        lOffCard1.Text = "Cards: " + countCards.ToString();
-                        lHeroEnergy.Text = "Energy: " + lines[lines.Length - 1];
-                    });
+                        You.CardsInMyHand.Clear();
+                        for (int i1 = 1; i1 < next; i1++)
+                        {
+                            if (lines[i1][2] == 'H')
+                                You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
+                            else
+                                You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                        }
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+                            lBCrads1.Items.Clear();
+                            foreach (Card c in You.CardsInMyHand)
+                            {
+                                if (c is Minion)
+                                {
+                                    Minion a = (Minion)c;
+                                    lBCrads1.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                                }
+                                else
+                                {
+                                    Spell a = (Spell)c;
+                                    lBCrads1.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                                }
+                            }
+                            int countCards = lines.Length - next - 2;
+                            lOffCard1.Text = "Cards: " + countCards.ToString();
+                            lHeroEnergy.Text = "Energy: " + lines[lines.Length - 1];
+                        });
+                    }
                 }
 
                 if (lines[0] == "DYour step")
@@ -381,38 +382,41 @@ namespace Client_v0._1._0
                         bStep.Enabled = false;
                     });
                     int next = 0;
-                    for (int i1 = 0; i1 < lines.Length; i1++)
+                    if (lines.Length > 2)
                     {
-                        if (lines[i1] == "next")
-                            next = i1;
-                    }
-                    Enemy.CardsInMyHand.Clear();
-                    for (int i1 = 1; i1 < next; i1++)
-                    {
-                        if (lines[i1][2] == 'H')
-                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                        else
-                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
-                    }
-                    this.Invoke((MethodInvoker)delegate ()
-                    {
-                        lBCards2.Items.Clear();
-                        foreach (Card c in Enemy.CardsInMyHand)
+                        for (int i1 = 0; i1 < lines.Length; i1++)
                         {
-                            if (c is Minion)
-                            {
-                                Minion a = (Minion)c;
-                                lBCards2.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
-                            }
-                            else
-                            {
-                                Spell a = (Spell)c;
-                                lBCards2.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
-                            }
+                            if (lines[i1] == "next")
+                                next = i1;
                         }
-                        int countCards = lines.Length - next - 2;
-                        lOffCard2.Text = "Cards: " + countCards.ToString();
-                    });
+                        Enemy.CardsInMyHand.Clear();
+                        for (int i1 = 1; i1 < next; i1++)
+                        {
+                            if (lines[i1][2] == 'H')
+                                Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
+                            else
+                                Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                        }
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+                            lBCards2.Items.Clear();
+                            foreach (Card c in Enemy.CardsInMyHand)
+                            {
+                                if (c is Minion)
+                                {
+                                    Minion a = (Minion)c;
+                                    lBCards2.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                                }
+                                else
+                                {
+                                    Spell a = (Spell)c;
+                                    lBCards2.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                                }
+                            }
+                            int countCards = lines.Length - next - 2;
+                            lOffCard2.Text = "Cards: " + countCards.ToString();
+                        });
+                    }
                 }
 
                 if (responseData[0] == 'A')
@@ -504,6 +508,10 @@ namespace Client_v0._1._0
                 }
 
                 if (responseData == "Not enough energy.")
+                {
+                    this.Invoke((MethodInvoker)delegate () { MessageBox.Show(responseData); });
+                }
+                if (responseData == "Bord is full.")
                 {
                     this.Invoke((MethodInvoker)delegate () { MessageBox.Show(responseData); });
                 }
