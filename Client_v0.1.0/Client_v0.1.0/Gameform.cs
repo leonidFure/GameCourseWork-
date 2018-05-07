@@ -67,15 +67,21 @@ namespace Client_v0._1._0
                     if (carde.BackColor == Color.Gray)
                     {
                         foreach (Control c in YourPanel.Controls)
+                        {
                             c.BackColor = Color.Gray;
+                            c.BackgroundImage = Picture.Card;
+                        }  
                         carde.BackColor = Color.Green;
-                        
+                        carde.BackgroundImage = Picture.SelectedCard;
                         sAttac = carde.Index.ToString()+";";
                     }
                     else
                     {
                         foreach (Control c in YourPanel.Controls)
+                        {
                             c.BackColor = Color.Gray;
+                            c.BackgroundImage = Picture.Card;
+                        }
                         bSelectedCard = false;
 
                     }
@@ -97,13 +103,20 @@ namespace Client_v0._1._0
                         {
                             foreach (Control c in YourPanel.Controls)
                                 if (c.Tag == "Enemy")
+                                {
                                     c.BackColor = Color.Gray;
-                            carde.BackColor = Color.Red;
-                            
+                                    c.BackgroundImage = Picture.Card;
+                                }
+                            carde.BackColor = Color.Green;
+                            carde.BackgroundImage = Picture.SelectedCard;
+
                             sAttac += carde.EnIndex.ToString();
                         }
                         else
+                        {
                             carde.BackColor = Color.Gray;
+                            carde.BackgroundImage = Picture.Card;
+                        }
                     }));
                     Byte[] data = System.Text.Encoding.ASCII.GetBytes(sAttac);
                     sAttac = "";
@@ -129,26 +142,10 @@ namespace Client_v0._1._0
                     string a;
                     a = e.Data.GetData(DataFormats.Text).ToString();
                     int count = lBCrads1.SelectedIndex;
-                    Carde c = new Carde();
-                    c.Location = new Point(cardX, 400);
-                    c.Size = new Size(114, 163);
-                    if (You.CardsInMyHand[count] is Minion)
-                    {
-                        Minion m = (Minion)You.CardsInMyHand[count];
-                        c.Namee = m.Name;
-                        c.Damage = m.Damage;
-                        c.Health = m.Health;
-                        c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
-                        c.Index = CountCarde;
-                        c.EnIndex = -1;
-                        CountCarde++;
-                        You.MyCardsOnBord.Add(m);
-                        YourPanel.Controls.Add(c);
-                        c.Click += new System.EventHandler(this.MouseClickNew);
-                        cardX += 125;
-                        Thread clientThread = new Thread(new ParameterizedThreadStart(DropCard));
-                        clientThread.Start(count);
-                    }
+                    
+                    
+                    Thread clientThread = new Thread(new ParameterizedThreadStart(DropCard));
+                    clientThread.Start(count);
                 }
             }
         }
@@ -288,11 +285,12 @@ namespace Client_v0._1._0
                     }
                     this.Invoke((MethodInvoker)delegate ()
                     {
-                        Carde c = new Carde();
-                        c.Location = new Point(cardX2, 50);
-                        if (Enemy.MyCardsOnBord[Enemy.MyCardsOnBord.Count - 1] is Minion)
+                        Carde c = new Carde
                         {
-                            Minion m = (Minion)Enemy.MyCardsOnBord[Enemy.MyCardsOnBord.Count - 1];
+                            Location = new Point(cardX2, 50)
+                        };
+                        if (Enemy.MyCardsOnBord[Enemy.MyCardsOnBord.Count - 1] is Minion m)
+                        {
                             c.Namee = m.Name;
                             c.Damage = m.Damage;
                             c.Health = m.Health;
@@ -369,8 +367,9 @@ namespace Client_v0._1._0
                                 lBCrads1.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
                             }
                         }
-                        int countCards = lines.Length - next - 1;
+                        int countCards = lines.Length - next - 2;
                         lOffCard1.Text = "Cards: " + countCards.ToString();
+                        lHeroEnergy.Text = "Energy: " + lines[lines.Length - 1];
                     });
                 }
 
@@ -411,7 +410,7 @@ namespace Client_v0._1._0
                                 lBCards2.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
                             }
                         }
-                        int countCards = lines.Length - next - 1;
+                        int countCards = lines.Length - next - 2;
                         lOffCard2.Text = "Cards: " + countCards.ToString();
                     });
                 }
@@ -443,14 +442,16 @@ namespace Client_v0._1._0
                             for (int j = 0; j < You.MyCardsOnBord.Count; j++)
                             {
                                 Minion m = (Minion)You.MyCardsOnBord[j];
-                                Carde c = new Carde();
-                                c.Location = new Point(cardX, 400);
-                                c.Namee = m.Name;
-                                c.Damage = m.Damage;
-                                c.Health = m.Health;
-                                c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
-                                c.Index = j;
-                                c.EnIndex = -1;
+                                Carde c = new Carde
+                                {
+                                    Location = new Point(cardX, 400),
+                                    Namee = m.Name,
+                                    Damage = m.Damage,
+                                    Health = m.Health,
+                                    image = (Image)Picture.ResourceManager.GetObject(m.Name),
+                                    Index = j,
+                                    EnIndex = -1
+                                };
                                 YourPanel.Controls.Add(c);
                                 c.Click += new System.EventHandler(this.MouseClickNew);
                                 cardX += 125;
@@ -476,15 +477,17 @@ namespace Client_v0._1._0
                             for (int j = 0; j < Enemy.MyCardsOnBord.Count; j++)
                             {
                                 Minion m = (Minion)Enemy.MyCardsOnBord[j];
-                                Carde c = new Carde();
-                                c.Location = new Point(cardX2, 50);
-                                c.Namee = m.Name;
-                                c.Damage = m.Damage;
-                                c.Health = m.Health;
-                                c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
-                                c.Index = -1;
-                                c.EnIndex = j;
-                                c.Tag = "Enemy";
+                                Carde c = new Carde
+                                {
+                                    Location = new Point(cardX2, 50),
+                                    Namee = m.Name,
+                                    Damage = m.Damage,
+                                    Health = m.Health,
+                                    image = (Image)Picture.ResourceManager.GetObject(m.Name),
+                                    Index = -1,
+                                    EnIndex = j,
+                                    Tag = "Enemy"
+                                };
                                 YourPanel.Controls.Add(c);
                                 c.Click += new System.EventHandler(this.MouseEnemyClickNew);
                                 cardX2 += 125;
@@ -495,12 +498,12 @@ namespace Client_v0._1._0
                     else { CountEnemyCarde = 0; cardX2 = 11; }
                 }
 
-                if (responseData == "Card can not attack")
+                if (responseData == "Card can not attack.")
                 {
                     this.Invoke((MethodInvoker)delegate () { MessageBox.Show(responseData); });
                 }
 
-                if (responseData == "Exeption have not mana")
+                if (responseData == "Not enough energy.")
                 {
                     this.Invoke((MethodInvoker)delegate () { MessageBox.Show(responseData); });
                 }
@@ -508,15 +511,36 @@ namespace Client_v0._1._0
                 if (lines[0][0] == 'H')
                 {
                     You.CardsInMyHand.Clear();
-                    for (int i1 = 1; i1 < lines.Length; i1++)
+                    for (int i1 = 2; i1 < lines.Length-1; i1++)
                     {
                         if (lines[i1][2] == 'H')
                             You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
                         else
                             You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
                     }
+                    You.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(lines[1]));
                     this.Invoke((MethodInvoker)delegate ()
                     {
+                        
+                        if (You.MyCardsOnBord[You.MyCardsOnBord.Count-1] is Minion m)
+                        {
+                            Carde c = new Carde
+                            {
+                                Location = new Point(cardX, 400),
+                                Size = new Size(114, 163),
+                                Namee = m.Name,
+                                Damage = m.Damage,
+                                Health = m.Health,
+                                image = (Image)Picture.ResourceManager.GetObject(m.Name),
+                                Index = CountCarde,
+                                EnIndex = -1
+                            };
+                            CountCarde++;
+                            YourPanel.Controls.Add(c);
+                            c.Click += new System.EventHandler(this.MouseClickNew);
+                            cardX += 125;
+                            lHeroEnergy.Text = "Energy: " + lines[lines.Length - 1];
+                        }
                         lBCrads1.Items.Clear();
                         foreach (Card c in You.CardsInMyHand)
                         {

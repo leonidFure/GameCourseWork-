@@ -39,6 +39,7 @@ namespace Server_v0._1._0
     }
     public class Game
     {
+        int mana1=1 , mana2 = 1;
         List<Card> deckPlayer1 = new List<Card>();
         List<Card> deckPlayer2 = new List<Card>();
         List<Card> deckPlayer1InHand = new List<Card>();
@@ -54,8 +55,6 @@ namespace Server_v0._1._0
         }
         public void Process()
         {
-
-
             NetworkStream stream1 = null;
             NetworkStream stream2 = null;
             try
@@ -162,8 +161,8 @@ namespace Server_v0._1._0
                         stream1.Write(msg, 0, msg.Length);
                         msg = System.Text.Encoding.ASCII.GetBytes(mes2);
                         stream2.Write(msg, 0, msg.Length);
-                        int _mana1 = 1, _mana2 = 1;
-                        Step(stream1, stream2, deckPlayer1InHand, deckPlayer2InHand,deckPlayer1OnBord,deckPlayer2OnBord,deckPlayer1,deckPlayer2);
+                        int curMana = 1;
+                        Step(stream1, stream2, deckPlayer1InHand, deckPlayer2InHand,deckPlayer1OnBord,deckPlayer2OnBord,deckPlayer1,deckPlayer2,mana1,mana2,curMana);
                     }
                 }
             }   
@@ -173,7 +172,6 @@ namespace Server_v0._1._0
             }
             finally
             {
-                
                 client1.Close();
                 client2.Close();
                 stream1.Close();
@@ -183,7 +181,7 @@ namespace Server_v0._1._0
             Console.Read();
         }
         
-        public void Step(NetworkStream stream1, NetworkStream stream2, List<Card> cards1, List<Card> cards2, List<Card> cardsbord1, List<Card> cardsbord2, List<Card> allCards1, List<Card> allCards2)
+        public void Step(NetworkStream stream1, NetworkStream stream2, List<Card> cards1, List<Card> cards2, List<Card> cardsbord1, List<Card> cardsbord2, List<Card> allCards1, List<Card> allCards2, int mana1,int mana2, int curMana)
         {
 
             int count1, count2;
@@ -193,47 +191,59 @@ namespace Server_v0._1._0
             {
                 String data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
                 #region  drop card on the bord
+                
                 if (int.TryParse(data, out count1))
                 {
-                    String mes = "";
-                    String mes2 = "";
-                    if (cards1[count1] is Minion)
+                    
+                    if (curMana >= cards1[count1].Cost)
                     {
-                        Minion minion = (Minion)cards1[count1];
-                        cardsbord1.Add(new Minion(minion.Name, minion.Cost, minion.Health, minion.Damage));
-                        mes = JsonConvert.SerializeObject((Minion)cardsbord1[cardsbord1.Count - 1]);
+                        curMana -= cards1[count1].Cost;
+                        String mes = "";
+                        String mes2 = "Hand;";
+                        if (cards1[count1] is Minion minion)
+                        {
+                            cardsbord1.Add(new Minion(minion.Name, minion.Cost, minion.Health, minion.Damage));
+                            mes = JsonConvert.SerializeObject((Minion)cardsbord1[cardsbord1.Count - 1]);
+                            mes2 += JsonConvert.SerializeObject((Minion)cardsbord1[cardsbord1.Count - 1]);
+                        }
+                        else
+                        {
+                            Spell spell = (Spell)cards1[count1];
+                            cardsbord1.Add(new Spell(spell.Name, spell.Cost, spell.MagicDamage));
+                            mes = JsonConvert.SerializeObject((Spell)cardsbord1[cardsbord1.Count - 1]);
+                            mes2 += JsonConvert.SerializeObject((Spell)cardsbord1[cardsbord1.Count - 1]);
+                        }
+                        cards1.RemoveAt(count1);
+                        foreach (Card c in cards1)
+                        {
+                            mes += ';';
+                            if (c is Minion)
+                                mes += JsonConvert.SerializeObject((Minion)c);
+                            else
+                                mes += JsonConvert.SerializeObject((Spell)c);
+
+                        }
+
+                        foreach (Card c in cards1)
+                        {
+                            mes2 += ';';
+                            if (c is Minion)
+                                mes2 += JsonConvert.SerializeObject((Minion)c);
+                            else
+                                mes2 += JsonConvert.SerializeObject((Spell)c);
+                        }
+                        mes2 += ';' + curMana.ToString();
+                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(mes);
+                        stream2.Write(msg, 0, msg.Length);
+                        msg = System.Text.Encoding.ASCII.GetBytes(mes2);
+                        stream1.Write(msg, 0, msg.Length);
                     }
                     else
                     {
-                        Spell spell = (Spell)cards1[count1];
-                        cardsbord1.Add(new Spell(spell.Name, spell.Cost, spell.MagicDamage));
-                        mes = JsonConvert.SerializeObject((Spell)cardsbord1[cardsbord1.Count - 1]);
+                        byte[] msg = System.Text.Encoding.ASCII.GetBytes("Not enough energy.");
+                        stream1.Write(msg, 0, msg.Length);
                     }
-                    cards1.RemoveAt(count1);
-                    foreach (Card c in cards1)
-                    {
-                        mes += ';';
-                        if (c is Minion)
-                            mes += JsonConvert.SerializeObject((Minion)c);
-                        else
-                            mes += JsonConvert.SerializeObject((Spell)c);
-
-                    }
-                    mes2 = "Hand";
-                    foreach (Card c in cards1)
-                    {
-                        mes2 += ';';
-                        if (c is Minion)
-                            mes2 += JsonConvert.SerializeObject((Minion)c);
-                        else
-                            mes2 += JsonConvert.SerializeObject((Spell)c);
-
-                    }
-                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(mes);
-                    stream2.Write(msg, 0, msg.Length);
-                    msg = System.Text.Encoding.ASCII.GetBytes(mes2);
-                    stream1.Write(msg, 0, msg.Length);
-                    Step(stream1, stream2, cards1, cards2, cardsbord1, cardsbord2,allCards1,allCards2);
+                    Step(stream1, stream2, cards1, cards2, cardsbord1, cardsbord2,allCards1,allCards2, mana1, mana2,curMana);
                 }
                 #endregion
                 else
@@ -249,7 +259,7 @@ namespace Server_v0._1._0
                         cards2.Add(deckPlayer2[b]);
                         allCards2.RemoveAt(b);
                         String mes = "";
-
+                        if(mana1<=10) mana1++;
                         if (deckPlayer2.Count>0)
                         {
                             foreach (Card c in cards2)
@@ -271,12 +281,15 @@ namespace Server_v0._1._0
                                     mes += JsonConvert.SerializeObject((Spell)c);
 
                             }
-                            byte[] msg = System.Text.Encoding.ASCII.GetBytes("Your step" + mes);
+
+                            mes += ';' + mana1.ToString();
+                            curMana = mana1;
+                            byte[] msg = System.Text.Encoding.ASCII.GetBytes("Your step" + mes );
                             stream2.Write(msg, 0, msg.Length);
                             msg = System.Text.Encoding.ASCII.GetBytes("DYour step" + mes);
                             stream1.Write(msg, 0, msg.Length);
                         }
-                        Step(stream2, stream1, cards2, cards1, cardsbord2, cardsbord1,allCards2,allCards1);
+                        Step(stream2, stream1, cards2, cards1, cardsbord2, cardsbord1,allCards2,allCards1, mana2, mana1,curMana);
                     }
                     else
                     {
@@ -351,10 +364,10 @@ namespace Server_v0._1._0
                         }
                         else
                         {
-                            msg = System.Text.Encoding.ASCII.GetBytes("Card can not attack");
+                            msg = System.Text.Encoding.ASCII.GetBytes("Card can not attack.");
                             stream1.Write(msg, 0, msg.Length);
                         }
-                        Step(stream1, stream2, cards1, cards2, cardsbord1, cardsbord2,allCards1,allCards2);
+                        Step(stream1, stream2, cards1, cards2, cardsbord1, cardsbord2,allCards1,allCards2, mana1, mana2,curMana);
                     }
                 }
             }

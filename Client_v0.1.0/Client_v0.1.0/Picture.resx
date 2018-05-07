@@ -133,9 +133,6 @@
   <data name="Chip" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resurses\2_chip.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DecSetting" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>resurses\decsetting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Earthworm_Jim" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resurses\chervyakdzhim.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -162,6 +159,9 @@
   </data>
   <data name="Scorpion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resurses\skorpion.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SelectedCard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resurses\selectedcard.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Sonic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resurses\sonik.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -113,16 +113,6 @@ namespace Client_v0._1._0 {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap DecSetting {
-            get {
-                object obj = ResourceManager.GetObject("DecSetting", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Earthworm_Jim {
             get {
                 object obj = ResourceManager.GetObject("Earthworm_Jim", resourceCulture);
@@ -206,6 +196,16 @@ namespace Client_v0._1._0 {
         internal static System.Drawing.Bitmap Scorpion {
             get {
                 object obj = ResourceManager.GetObject("Scorpion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SelectedCard {
+            get {
+                object obj = ResourceManager.GetObject("SelectedCard", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
