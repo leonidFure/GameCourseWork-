@@ -47,7 +47,7 @@
             this.YourPanel.Location = new System.Drawing.Point(12, 65);
             this.YourPanel.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.YourPanel.Name = "YourPanel";
-            this.YourPanel.Size = new System.Drawing.Size(886, 611);
+            this.YourPanel.Size = new System.Drawing.Size(886, 610);
             this.YourPanel.TabIndex = 0;
             this.YourPanel.Click += new System.EventHandler(this.YourPanel_Click);
             this.YourPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.YourPanel_DragDrop);

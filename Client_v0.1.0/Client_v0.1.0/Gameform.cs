@@ -285,7 +285,7 @@ namespace Client_v0._1._0
                     {
                         Carde c = new Carde
                         {
-                            Location = new Point(cardX2, 50)
+                            Location = new Point(cardX2, 117)
                         };
                         if (Enemy.MyCardsOnBord[Enemy.MyCardsOnBord.Count - 1] is Minion m)
                         {
@@ -448,7 +448,7 @@ namespace Client_v0._1._0
                                 Minion m = (Minion)You.MyCardsOnBord[j];
                                 Carde c = new Carde
                                 {
-                                    Location = new Point(cardX, 400),
+                                    Location = new Point(cardX, 330),
                                     Namee = m.Name,
                                     Damage = m.Damage,
                                     Health = m.Health,
@@ -483,7 +483,7 @@ namespace Client_v0._1._0
                                 Minion m = (Minion)Enemy.MyCardsOnBord[j];
                                 Carde c = new Carde
                                 {
-                                    Location = new Point(cardX2, 50),
+                                    Location = new Point(cardX2, 117),
                                     Namee = m.Name,
                                     Damage = m.Damage,
                                     Health = m.Health,
@@ -534,7 +534,7 @@ namespace Client_v0._1._0
                         {
                             Carde c = new Carde
                             {
-                                Location = new Point(cardX, 400),
+                                Location = new Point(cardX, 330),
                                 Size = new Size(114, 163),
                                 Namee = m.Name,
                                 Damage = m.Damage,
