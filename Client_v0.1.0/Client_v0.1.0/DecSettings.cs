@@ -98,6 +98,7 @@ namespace Client_v0._1._0
         {
             this.Visible = false;
             _m.Visible = true;
+
         }
 
         private void DecSettings_Load(object sender, EventArgs e)
