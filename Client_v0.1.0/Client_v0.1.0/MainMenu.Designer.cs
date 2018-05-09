@@ -36,6 +36,8 @@
             this.lGreeting = new System.Windows.Forms.Label();
             this.cBSetdecks = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.labelHero = new System.Windows.Forms.Label();
+            this.comboBoxHeros = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // bPlay
@@ -117,11 +119,37 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Deck:";
             // 
+            // labelHero
+            // 
+            this.labelHero.AutoSize = true;
+            this.labelHero.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelHero.Location = new System.Drawing.Point(468, 368);
+            this.labelHero.Name = "labelHero";
+            this.labelHero.Size = new System.Drawing.Size(57, 24);
+            this.labelHero.TabIndex = 10;
+            this.labelHero.Text = "Hero:";
+            // 
+            // comboBoxHeros
+            // 
+            this.comboBoxHeros.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBoxHeros.FormattingEnabled = true;
+            this.comboBoxHeros.Items.AddRange(new object[] {
+            "Mage",
+            "Blue_Virus",
+            "CN27",
+            "Plane"});
+            this.comboBoxHeros.Location = new System.Drawing.Point(532, 365);
+            this.comboBoxHeros.Name = "comboBoxHeros";
+            this.comboBoxHeros.Size = new System.Drawing.Size(148, 32);
+            this.comboBoxHeros.TabIndex = 9;
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(692, 439);
+            this.Controls.Add(this.labelHero);
+            this.Controls.Add(this.comboBoxHeros);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cBSetdecks);
             this.Controls.Add(this.lGreeting);
@@ -149,5 +177,7 @@
         private System.Windows.Forms.Label lGreeting;
         private System.Windows.Forms.ComboBox cBSetdecks;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelHero;
+        private System.Windows.Forms.ComboBox comboBoxHeros;
     }
 }

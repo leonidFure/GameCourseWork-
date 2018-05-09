@@ -72,8 +72,13 @@ namespace Server_v0._1._0
                     data2 = null;
                     int i1;
                     int i2;
-                    msg1 = System.Text.Encoding.ASCII.GetBytes(player1.Health.ToString());
-                    msg2 = System.Text.Encoding.ASCII.GetBytes(player1.Health.ToString());
+                    i1 = stream1.Read(bytes1, 0, bytes1.Length);
+                    i2 = stream2.Read(bytes2, 0, bytes2.Length);
+                    data1 = System.Text.Encoding.ASCII.GetString(bytes1, 0, i1);
+                    data2 = System.Text.Encoding.ASCII.GetString(bytes2, 0, i2);
+                    //добавить отправку хп противника
+                    msg1 = System.Text.Encoding.ASCII.GetBytes(player1.Health.ToString()+';'+data1+';'+data2);
+                    msg2 = System.Text.Encoding.ASCII.GetBytes(player2.Health.ToString() + ';' + data2 + ';' + data1);
                     stream1.Write(msg1, 0, msg1.Length);
                     stream2.Write(msg2, 0, msg2.Length);
                     while ((i1 = stream1.Read(bytes1, 0, bytes1.Length)) != 0 && (i2 = stream2.Read(bytes2, 0, bytes2.Length)) != 0)
@@ -231,6 +236,7 @@ namespace Server_v0._1._0
                                 else
                                     mes2 += JsonConvert.SerializeObject((Spell)c);
                             }
+                            // curMana так же должен получать и второй стрим(mes+=...)
                             mes2 += ';' + curMana.ToString();
                             byte[] msg = System.Text.Encoding.ASCII.GetBytes(mes);
                             stream2.Write(msg, 0, msg.Length);

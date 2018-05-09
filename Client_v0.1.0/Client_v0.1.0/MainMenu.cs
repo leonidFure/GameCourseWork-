@@ -49,7 +49,7 @@ namespace Client_v0._1._0
         {
             if (cBSetdecks.SelectedIndex!=-1)
             { 
-                Gameform gf = new Gameform(cBSetdecks.Text);
+                Gameform gf = new Gameform(cBSetdecks.Text,comboBoxHeros.Text);
                 gf.Show();
                 this.Hide();
             }

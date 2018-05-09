@@ -83,6 +83,16 @@ namespace Client_v0._1._0 {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Blue_Virus {
+            get {
+                object obj = ResourceManager.GetObject("Blue_Virus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Bugs_Bunny {
             get {
                 object obj = ResourceManager.GetObject("Bugs_Bunny", resourceCulture);
@@ -106,6 +116,16 @@ namespace Client_v0._1._0 {
         internal static System.Drawing.Bitmap Chip {
             get {
                 object obj = ResourceManager.GetObject("Chip", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CN27 {
+            get {
+                object obj = ResourceManager.GetObject("CN27", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,6 +163,16 @@ namespace Client_v0._1._0 {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Mage {
+            get {
+                object obj = ResourceManager.GetObject("Mage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Michael_Jackson {
             get {
                 object obj = ResourceManager.GetObject("Michael_Jackson", resourceCulture);
@@ -156,6 +186,26 @@ namespace Client_v0._1._0 {
         internal static System.Drawing.Bitmap Obelix {
             get {
                 object obj = ResourceManager.GetObject("Obelix", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Plane {
+            get {
+                object obj = ResourceManager.GetObject("Plane", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Player {
+            get {
+                object obj = ResourceManager.GetObject("Player", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

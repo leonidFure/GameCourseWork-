@@ -32,11 +32,12 @@ namespace Client_v0._1._0
         Player You = new Player(0, 30, 0, "Maxurik");
         Player Enemy = new Player(0, 30, 0, "Lewa");
         int cardX = 11,cardX2=11;
-        string path;
-        public Gameform(string path)
+        string path, hero;
+        public Gameform(string path, string hero)
         {
             InitializeComponent();
             this.path = path;
+            this.hero = hero;
         }
         
         private void bStep_Click(object sender, EventArgs e)
@@ -170,12 +171,22 @@ namespace Client_v0._1._0
         {
             try
             {
+
+                Byte[] data = System.Text.Encoding.ASCII.GetBytes(hero);
+
+                stream.Write(data, 0, data.Length);
                 int i;
                 Int32 bytes = stream.Read(d, 0, d.Length);
                 responseData = System.Text.Encoding.ASCII.GetString(d, 0, bytes);
+                string[] vs = responseData.Split(';');
+                //
+                //здесь добавить отображение хп противника
+                //
                 this.Invoke((MethodInvoker)delegate ()
                 {
-                    this.lHeroHeath.Text = "Health: " + responseData;
+                    this.userPlayer1.Health =int.Parse(vs[0]);
+                    this.userPlayer1.HeroImage = (Image)Picture.ResourceManager.GetObject(vs[1]);
+                    this.userPlayer2.HeroImage = (Image)Picture.ResourceManager.GetObject(vs[2]);
                 });
                 string message;
                 JsonSerializer serializer = new JsonSerializer();
@@ -183,7 +194,7 @@ namespace Client_v0._1._0
                 {
                     message = file.ReadLine();
                 }
-                Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
+                data = System.Text.Encoding.ASCII.GetBytes(message);
                 
                 stream.Write(data, 0, data.Length);
                 
@@ -271,6 +282,7 @@ namespace Client_v0._1._0
                 string[] lines = responseData.Split(';');
                 if (responseData[0] =='{' )
                 {
+                    // добавить изменение енергии после сбрасывания карты на стол(изменения также должны быть на сервере)
                     if (lines[0][2] == 'H')
                     {
                         Minion minion = JsonConvert.DeserializeObject<Minion>(lines[0]);
@@ -369,7 +381,7 @@ namespace Client_v0._1._0
                             }
                             int countCards = lines.Length - next - 2;
                             lOffCard1.Text = "Cards: " + countCards.ToString();
-                            lHeroEnergy.Text = "Energy: " + lines[lines.Length - 1];
+                            userPlayer1.Energy = int.Parse(lines[lines.Length - 1]);
                         });
                     }
                 }
@@ -475,6 +487,7 @@ namespace Client_v0._1._0
                             else
                                 Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
                         }
+                        
                         this.Invoke((MethodInvoker)delegate ()
                         {
                             cardX2 = 11;
@@ -547,7 +560,7 @@ namespace Client_v0._1._0
                             YourPanel.Controls.Add(c);
                             c.Click += new System.EventHandler(this.MouseClickNew);
                             cardX += 125;
-                            lHeroEnergy.Text = "Energy: " + lines[lines.Length - 1];
+                            userPlayer1.Energy = int.Parse(lines[lines.Length - 1]);
                         }
                         lBCrads1.Items.Clear();
                         foreach (Card c in You.CardsInMyHand)

@@ -103,6 +103,12 @@
     <Compile Include="Spell.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UserPlayer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserPlayer.Designer.cs">
+      <DependentUpon>UserPlayer.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Carde.resx">
       <DependentUpon>Carde.cs</DependentUpon>
     </EmbeddedResource>
@@ -135,6 +141,9 @@
     <EmbeddedResource Include="SaveForm.resx">
       <DependentUpon>SaveForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserPlayer.resx">
+      <DependentUpon>UserPlayer.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Fonts\8-BIT WONDER.TTF" />
     <None Include="Fonts\bitout.fon" />
     <None Include="Fonts\PixelFont.ttf" />
@@ -161,14 +170,19 @@
     <Content Include="Resurses\Damage.png" />
     <Content Include="Resurses\DecSetting.png" />
     <Content Include="Resurses\Ecco_the_Dolphin.jpg" />
+    <Content Include="Resurses\ferst_khiro.jpg" />
+    <Content Include="Resurses\for_khiro.jpg" />
     <Content Include="Resurses\knakls.jpg" />
     <Content Include="Resurses\MayklDzhexon.jpg" />
     <Content Include="Resurses\obelix.jpg" />
+    <Content Include="Resurses\Player.png" />
     <Content Include="Resurses\RedChel.jpg" />
     <Content Include="Resurses\Robokop.jpg" />
+    <Content Include="Resurses\sekond_khiro.jpg" />
     <Content Include="Resurses\SelectedCard.png" />
     <Content Include="Resurses\Skorpion.jpg" />
     <Content Include="Resurses\Sonik.jpg" />
+    <Content Include="Resurses\tkhred_khiro.jpg" />
     <Content Include="Resurses\Vectorman.jpg" />
     <Content Include="Resurses\ZheltyRenzher.jpg" />
   </ItemGroup>
