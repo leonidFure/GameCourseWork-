@@ -56,7 +56,7 @@ namespace Client_v0._1._0
             }
         }
 
-        public void MouseClickNew(object sender, EventArgs e)
+        public void MouseClickNew(object sender, EventArgs e)///dwd
         {
             if (sStep == true)
             {
