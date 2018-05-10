@@ -78,6 +78,7 @@ namespace Client_v0._1._0
                         carde.BackColor = Color.Green;
                         carde.BackgroundImage = Picture.SelectedCard;
                         sAttac = carde.Index.ToString()+";";
+                        bSelectedCard = true;
                     }
                     else
                     {
@@ -93,7 +94,7 @@ namespace Client_v0._1._0
 
                     }
                 }));
-                bSelectedCard = true;
+                
             }
         }
 
@@ -106,24 +107,15 @@ namespace Client_v0._1._0
                     Invoke(new MethodInvoker(delegate ()
                     {
                         Carde carde = (Carde)sender;
-                        if (carde.BackColor == Color.Gray)
+                        foreach (Control c in YourPanel.Controls)
                         {
-                            foreach (Control c in YourPanel.Controls)
-                                if (c.Tag == "Enemy")
-                                {
-                                    c.BackColor = Color.Gray;
-                                    c.BackgroundImage = Picture.Card;
-                                }
-                            carde.BackColor = Color.Green;
-                            carde.BackgroundImage = Picture.SelectedCard;
+                            c.BackColor = Color.Gray;
+                            c.BackgroundImage = Picture.Card;
+                        }
+                        bSelectedCard = false;
+                        sAttac += carde.EnIndex.ToString();
 
-                            sAttac += carde.EnIndex.ToString();
-                        }
-                        else
-                        {
-                            carde.BackColor = Color.Gray;
-                            carde.BackgroundImage = Picture.Card;
-                        }
+
                     }));
                     Byte[] data = System.Text.Encoding.ASCII.GetBytes(sAttac);
                     sAttac = "";
@@ -453,6 +445,7 @@ namespace Client_v0._1._0
                     this.Invoke((MethodInvoker)delegate () 
                     {
                         YourPanel.Controls.Clear();
+                            
                     });
                     if (n != 1)
                     {
@@ -595,7 +588,17 @@ namespace Client_v0._1._0
 
         private void userPlayer2_Click(object sender, EventArgs e)
         {
-
+            if (bSelectedCard)
+            {
+                if (sStep == true)
+                {
+                    Invoke(new MethodInvoker(delegate () {sAttac += "Player";} ));
+                    bSelectedCard = false;
+                    Byte[] data = System.Text.Encoding.ASCII.GetBytes(sAttac);
+                    sAttac = "";
+                    stream.Write(data, 0, data.Length);
+                }
+            }
         }
 
         private void YourPanel_Click(object sender, EventArgs e)

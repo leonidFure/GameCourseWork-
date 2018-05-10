@@ -310,6 +310,7 @@ namespace Server_v0._1._0
                         string mes1 = "";
                         string mes2 = "";
                         string[] counts = data.Split(';');
+                        if (int.TryParse(counts[1], out count2)) { }
                         count1 = int.Parse(counts[0]);
                         count2 = int.Parse(counts[1]);
                         Minion m1 = (Minion)player1.MyCardsOnBord[count1];
