@@ -236,8 +236,8 @@ namespace Server_v0._1._0
                                 else
                                     mes2 += JsonConvert.SerializeObject((Spell)c);
                             }
-                            // curMana так же должен получать и второй стрим(mes+=...)
                             mes2 += ';' + curMana.ToString();
+                            mes += ';' + curMana.ToString();
                             byte[] msg = System.Text.Encoding.ASCII.GetBytes(mes);
                             stream2.Write(msg, 0, msg.Length);
                             msg = System.Text.Encoding.ASCII.GetBytes(mes2);

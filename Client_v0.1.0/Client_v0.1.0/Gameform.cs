@@ -69,8 +69,11 @@ namespace Client_v0._1._0
                     {
                         foreach (Control c in YourPanel.Controls)
                         {
-                            c.BackColor = Color.Gray;
-                            c.BackgroundImage = Picture.Card;
+                            if (c is Carde)
+                            {
+                                c.BackColor = Color.Gray;
+                                c.BackgroundImage = Picture.Card;
+                            }
                         }  
                         carde.BackColor = Color.Green;
                         carde.BackgroundImage = Picture.SelectedCard;
@@ -80,8 +83,11 @@ namespace Client_v0._1._0
                     {
                         foreach (Control c in YourPanel.Controls)
                         {
-                            c.BackColor = Color.Gray;
-                            c.BackgroundImage = Picture.Card;
+                            if (c is Carde)
+                            {
+                                c.BackColor = Color.Gray;
+                                c.BackgroundImage = Picture.Card;
+                            }
                         }
                         bSelectedCard = false;
 
@@ -295,26 +301,27 @@ namespace Client_v0._1._0
                     }
                     this.Invoke((MethodInvoker)delegate ()
                     {
-                        Carde c = new Carde
-                        {
-                            Location = new Point(cardX2, 117)
-                        };
-                        if (Enemy.MyCardsOnBord[Enemy.MyCardsOnBord.Count - 1] is Minion m)
-                        {
-                            c.Namee = m.Name;
-                            c.Damage = m.Damage;
-                            c.Health = m.Health;
-                            c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
-                            c.Index = -1;
-                            c.EnIndex = Enemy.MyCardsOnBord.Count - 1;
-                            c.Tag = "Enemy";
-                            YourPanel.Controls.Add(c);
-                            c.Click += new System.EventHandler(this.MouseEnemyClickNew);
-                            cardX2 += 125;
-                        }
+                    Carde c = new Carde
+                    {
+                        Location = new Point(cardX2, 117)
+                    };
+                    if (Enemy.MyCardsOnBord[Enemy.MyCardsOnBord.Count - 1] is Minion m)
+                    {
+                        c.Namee = m.Name;
+                        c.Damage = m.Damage;
+                        c.Health = m.Health;
+                        c.image = (Image)Picture.ResourceManager.GetObject(m.Name);
+                        c.Index = -1;
+                        c.EnIndex = Enemy.MyCardsOnBord.Count - 1;
+                        c.Tag = "Enemy";
+                        YourPanel.Controls.Add(c);
+                        c.Click += new System.EventHandler(this.MouseEnemyClickNew);
+                        cardX2 += 125;
+                    }
+                    userPlayer2.Energy = int.Parse(lines[lines.Length - 1]);
                     });
                     Enemy.CardsInMyHand.Clear();
-                    for (int i1 = 1; i1 < lines.Length; i1++)
+                    for (int i1 = 1; i1 < lines.Length-1; i1++)
                     {
                         if (lines[i1][2] == 'H')
                             Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
@@ -427,6 +434,7 @@ namespace Client_v0._1._0
                             }
                             int countCards = lines.Length - next - 2;
                             lOffCard2.Text = "Cards: " + countCards.ToString();
+                            userPlayer2.Energy = int.Parse(lines[lines.Length - 1]);
                         });
                     }
                 }
@@ -442,7 +450,10 @@ namespace Client_v0._1._0
                         if (lines[i1] == "next")
                             n = i1;
                     }
-                    this.Invoke((MethodInvoker)delegate () { YourPanel.Controls.Clear(); });
+                    this.Invoke((MethodInvoker)delegate () 
+                    {
+                        YourPanel.Controls.Clear();
+                    });
                     if (n != 1)
                     {
                         for (int i1 = 1; i1 < n; i1++)
@@ -580,6 +591,11 @@ namespace Client_v0._1._0
                 }
             }
             Step();
+        }
+
+        private void userPlayer2_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void YourPanel_Click(object sender, EventArgs e)

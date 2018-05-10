@@ -50,9 +50,9 @@
             this.labelEnergy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(148)))), ((int)(((byte)(72)))));
             this.labelEnergy.Location = new System.Drawing.Point(23, 71);
             this.labelEnergy.Name = "labelEnergy";
-            this.labelEnergy.Size = new System.Drawing.Size(19, 13);
+            this.labelEnergy.Size = new System.Drawing.Size(13, 13);
             this.labelEnergy.TabIndex = 1;
-            this.labelEnergy.Text = "11";
+            this.labelEnergy.Text = "1";
             // 
             // labelHealth
             // 
@@ -62,7 +62,7 @@
             this.labelHealth.Name = "labelHealth";
             this.labelHealth.Size = new System.Drawing.Size(19, 13);
             this.labelHealth.TabIndex = 2;
-            this.labelHealth.Text = "11";
+            this.labelHealth.Text = "30";
             this.labelHealth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UserPlayer
