@@ -147,7 +147,10 @@ namespace Client_v0._1._0
                 }
             }
         }
-        
+
+        UserPlayer userPlayer1;
+        UserPlayer userPlayer2;
+
         private void Gameform_Load(object sender, EventArgs e)
         {
             Thread clientThread = new Thread(new ThreadStart(Connect));
@@ -155,7 +158,25 @@ namespace Client_v0._1._0
             this.ControlBox = false;
             List<Card> MyDeck = new List<Card>();
             bStep.Enabled = false;
-            
+
+            userPlayer1 = new UserPlayer
+            {
+                Location = new Point(393, 510),
+                Health = You.Health,
+                Energy = You.Energy,
+                Size = new Size(100,100)
+            };
+            YourPanel.Controls.Add(userPlayer1);
+
+            userPlayer2 = new UserPlayer
+            {
+                Location = new Point(393,0),
+                Health = Enemy.Health,
+                Energy = Enemy.Energy,
+                Size = new Size(100, 100)
+            };
+            YourPanel.Controls.Add(userPlayer2);
+            userPlayer2.Click += new System.EventHandler(this.userPlayer2Click);
         }
         
 
@@ -589,7 +610,7 @@ namespace Client_v0._1._0
             Step();
         }
 
-        private void userPlayer2_Click(object sender, EventArgs e)
+        private void userPlayer2Click(object sender, EventArgs e)
         {
             if (bSelectedCard)
             {

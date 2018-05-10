@@ -6,7 +6,7 @@ namespace Client_v0._1._0
 {
     class Player
     {
-        int damage;
+        int energy;
         int armor;
         int health;
         string name;
@@ -15,15 +15,15 @@ namespace Client_v0._1._0
         List<Card> cardsInMyHand = new List<Card>();
         List<Card> myCardsOnBord = new List<Card>();
 
-        public Player(int damage, int health, int armor, string name) 
+        public Player(int energy, int health, int armor, string name) 
         {
             this.armor = armor;
-            this.damage = damage;
+            this.energy = energy;
             this.health = health;
             this.name = name;
         }
 
-        public int Damage { get => damage; set => damage = value; }
+        public int Energy { get => energy; set => energy = value; }
         public int Armor { get => armor; set => armor = value; }
         public int Health { get => health; set => health = value; }
         public List<Card> MyDeck { get => myDeck; set => myDeck = value; }

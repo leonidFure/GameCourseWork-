@@ -40,7 +40,7 @@ namespace Client_v0._1._0
             get { return int.Parse(labelHealth.Text); }
             set { labelHealth.Text = value.ToString(); }
         }
-
+        
         public int Energy
         {
             get { return int.Parse(labelEnergy.Text); }

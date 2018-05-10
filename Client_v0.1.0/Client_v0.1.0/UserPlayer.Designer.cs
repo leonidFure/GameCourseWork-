@@ -67,8 +67,8 @@
             // 
             // UserPlayer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoSize = true;
             this.BackgroundImage = global::Client_v0._1._0.Picture.Player;
             this.Controls.Add(this.labelHealth);
             this.Controls.Add(this.labelEnergy);

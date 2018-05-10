@@ -197,7 +197,7 @@ namespace Server_v0._1._0
                 if (int.TryParse(data, out count1))
                 {
 
-                    if (player2.MyCardsOnBord.Count <= 7)
+                    if (player1.MyCardsOnBord.Count <= 7)
                     {
                         if (curMana >= player1.CardsInMyHand[count1].Cost)
                         {
@@ -392,14 +392,14 @@ namespace Server_v0._1._0
                                 player2.Health -= m1.Damage;
                                 
                                 m1.CanAttack = false;
-                                mes1 += "AttacPlayer;";
-                                mes2 += "AttacPlayer;";
+                                mes1 = "AttacPlayer;";
+                                mes2 = "AttacPlayer;";
 
-                                mes1 = JsonConvert.SerializeObject(player1);
+                                mes1 += JsonConvert.SerializeObject(player1);
                                 mes1 += ";";
                                 mes1 += JsonConvert.SerializeObject(player2);
 
-                                mes2 = JsonConvert.SerializeObject(player2);
+                                mes2 += JsonConvert.SerializeObject(player2);
                                 mes2 += ";";
                                 mes2 += JsonConvert.SerializeObject(player1);
 

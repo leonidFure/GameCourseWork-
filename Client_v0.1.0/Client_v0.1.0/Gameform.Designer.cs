@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Gameform));
             this.YourPanel = new System.Windows.Forms.Panel();
             this.lOffCard2 = new System.Windows.Forms.Label();
             this.lOffCard1 = new System.Windows.Forms.Label();
@@ -38,9 +37,6 @@
             this.lHeroEnergy = new System.Windows.Forms.Label();
             this.bStep = new System.Windows.Forms.Button();
             this.bExit = new System.Windows.Forms.Button();
-            this.userPlayer1 = new Client_v0._1._0.UserPlayer();
-            this.userPlayer2 = new Client_v0._1._0.UserPlayer();
-            this.YourPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // YourPanel
@@ -48,8 +44,6 @@
             this.YourPanel.AllowDrop = true;
             this.YourPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(187)))), ((int)(((byte)(206)))));
             this.YourPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.YourPanel.Controls.Add(this.userPlayer1);
-            this.YourPanel.Controls.Add(this.userPlayer2);
             this.YourPanel.Location = new System.Drawing.Point(12, 65);
             this.YourPanel.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.YourPanel.Name = "YourPanel";
@@ -139,31 +133,6 @@
             this.bExit.UseVisualStyleBackColor = true;
             this.bExit.Click += new System.EventHandler(this.bExit_Click);
             // 
-            // userPlayer1
-            // 
-            this.userPlayer1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("userPlayer1.BackgroundImage")));
-            this.userPlayer1.Energy = 1;
-            this.userPlayer1.Health = 30;
-            this.userPlayer1.Location = new System.Drawing.Point(393, 506);
-            this.userPlayer1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.userPlayer1.Name = "userPlayer1";
-            this.userPlayer1.Size = new System.Drawing.Size(100, 100);
-            this.userPlayer1.TabIndex = 1;
-            this.userPlayer1.Tag = "Player";
-            // 
-            // userPlayer2
-            // 
-            this.userPlayer2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("userPlayer2.BackgroundImage")));
-            this.userPlayer2.Energy = 1;
-            this.userPlayer2.Health = 30;
-            this.userPlayer2.Location = new System.Drawing.Point(393, -2);
-            this.userPlayer2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.userPlayer2.Name = "userPlayer2";
-            this.userPlayer2.Size = new System.Drawing.Size(100, 100);
-            this.userPlayer2.TabIndex = 0;
-            this.userPlayer2.Tag = "Player";
-            this.userPlayer2.Click += new System.EventHandler(this.userPlayer2_Click);
-            // 
             // Gameform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
@@ -184,7 +153,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Game";
             this.Load += new System.EventHandler(this.Gameform_Load);
-            this.YourPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,8 +169,6 @@
         private System.Windows.Forms.Label lHeroEnergy;
         private System.Windows.Forms.Button bStep;
         private System.Windows.Forms.Button bExit;
-        private UserPlayer userPlayer1;
-        private UserPlayer userPlayer2;
     }
 }
 
