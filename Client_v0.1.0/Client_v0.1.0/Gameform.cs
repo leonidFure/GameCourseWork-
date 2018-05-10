@@ -45,8 +45,6 @@ namespace Client_v0._1._0
             
             Byte[] data = System.Text.Encoding.ASCII.GetBytes("End step");
             stream.Write(data, 0, data.Length);
-
-
         }
 
         private void lBCrads1_MouseDown(object sender, MouseEventArgs e)
@@ -109,8 +107,11 @@ namespace Client_v0._1._0
                         Carde carde = (Carde)sender;
                         foreach (Control c in YourPanel.Controls)
                         {
-                            c.BackColor = Color.Gray;
-                            c.BackgroundImage = Picture.Card;
+                            if (c is Carde)
+                            {
+                                c.BackColor = Color.Gray;
+                                c.BackgroundImage = Picture.Card;
+                            }
                         }
                         bSelectedCard = false;
                         sAttac += carde.EnIndex.ToString();
@@ -431,7 +432,7 @@ namespace Client_v0._1._0
                     }
                 }
 
-                if (responseData[0] == 'A')
+                if (lines[0] == "Attac")
                 {
                     int n = 0;
                     responseData = responseData.Substring(0, responseData.Length - 1);
@@ -442,11 +443,7 @@ namespace Client_v0._1._0
                         if (lines[i1] == "next")
                             n = i1;
                     }
-                    this.Invoke((MethodInvoker)delegate () 
-                    {
-                        YourPanel.Controls.Clear();
-                            
-                    });
+                    this.Invoke((MethodInvoker)delegate () { YourPanel.Controls.Clear(); });
                     if (n != 1)
                     {
                         for (int i1 = 1; i1 < n; i1++)
@@ -491,7 +488,7 @@ namespace Client_v0._1._0
                             else
                                 Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
                         }
-                        
+
                         this.Invoke((MethodInvoker)delegate ()
                         {
                             cardX2 = 11;
@@ -517,6 +514,12 @@ namespace Client_v0._1._0
                         });
                     }
                     else { CountEnemyCarde = 0; cardX2 = 11; }
+                }
+                if (lines[0] == "AttacPlayer")
+                {
+                    You = JsonConvert.DeserializeObject<Player>(lines[1]);
+                    Enemy = JsonConvert.DeserializeObject<Player>(lines[2]);
+                    this.Invoke((MethodInvoker)delegate () { userPlayer1.Health = You.Health; userPlayer2.Health = Enemy.Health; });
                 }
 
                 if (responseData == "Card can not attack.")
