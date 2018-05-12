@@ -80,8 +80,8 @@ namespace Client_v0._1._0
                         {
                             Spell m = (Spell)AllCards[count];
                             _cost = m.Cost;
-                            _damage = m.MagicDamage;
-                            MyDeck.Add(new Spell(AllCards[count].Name, _cost, _damage));
+                            //_damage = m.MagicDamage;
+                            MyDeck.Add(new Spell(AllCards[count].Name, _cost));
                         }
                         count++;
                     } while (AllCards[count-1].Name != a.Substring(0, a.LastIndexOf('D') - 2));
@@ -133,8 +133,8 @@ namespace Client_v0._1._0
                 }
                 else
                 {
-                    Spell a = (Spell)c;
-                    lBAllCard.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                    //Spell a = (Spell)c;
+                    //lBAllCard.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
                 }
             }
             string[] dirs = Directory.GetFiles(@"Decks");
@@ -201,8 +201,8 @@ namespace Client_v0._1._0
                     }
                     else
                     {
-                        Spell a = (Spell)c;
-                        lBYourDeck.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")"+ " SPELL");
+                        //Spell a = (Spell)c;
+                        //lBYourDeck.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")"+ " SPELL");
                     }
                 }
             }

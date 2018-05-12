@@ -49,85 +49,88 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Card.cs">
+    <Compile Include="Classes\Card.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Carde.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Carde.Designer.cs">
-      <DependentUpon>Carde.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DecSettings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DecSettings.Designer.cs">
-      <DependentUpon>DecSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Fonts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Fonts.resx</DependentUpon>
     </Compile>
-    <Compile Include="Gameform.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Gameform.Designer.cs">
-      <DependentUpon>Gameform.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainMenu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainMenu.Designer.cs">
-      <DependentUpon>MainMenu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Minion.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Picture.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Picture.resx</DependentUpon>
     </Compile>
-    <Compile Include="Player.cs">
+    <Compile Include="User Controls\Carde.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Carde.Designer.cs">
+      <DependentUpon>Carde.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\DeckSpell.cs" />
+    <Compile Include="Forms\DecSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DecSettings.Designer.cs">
+      <DependentUpon>DecSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Gameform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Gameform.Designer.cs">
+      <DependentUpon>Gameform.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainMenu.Designer.cs">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\MassSpell.cs" />
+    <Compile Include="Classes\Minion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Classes\Player.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SaveForm.cs">
+    <Compile Include="Forms\SaveForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SaveForm.Designer.cs">
+    <Compile Include="Forms\SaveForm.Designer.cs">
       <DependentUpon>SaveForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Spell.cs">
+    <Compile Include="Classes\Spell.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UserPlayer.cs">
+    <Compile Include="Classes\TargetSpell.cs" />
+    <Compile Include="User Controls\UserPlayer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserPlayer.Designer.cs">
+    <Compile Include="User Controls\UserPlayer.Designer.cs">
       <DependentUpon>UserPlayer.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Carde.resx">
+    <EmbeddedResource Include="User Controls\Carde.resx">
       <DependentUpon>Carde.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DecSettings.resx">
+    <EmbeddedResource Include="Forms\DecSettings.resx">
       <DependentUpon>DecSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Fonts.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Fonts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gameform.resx">
+    <EmbeddedResource Include="Forms\Gameform.resx">
       <DependentUpon>Gameform.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainMenu.resx">
+    <EmbeddedResource Include="Forms\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Picture.resx">
@@ -139,10 +142,10 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SaveForm.resx">
+    <EmbeddedResource Include="Forms\SaveForm.resx">
       <DependentUpon>SaveForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserPlayer.resx">
+    <EmbeddedResource Include="User Controls\UserPlayer.resx">
       <DependentUpon>UserPlayer.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Fonts\8-BIT WONDER.TTF" />
