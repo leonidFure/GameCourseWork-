@@ -33,8 +33,6 @@
             this.lOffCard1 = new System.Windows.Forms.Label();
             this.lBCards2 = new System.Windows.Forms.ListBox();
             this.lBCrads1 = new System.Windows.Forms.ListBox();
-            this.lHeroHeath = new System.Windows.Forms.Label();
-            this.lHeroEnergy = new System.Windows.Forms.Label();
             this.bStep = new System.Windows.Forms.Button();
             this.bExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -92,34 +90,14 @@
             this.lBCrads1.TabIndex = 5;
             this.lBCrads1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lBCrads1_MouseDown);
             // 
-            // lHeroHeath
-            // 
-            this.lHeroHeath.AutoSize = true;
-            this.lHeroHeath.Font = new System.Drawing.Font("Arial", 40.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lHeroHeath.Location = new System.Drawing.Point(-1, 704);
-            this.lHeroHeath.Name = "lHeroHeath";
-            this.lHeroHeath.Size = new System.Drawing.Size(273, 61);
-            this.lHeroHeath.TabIndex = 6;
-            this.lHeroHeath.Text = "Health: 30";
-            // 
-            // lHeroEnergy
-            // 
-            this.lHeroEnergy.AutoSize = true;
-            this.lHeroEnergy.Font = new System.Drawing.Font("Arial", 40.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lHeroEnergy.Location = new System.Drawing.Point(424, 704);
-            this.lHeroEnergy.Name = "lHeroEnergy";
-            this.lHeroEnergy.Size = new System.Drawing.Size(257, 61);
-            this.lHeroEnergy.TabIndex = 7;
-            this.lHeroEnergy.Text = "Energy: 1";
-            // 
             // bStep
             // 
-            this.bStep.Font = new System.Drawing.Font("Arial", 25.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bStep.Font = new System.Drawing.Font("Arial", 25.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bStep.Location = new System.Drawing.Point(901, 691);
             this.bStep.Name = "bStep";
             this.bStep.Size = new System.Drawing.Size(184, 79);
             this.bStep.TabIndex = 8;
-            this.bStep.Text = "Your Step";
+            this.bStep.Text = "Your Turn";
             this.bStep.UseVisualStyleBackColor = true;
             this.bStep.Click += new System.EventHandler(this.bStep_Click);
             // 
@@ -140,8 +118,6 @@
             this.ClientSize = new System.Drawing.Size(1097, 774);
             this.Controls.Add(this.bExit);
             this.Controls.Add(this.bStep);
-            this.Controls.Add(this.lHeroEnergy);
-            this.Controls.Add(this.lHeroHeath);
             this.Controls.Add(this.lBCrads1);
             this.Controls.Add(this.lBCards2);
             this.Controls.Add(this.lOffCard1);
@@ -165,8 +141,6 @@
         private System.Windows.Forms.Label lOffCard1;
         private System.Windows.Forms.ListBox lBCards2;
         private System.Windows.Forms.ListBox lBCrads1;
-        private System.Windows.Forms.Label lHeroHeath;
-        private System.Windows.Forms.Label lHeroEnergy;
         private System.Windows.Forms.Button bStep;
         private System.Windows.Forms.Button bExit;
     }

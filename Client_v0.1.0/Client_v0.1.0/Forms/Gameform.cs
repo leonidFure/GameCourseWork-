@@ -81,8 +81,7 @@ namespace Client_v0._1._0
                             if (c is Carde)
                             {
                                 c.BackColor = Color.Gray;
-                                c.BackgroundImage = Picture.Card;
-                            }
+                                c.BackgroundImage = Picture.Card                            }
                         }
                         bSelectedCard = false;
 
@@ -296,6 +295,7 @@ namespace Client_v0._1._0
                         this.Invoke((MethodInvoker)delegate ()
                         {
                             bStep.Enabled = true;
+                            bStep.Text = "You Turn";
                         });
                         sStep = true;
                     }
@@ -386,6 +386,7 @@ namespace Client_v0._1._0
                     this.Invoke((MethodInvoker)delegate ()
                     {
                         bStep.Enabled = true;
+                        bStep.Text = "Your Turn";
                     });
                     if (lines.Length > 2)
                     {
@@ -432,6 +433,7 @@ namespace Client_v0._1._0
                     this.Invoke((MethodInvoker)delegate ()
                     {
                         bStep.Enabled = false;
+                        bStep.Text = "Enemy Turn";
                     });
                     int next = 0;
                     if (lines.Length > 2)
