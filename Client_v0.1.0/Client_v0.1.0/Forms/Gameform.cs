@@ -24,9 +24,9 @@ namespace Client_v0._1._0
         string sAttac = "";
         bool bSelectedCard = false;
         bool sStep = false;
-        
-        Player You = new Player(0, 30, 0, "Maxurik");
-        Player Enemy = new Player(0, 30, 0, "Lewa");
+
+        Player You = new Player(30, 1);
+        Player Enemy = new Player(30,1);
         int cardX = 11, cardX2 = 11;
         string path, hero;
         public Gameform(string path, string hero)
@@ -81,7 +81,8 @@ namespace Client_v0._1._0
                             if (c is Carde)
                             {
                                 c.BackColor = Color.Gray;
-                                c.BackgroundImage = Picture.Card                            }
+                                c.BackgroundImage = Picture.Card;
+                            }
                         }
                         bSelectedCard = false;
 
@@ -200,7 +201,7 @@ namespace Client_v0._1._0
         //Gameform gameform = new Gameform(path, hero);
         Byte[] d = new Byte[4096];
         static Int32 port = 22222;
-         static TcpClient client = new TcpClient("10.172.223.2", port);
+         static TcpClient client = new TcpClient("127.0.0.1", port);
         NetworkStream stream = client.GetStream();
         String responseData = String.Empty;
 
@@ -208,10 +209,7 @@ namespace Client_v0._1._0
         {
             try
             {
-                
-
                 Byte[] data = System.Text.Encoding.ASCII.GetBytes(hero);
-
                 stream.Write(data, 0, data.Length);
                 int i;
                 Int32 bytes = stream.Read(d, 0, d.Length);
@@ -485,7 +483,13 @@ namespace Client_v0._1._0
                         if (lines[i1] == "next")
                             n = i1;
                     }
-                    this.Invoke((MethodInvoker)delegate () { YourPanel.Controls.Clear(); });
+                    this.Invoke((MethodInvoker)delegate ()
+                    {
+                        YourPanel.Controls.Clear();
+                        YourPanel.Controls.Add(userPlayer2);
+                        YourPanel.Controls.Add(userPlayer1);
+
+                    });
                     if (n != 1)
                     {
                         for (int i1 = 1; i1 < n; i1++)
@@ -559,8 +563,8 @@ namespace Client_v0._1._0
                 }
                 if (lines[0] == "AttacPlayer")
                 {
-                    You = JsonConvert.DeserializeObject<Player>(lines[1]);
-                    Enemy = JsonConvert.DeserializeObject<Player>(lines[2]);
+                    You.Health = int.Parse(lines[1]);
+                    Enemy.Health = int.Parse(lines[2]);
                     this.Invoke((MethodInvoker)delegate () { userPlayer1.Health = You.Health; userPlayer2.Health = Enemy.Health; });
                 }
 

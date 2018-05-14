@@ -395,13 +395,13 @@ namespace Server_v0._1._0
                                 mes1 = "AttacPlayer;";
                                 mes2 = "AttacPlayer;";
 
-                                mes1 += JsonConvert.SerializeObject(player1);
+                                mes1 += player1.Health;
                                 mes1 += ";";
-                                mes1 += JsonConvert.SerializeObject(player2);
+                                mes1 += player2.Health;
 
-                                mes2 += JsonConvert.SerializeObject(player2);
+                                mes2 += player2.Health;
                                 mes2 += ";";
-                                mes2 += JsonConvert.SerializeObject(player1);
+                                mes2 += player1.Health;
 
 
                                 msg = System.Text.Encoding.ASCII.GetBytes(mes1);
