@@ -105,22 +105,22 @@ namespace Client_v0._1._0
         {
             this.ControlBox = false;
 
-            AllCards.Add(new Minion("Earthworm_Jim",7,7,8));
-            AllCards.Add(new Minion("Sonic", 3, 2, 4));
+            AllCards.Add(new Minion("Earthworm_Jim",7,8,7));
+            AllCards.Add(new Minion("Sonic", 3, 4, 2));
             AllCards.Add(new Minion("Scorpion", 5, 5, 5));
-            AllCards.Add(new Minion("RoboСop", 6, 6, 7));
-            AllCards.Add(new Minion("Obelix", 8, 4, 12));
-            AllCards.Add(new Minion("Red_Octopus", 2, 2, 3));
-            AllCards.Add(new Minion("Michael_Jackson", 4, 5, 4));
-            AllCards.Add(new Minion("Knuckles", 4, 4, 5));
-            AllCards.Add(new Minion("Power_Ranger", 6, 5, 8));
-            AllCards.Add(new Minion("Bugs_Bunny", 3, 3, 4));
-            AllCards.Add(new Minion("Aladdin", 5, 6, 3));
-            AllCards.Add(new Minion("Vectorman", 1, 1, 2));
-            AllCards.Add(new Minion("Ecco_the_Dolphin", 2, 1, 4));
-            AllCards.Add(new Minion("Altered_Beast", 5, 2, 8));
-            AllCards.Add(new Minion("Chip", 1, 2, 1));
-            AllCards.Add(new Minion("Wily", 1, 1, 3));
+            AllCards.Add(new Minion("RoboСop", 6,7, 6));
+            AllCards.Add(new Minion("Obelix", 8, 12, 4));
+            AllCards.Add(new Minion("Red_Octopus", 2, 3, 2));
+            AllCards.Add(new Minion("Michael_Jackson", 4,4, 5));
+            AllCards.Add(new Minion("Knuckles", 4, 5, 4));
+            AllCards.Add(new Minion("Power_Ranger", 6, 8,5));
+            AllCards.Add(new Minion("Bugs_Bunny", 3, 4, 3));
+            AllCards.Add(new Minion("Aladdin", 5, 3, 6));
+            AllCards.Add(new Minion("Vectorman", 1, 2, 1));
+            AllCards.Add(new Minion("Ecco_the_Dolphin", 2, 4, 1));
+            AllCards.Add(new Minion("Altered_Beast", 5, 8, 2));
+            AllCards.Add(new Minion("Chip", 1, 1, 2));
+            AllCards.Add(new Minion("Wily", 1, 3, 1));
             
 
 
