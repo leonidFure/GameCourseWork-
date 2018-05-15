@@ -648,8 +648,4 @@ namespace Client_v0._1._0
             stream.Write(data, 0, data.Length);
         }
     }
-    public class Controller
-    {
-        
-    }
 }
