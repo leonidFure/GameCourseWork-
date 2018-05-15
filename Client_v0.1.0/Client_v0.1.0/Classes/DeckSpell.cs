@@ -7,12 +7,13 @@ namespace Client_v0._1._0
 {
     class DeckSpell: Spell
     {
+        int draw;//кол-во карт
         string Feature { set; get; }
-        int Points { set; get; }
-        public DeckSpell(string name, int cost, string feature, int points) : base(name, cost)
+        public int Draw { get => draw; set =>draw = value; }
+        public DeckSpell(string name, int cost, string feature,int draw) : base(name, cost)
         {
             Feature = feature;
-            Points = points;
+            this.draw = draw;
         }
     }
 }
