@@ -52,6 +52,7 @@
     <Compile Include="Classes\Card.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controller.cs" />
     <Compile Include="Fonts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
