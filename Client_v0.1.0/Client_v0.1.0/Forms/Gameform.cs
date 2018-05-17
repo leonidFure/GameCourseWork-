@@ -20,11 +20,11 @@ namespace Client_v0._1._0
     public partial class Gameform : Form
     {
         
-        string sAttac = "";
-        bool bSelectedCard = false;
-        bool sStep = false;
-        int cardX = 11, cardX2 = 11;
-        string path, hero;
+        string sAttac = "";//Строка для отправки серверу сообщения об атаке
+        bool bSelectedCard = false;//Переменная, показывающая была ли выбрана карта игрока, которой он будет атакавать
+        bool sStep = false;//Переменная, показывающая чей сейчас ход
+        int cardX = 11, cardX2 = 11;//Координаты карт по X относительно панели
+        string path, hero;//Строки получаемые при инициализации формы с путем к файлу с колодой и названием персонажа
         Controller controller;
         public UserPlayer userPlayer1;
         public UserPlayer userPlayer2;
@@ -36,7 +36,11 @@ namespace Client_v0._1._0
             this.hero = hero;
             controller = new Controller(path, hero,this);
         }
-
+        /// <summary>
+        /// Сообщает контролеру об завершении хода
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bStep_Click(object sender, EventArgs e)
         {
             Thread clientThread = new Thread(new ParameterizedThreadStart(controller.SendMSG));
@@ -51,7 +55,11 @@ namespace Client_v0._1._0
                 lBCrads1.DoDragDrop(list.Text, DragDropEffects.Copy | DragDropEffects.Move);
             }
         }
-
+        /// <summary>
+        /// Выбор атакующей карты
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void MouseClickNew(object sender, EventArgs e)
         {
             if (sStep == true)
@@ -90,7 +98,11 @@ namespace Client_v0._1._0
                 }));
             }
         }
-
+        /// <summary>
+        /// Выбор атакуемой карты
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void MouseEnemyClickNew(object sender, EventArgs e)
         {
             if (bSelectedCard)
@@ -168,12 +180,16 @@ namespace Client_v0._1._0
 
         private void bExit_Click(object sender, EventArgs e)
         {
-            
+            //Добавить отправку контролеру сообщения об окончании партии
             Application.Exit();
             MainMenu mainMenu = new MainMenu();
             mainMenu.Show();
         }
-
+        /// <summary>
+        /// Сообщает контролеру об атаке картой персонажа соперника
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void userPlayer2Click(object sender, EventArgs e)
         {
             if (bSelectedCard)
@@ -196,7 +212,14 @@ namespace Client_v0._1._0
             foreach (Control c in YourPanel.Controls)
                 c.BackColor = Color.Gray;
         }
-
+        /// <summary>
+        /// Метод, вызываемый для изменения списка карт 
+        /// находящихся в руке одного из игроков
+        /// </summary>
+        /// <param name="cards">Изменённый список карт</param>
+        /// <param name="player">Строка, обозначающая колода кокого играка подается в метод</param>
+        /// <param name="energy">Количество енергии игрока</param>
+        /// <param name="countCards">Количество карт оставшихся в колоде</param>
         public void ChangeHandDeck(List<Card> cards, string player,int energy, int countCards)
         {
             if (player == "You")
@@ -238,7 +261,13 @@ namespace Client_v0._1._0
                 userPlayer2.Energy = energy;
             }
         }
-
+        /// <summary>
+        /// Метод, вызываемый для изменения списка карт
+        /// находящихся в руке обоих игроков
+        /// </summary>
+        /// <param name="cards1">Изменённый список карт первого игрока</param>
+        /// <param name="cards2">Изменённый список карт второго игрока</param>
+        /// <param name="CountCards1">Количество карт в колоде игроков</param>
         public void ChangeHandDeck(List<Card> cards1, List<Card> cards2, string CountCards1)
         {
             foreach (Card c in cards1)
@@ -270,7 +299,13 @@ namespace Client_v0._1._0
             lOffCard1.Text = "Cards: " + CountCards1;
             lOffCard2.Text = "Cards: " + CountCards1;
         }
-
+        /// <summary>
+        /// Метод добавления карты на стол
+        /// </summary>
+        /// <param name="card">Карта, которую необходимо добавить</param>
+        /// <param name="index">Индекс карты</param>
+        /// <param name="energy">Текущая енергия игрока</param>
+        /// <param name="player">Строка, обозначающая карта кокого играка подается в метод</param>
         public void AddCardOnBord(Card card, int index,int energy, string player)
         {
             Minion m = (Minion)card;
@@ -312,6 +347,12 @@ namespace Client_v0._1._0
                 userPlayer2.Energy = energy;
             }
         }
+        /// <summary>
+        /// Метод добавления карт на стол
+        /// </summary>
+        /// <param name="cards">Список карт, которые необходимо добавить на стол</param>
+        /// <param name="bordNotEmpty">Переменная определяющая, присутсявуют ли карты на столе</param>
+        /// <param name="player">Строка, обозначающая карты кокого играка подается в метод</param>
         public void AddCardsOnBord(List<Card> cards, bool bordNotEmpty,string player)
         {
             if (player == "You")
@@ -368,6 +409,11 @@ namespace Client_v0._1._0
                     cardX2 = 11;
             }
         }
+        
+        /// <summary>
+        /// Метод завершающий игру
+        /// </summary>
+        /// <param name="msg">Сообщение, показывающее какой из игроков выграл</param>
         public void EndGame(string msg)
         {
             MessageBox.Show(msg, "End game", MessageBoxButtons.OK);
@@ -375,12 +421,21 @@ namespace Client_v0._1._0
             MainMenu mainMenu = new MainMenu();
             mainMenu.Show();
         }
+
+        /// <summary>
+        /// Метод передачи хода
+        /// </summary>
+        /// <param name="step">Переменная, показывающая чей сейчас ход</param>
+        /// <param name="turn">Текст отображаемый на кнопке хода</param>
         public void ChangeTurn(bool step, string turn)
         {
             sStep = step;
             bStep.Enabled = step;
             bStep.Text = turn;
         }
+        /// <summary>
+        /// Метод добавления персонажей на игровое поле
+        /// </summary>
         public void SetUserPlayers()
         {
             YourPanel.Controls.Clear();

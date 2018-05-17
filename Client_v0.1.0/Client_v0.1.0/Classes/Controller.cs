@@ -46,6 +46,7 @@ namespace Client_v0._1._0
                 string[] vs = responseData.Split(';');
                 You = new Player(int.Parse(vs[0]),1);
                 Enemy = new Player(int.Parse(vs[0]), 1);
+
                 gameform.Invoke((MethodInvoker)delegate ()
                 {
                     gameform.userPlayer1.Health = int.Parse(vs[0]);
@@ -54,44 +55,46 @@ namespace Client_v0._1._0
                 });
                 string message;
                 JsonSerializer serializer = new JsonSerializer();
+
                 using (StreamReader file = new StreamReader("Decks" + (char)92 + path + ".txt"))
                 {
                     message = file.ReadLine();
                 }
+
                 data = System.Text.Encoding.ASCII.GetBytes(message);
-
                 stream.Write(data, 0, data.Length);
-
                 responseData = String.Empty;
                 i = stream.Read(d, 0, d.Length);
-                    responseData = System.Text.Encoding.ASCII.GetString(d, 0, i);
-                    string[] lines = responseData.Split(';');
+                responseData = System.Text.Encoding.ASCII.GetString(d, 0, i);
+                string[] lines = responseData.Split(';');
 
-                    for (int i1 = 0; i1 < 7; i1++)
-                    {
-                        if (lines[i1][2] == 'H')
-                            You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                        else
-                            You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
-                    }
+                for (int i1 = 0; i1 < 7; i1++)
+                {
+                    if (lines[i1][2] == 'H')
+                        You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
+                    else
+                        You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                }
 
-                    for (int i1 = 7; i1 < 14; i1++)
-                    {
-                        if (lines[i1][2] == 'H')
-                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                        else
-                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
-                    }
+                for (int i1 = 7; i1 < 14; i1++)
+                {
+                    if (lines[i1][2] == 'H')
+                        Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
+                    else
+                        Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                }
 
-                    gameform.Invoke((MethodInvoker)delegate () { gameform.ChangeHandDeck(You.CardsInMyHand, Enemy.CardsInMyHand, lines[14]);});
-                    if (lines[15] == "Your step")
+                gameform.Invoke((MethodInvoker)delegate () { gameform.ChangeHandDeck(You.CardsInMyHand, Enemy.CardsInMyHand, lines[14]); });
+
+                if (lines[15] == "Your step")
+                {
+                    gameform.Invoke((MethodInvoker)delegate ()
                     {
-                        gameform.Invoke((MethodInvoker)delegate ()
-                        {
-                            gameform.ChangeTurn(true, "Your Turn");
-                        });
-                    }
-                    Step();
+                        gameform.ChangeTurn(true, "Your Turn");
+                    });
+                }
+
+                Step();
 
             }
             catch (ArgumentNullException e)
