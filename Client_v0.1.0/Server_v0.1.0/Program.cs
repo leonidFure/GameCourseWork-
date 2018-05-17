@@ -81,8 +81,9 @@ namespace Server_v0._1._0
                     msg2 = System.Text.Encoding.ASCII.GetBytes(player2.Health.ToString() + ';' + data2 + ';' + data1);
                     stream1.Write(msg1, 0, msg1.Length);
                     stream2.Write(msg2, 0, msg2.Length);
-                    while ((i1 = stream1.Read(bytes1, 0, bytes1.Length)) != 0 && (i2 = stream2.Read(bytes2, 0, bytes2.Length)) != 0)
-                    {
+                    
+                        i1 = stream1.Read(bytes1, 0, bytes1.Length);
+                        i2 = stream2.Read(bytes2, 0, bytes2.Length);
                         data1 = System.Text.Encoding.ASCII.GetString(bytes1, 0, i1);
                         data1 = data1.Substring(0, data1.Length - 1);
                         lines = data1.Split(';');
@@ -163,9 +164,8 @@ namespace Server_v0._1._0
                         stream1.Write(msg, 0, msg.Length);
                         msg = System.Text.Encoding.ASCII.GetBytes(mes2);
                         stream2.Write(msg, 0, msg.Length);
-                        int curMana = 1;
-                        Step(stream1, stream2, player1,player2,curMana);
-                    }
+                        Step(stream1, stream2, player1, player2, 1);
+                    return;
                 }
             }   
             catch (SocketException e)
@@ -256,6 +256,7 @@ namespace Server_v0._1._0
                     }
                     
                     Step(stream1, stream2, player1, player2, curMana);
+                    return;
                 }
                 #endregion
                 else
@@ -266,7 +267,6 @@ namespace Server_v0._1._0
                         {
                             m.CanAttack = true;
                         }
-                        
                         String mes = "";
                         if(player1.Energy<10) player1.Energy++;
                         byte[] msg;
@@ -303,6 +303,7 @@ namespace Server_v0._1._0
                         msg = System.Text.Encoding.ASCII.GetBytes("DYour step" + mes);
                         stream1.Write(msg, 0, msg.Length);
                         Step(stream2, stream1, player2, player1, curMana);
+                        return;
                     }
                     else
                     {
@@ -408,6 +409,9 @@ namespace Server_v0._1._0
                                     msg = System.Text.Encoding.ASCII.GetBytes("Player2Win");
                                     stream1.Write(msg, 0, msg.Length);
                                     stream2.Write(msg, 0, msg.Length);
+                                    i = stream1.Read(bytes, 0, bytes.Length);
+                                    client1.Close();
+                                    client2.Close();
                                     return;
                                 }
                                 if (player2.Health <= 0)
@@ -415,6 +419,9 @@ namespace Server_v0._1._0
                                     msg = System.Text.Encoding.ASCII.GetBytes("Player1Win");
                                     stream1.Write(msg, 0, msg.Length);
                                     stream2.Write(msg, 0, msg.Length);
+                                    i = stream1.Read(bytes, 0, bytes.Length);
+                                    client1.Close();
+                                    client2.Close();
                                     return;
                                 }
                                 if(player1.Health>0&&player2.Health>0)
@@ -431,7 +438,16 @@ namespace Server_v0._1._0
                                 stream1.Write(msg, 0, msg.Length);
                             }
                         }
+                        if (data == "End game")
+                        {
+                            msg = System.Text.Encoding.ASCII.GetBytes("Player1Win");
+                            stream1.Write(msg, 0, msg.Length);
+                            stream2.Write(msg, 0, msg.Length);
+                            i = stream1.Read(bytes, 0, bytes.Length);
+                            return;
+                        }
                         Step(stream1, stream2, player1, player2, curMana);
+                        return;
                     }
                 }
             }

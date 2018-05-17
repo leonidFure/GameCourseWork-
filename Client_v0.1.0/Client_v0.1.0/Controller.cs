@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
@@ -25,12 +26,16 @@ namespace Client_v0._1._0
         Gameform gameform;
         Byte[] d = new Byte[4096];
         static Int32 port = 22222;
-        static TcpClient client = new TcpClient("127.0.0.1", port);
-        NetworkStream stream = client.GetStream();
+        static TcpClient client;
+        
+        NetworkStream stream;
         String responseData = String.Empty;
         Player You, Enemy;
         public void Connect()
         {
+            client = new TcpClient();
+            client.Connect("127.0.0.1", port);
+            stream = client.GetStream();
             try
             {
                 Byte[] data = System.Text.Encoding.ASCII.GetBytes(hero);
@@ -58,8 +63,7 @@ namespace Client_v0._1._0
                 stream.Write(data, 0, data.Length);
 
                 responseData = String.Empty;
-                while ((i = stream.Read(d, 0, d.Length)) != 0)
-                {
+                i = stream.Read(d, 0, d.Length);
                     responseData = System.Text.Encoding.ASCII.GetString(d, 0, i);
                     string[] lines = responseData.Split(';');
 
@@ -87,9 +91,7 @@ namespace Client_v0._1._0
                             gameform.ChangeTurn(true, "Your Turn");
                         });
                     }
-
                     Step();
-                }
 
             }
             catch (ArgumentNullException e)
@@ -280,11 +282,17 @@ namespace Client_v0._1._0
                 }
                 if (responseData == "Player1Win")
                 {
+                    client.Close();
+                    stream.Close();
                     gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame(responseData); });
+                    return;
                 }
                 if (responseData == "Player2Win")
                 {
+                    client.Close();
+                    stream.Close();
                     gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame(responseData); });
+                    return;
                 }
                 if (responseData == "Card can not attack.")
                 {
@@ -326,6 +334,7 @@ namespace Client_v0._1._0
                 }
             }
             Step();
+            return;
         }
 
         public void SendMSG(object count)

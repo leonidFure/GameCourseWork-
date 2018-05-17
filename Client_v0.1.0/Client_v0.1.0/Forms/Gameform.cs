@@ -26,6 +26,9 @@ namespace Client_v0._1._0
         int cardX = 11, cardX2 = 11;
         string path, hero;
         Controller controller;
+        public UserPlayer userPlayer1;
+        public UserPlayer userPlayer2;
+
         public Gameform(string path, string hero)
         {
             InitializeComponent();
@@ -85,7 +88,6 @@ namespace Client_v0._1._0
 
                     }
                 }));
-
             }
         }
 
@@ -140,9 +142,6 @@ namespace Client_v0._1._0
             }
         }
 
-        public UserPlayer userPlayer1;
-        public UserPlayer userPlayer2;
-
         private void Gameform_Load(object sender, EventArgs e)
         {
             Thread clientThread = new Thread(new ThreadStart(controller.Connect));
@@ -165,12 +164,12 @@ namespace Client_v0._1._0
             };
             YourPanel.Controls.Add(userPlayer2);
             userPlayer2.Click += new System.EventHandler(this.userPlayer2Click);
-
         }
 
         private void bExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            
+            Application.Exit();
             MainMenu mainMenu = new MainMenu();
             mainMenu.Show();
         }
@@ -190,7 +189,6 @@ namespace Client_v0._1._0
                 }
             }
         }
-        
 
         private void YourPanel_Click(object sender, EventArgs e)
         {
@@ -198,6 +196,7 @@ namespace Client_v0._1._0
             foreach (Control c in YourPanel.Controls)
                 c.BackColor = Color.Gray;
         }
+
         public void ChangeHandDeck(List<Card> cards, string player,int energy, int countCards)
         {
             if (player == "You")
@@ -239,6 +238,7 @@ namespace Client_v0._1._0
                 userPlayer2.Energy = energy;
             }
         }
+
         public void ChangeHandDeck(List<Card> cards1, List<Card> cards2, string CountCards1)
         {
             foreach (Card c in cards1)
@@ -270,6 +270,7 @@ namespace Client_v0._1._0
             lOffCard1.Text = "Cards: " + CountCards1;
             lOffCard2.Text = "Cards: " + CountCards1;
         }
+
         public void AddCardOnBord(Card card, int index,int energy, string player)
         {
             Minion m = (Minion)card;
