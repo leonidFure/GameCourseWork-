@@ -278,7 +278,14 @@ namespace Client_v0._1._0
                     Enemy.Health = int.Parse(lines[2]);
                     gameform.Invoke((MethodInvoker)delegate () { gameform.userPlayer1.Health = You.Health; gameform.userPlayer2.Health = Enemy.Health; });
                 }
-
+                if (responseData == "Player1Win")
+                {
+                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame(responseData); });
+                }
+                if (responseData == "Player2Win")
+                {
+                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame(responseData); });
+                }
                 if (responseData == "Card can not attack.")
                 {
                     gameform.Invoke((MethodInvoker)delegate () { MessageBox.Show(responseData); });

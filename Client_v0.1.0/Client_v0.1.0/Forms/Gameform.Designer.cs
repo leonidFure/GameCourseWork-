@@ -54,17 +54,17 @@
             // lOffCard2
             // 
             this.lOffCard2.AutoSize = true;
-            this.lOffCard2.Font = new System.Drawing.Font("Arial Narrow", 24.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lOffCard2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lOffCard2.Location = new System.Drawing.Point(902, 22);
             this.lOffCard2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lOffCard2.Name = "lOffCard2";
-            this.lOffCard2.Size = new System.Drawing.Size(0, 40);
+            this.lOffCard2.Size = new System.Drawing.Size(0, 38);
             this.lOffCard2.TabIndex = 2;
             // 
             // lOffCard1
             // 
             this.lOffCard1.AutoSize = true;
-            this.lOffCard1.Font = new System.Drawing.Font("Arial Narrow", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lOffCard1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lOffCard1.Location = new System.Drawing.Point(902, 374);
             this.lOffCard1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lOffCard1.Name = "lOffCard1";
@@ -74,28 +74,26 @@
             // lBCards2
             // 
             this.lBCards2.FormattingEnabled = true;
-            this.lBCards2.ItemHeight = 15;
             this.lBCards2.Location = new System.Drawing.Point(901, 65);
             this.lBCards2.Name = "lBCards2";
-            this.lBCards2.Size = new System.Drawing.Size(184, 259);
+            this.lBCards2.Size = new System.Drawing.Size(184, 251);
             this.lBCards2.TabIndex = 4;
             // 
             // lBCrads1
             // 
             this.lBCrads1.FormattingEnabled = true;
-            this.lBCrads1.ItemHeight = 15;
             this.lBCrads1.Location = new System.Drawing.Point(901, 414);
             this.lBCrads1.Name = "lBCrads1";
-            this.lBCrads1.Size = new System.Drawing.Size(184, 259);
+            this.lBCrads1.Size = new System.Drawing.Size(184, 251);
             this.lBCrads1.TabIndex = 5;
             this.lBCrads1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lBCrads1_MouseDown);
             // 
             // bStep
             // 
             this.bStep.Font = new System.Drawing.Font("Arial", 25.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bStep.Location = new System.Drawing.Point(901, 691);
+            this.bStep.Location = new System.Drawing.Point(457, 6);
             this.bStep.Name = "bStep";
-            this.bStep.Size = new System.Drawing.Size(184, 79);
+            this.bStep.Size = new System.Drawing.Size(184, 53);
             this.bStep.TabIndex = 8;
             this.bStep.Text = "Your Turn";
             this.bStep.UseVisualStyleBackColor = true;
@@ -113,17 +111,17 @@
             // 
             // Gameform
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1097, 774);
-            this.Controls.Add(this.bExit);
+            this.ClientSize = new System.Drawing.Size(1097, 733);
             this.Controls.Add(this.bStep);
+            this.Controls.Add(this.bExit);
             this.Controls.Add(this.lBCrads1);
             this.Controls.Add(this.lBCards2);
             this.Controls.Add(this.lOffCard1);
             this.Controls.Add(this.lOffCard2);
             this.Controls.Add(this.YourPanel);
-            this.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "Gameform";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

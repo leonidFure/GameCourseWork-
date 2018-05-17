@@ -170,7 +170,9 @@ namespace Client_v0._1._0
 
         private void bExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.Show();
         }
 
         private void userPlayer2Click(object sender, EventArgs e)
@@ -364,6 +366,13 @@ namespace Client_v0._1._0
                 else
                     cardX2 = 11;
             }
+        }
+        public void EndGame(string msg)
+        {
+            MessageBox.Show(msg, "End game", MessageBoxButtons.OK);
+            this.Close();
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.Show();
         }
         public void ChangeTurn(bool step, string turn)
         {

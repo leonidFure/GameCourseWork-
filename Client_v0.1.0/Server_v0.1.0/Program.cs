@@ -403,11 +403,27 @@ namespace Server_v0._1._0
                                 mes2 += ";";
                                 mes2 += player1.Health;
 
-
-                                msg = System.Text.Encoding.ASCII.GetBytes(mes1);
-                                stream1.Write(msg, 0, msg.Length);
-                                msg = System.Text.Encoding.ASCII.GetBytes(mes2);
-                                stream2.Write(msg, 0, msg.Length);
+                                if (player1.Health <= 0)
+                                {
+                                    msg = System.Text.Encoding.ASCII.GetBytes("Player2Win");
+                                    stream1.Write(msg, 0, msg.Length);
+                                    stream2.Write(msg, 0, msg.Length);
+                                    return;
+                                }
+                                if (player2.Health <= 0)
+                                {
+                                    msg = System.Text.Encoding.ASCII.GetBytes("Player1Win");
+                                    stream1.Write(msg, 0, msg.Length);
+                                    stream2.Write(msg, 0, msg.Length);
+                                    return;
+                                }
+                                if(player1.Health>0&&player2.Health>0)
+                                {
+                                    msg = System.Text.Encoding.ASCII.GetBytes(mes1);
+                                    stream1.Write(msg, 0, msg.Length);
+                                    msg = System.Text.Encoding.ASCII.GetBytes(mes2);
+                                    stream2.Write(msg, 0, msg.Length);
+                                }
                             }
                             else
                             {
