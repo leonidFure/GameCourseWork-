@@ -364,10 +364,7 @@ namespace Client_v0._1._0
                 }
                 catch (StackOverflowException)
                 {
-                    client.Close();
-                    stream.Close();
-                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame(responseData); });
-                    return;
+                    
                 }
                 finally
                 {
