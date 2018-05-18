@@ -364,13 +364,13 @@ namespace Client_v0._1._0
                 }
                 catch (StackOverflowException)
                 {
-                    Console.WriteLine();
+                    client.Close();
+                    stream.Close();
+                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame(responseData); });
+                    return;
                 }
                 finally
                 {
-                    client.Close();
-                    stream.Close();
-                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
                 }
             }
             Step();
