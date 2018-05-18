@@ -20,21 +20,40 @@ namespace Server_v0._1._0
             {
                 server = new TcpListener(IPAddress.Any, port);
                 server.Start();
-                Console.WriteLine(">> " + "Ожидание подключения первого игрока... ");
+                
                 while (true)
                 {
-
+                    Console.WriteLine(">> " + "Ожидание подключения первого игрока... ");
                     TcpClient client1 = server.AcceptTcpClient();
-                    Console.WriteLine(">> " + "Подключился первый игрок");
+                    Console.WriteLine(">> " + "Подключился новый игрок");
                     Console.WriteLine(">> " + "Ожидание подключения второго игрока... ");
                     TcpClient client2 = server.AcceptTcpClient();
                     Console.WriteLine(">> " + "Подключился второй игрок");
-                    Game game = new Game(client1, client2);
-                    Thread clientThread = new Thread(new ThreadStart(game.Process));
-                    clientThread.Start();
+                    Connect(client1, client2);
                 }
             }
             finally { server.Stop(); }
+        }
+        static void Connect(TcpClient client1, TcpClient client2)
+        {
+            try
+            {
+                NetworkStream networkStream1 = client1.GetStream();
+                NetworkStream networkStream2 = client2.GetStream();
+                byte[] msg = System.Text.Encoding.ASCII.GetBytes("Are you ready?");
+                networkStream1.Write(msg, 0, msg.Length);
+                networkStream2.Write(msg, 0, msg.Length);
+                Game game = new Game(client1, client2);
+                Thread clientThread = new Thread(new ThreadStart(game.Process));
+                clientThread.Start();
+            }
+            catch
+            {
+                client1 = client2;
+                client2 = null;
+                client2 = server.AcceptTcpClient();
+                Connect(client1, client2);
+            }
         }
     }
     public class Game
@@ -65,7 +84,7 @@ namespace Server_v0._1._0
                 Random rndCard = new Random(0);
                 while (true)
                 {
-                    
+
                     byte[] msg;
                     byte[] msg1, msg2;
                     data1 = null;
@@ -77,100 +96,105 @@ namespace Server_v0._1._0
                     data1 = System.Text.Encoding.ASCII.GetString(bytes1, 0, i1);
                     data2 = System.Text.Encoding.ASCII.GetString(bytes2, 0, i2);
                     //добавить отправку хп противника
-                    msg1 = System.Text.Encoding.ASCII.GetBytes(player1.Health.ToString()+';'+data1+';'+data2);
+                    msg1 = System.Text.Encoding.ASCII.GetBytes(player1.Health.ToString() + ';' + data1 + ';' + data2);
                     msg2 = System.Text.Encoding.ASCII.GetBytes(player2.Health.ToString() + ';' + data2 + ';' + data1);
                     stream1.Write(msg1, 0, msg1.Length);
                     stream2.Write(msg2, 0, msg2.Length);
-                    
-                        i1 = stream1.Read(bytes1, 0, bytes1.Length);
-                        i2 = stream2.Read(bytes2, 0, bytes2.Length);
-                        data1 = System.Text.Encoding.ASCII.GetString(bytes1, 0, i1);
-                        data1 = data1.Substring(0, data1.Length - 1);
-                        lines = data1.Split(';');
 
-                        foreach (string l in lines)
-                        {
-                            if (l[2] == 'H')
-                                player1.MyDeck.Add(JsonConvert.DeserializeObject<Minion>(l));
-                            else
-                                player1.MyDeck.Add(JsonConvert.DeserializeObject<Spell>(l));
-                        }
+                    i1 = stream1.Read(bytes1, 0, bytes1.Length);
+                    i2 = stream2.Read(bytes2, 0, bytes2.Length);
+                    data1 = System.Text.Encoding.ASCII.GetString(bytes1, 0, i1);
+                    data1 = data1.Substring(0, data1.Length - 1);
+                    lines = data1.Split(';');
 
-                        data2 = System.Text.Encoding.ASCII.GetString(bytes2, 0, i2);
-                        data2 = data2.Substring(0, data2.Length - 1);
-                        lines = data2.Split(';');
+                    foreach (string l in lines)
+                    {
+                        if (l[2] == 'H')
+                            player1.MyDeck.Add(JsonConvert.DeserializeObject<Minion>(l));
+                        else
+                            player1.MyDeck.Add(JsonConvert.DeserializeObject<Spell>(l));
+                    }
 
-                        foreach (string l in lines)
-                        {
-                            if (l[2] == 'H')
-                                player2.MyDeck.Add(JsonConvert.DeserializeObject<Minion>(l));
-                            else
-                                player2.MyDeck.Add(JsonConvert.DeserializeObject<Spell>(l));
-                        }
+                    data2 = System.Text.Encoding.ASCII.GetString(bytes2, 0, i2);
+                    data2 = data2.Substring(0, data2.Length - 1);
+                    lines = data2.Split(';');
 
-                        for (int i = 0; i < 7; i++)
-                        {
-                            int a = rndCard.Next(player1.MyDeck.Count - i);
-                            int b = rndCard.Next(player2.MyDeck.Count - i);
-                            player1.CardsInMyHand.Add(player1.MyDeck[a]);
-                            player2.CardsInMyHand.Add(player2.MyDeck[b]);
-                            player1.MyDeck.RemoveAt(a);
-                            player2.MyDeck.RemoveAt(b);
-                        }
+                    foreach (string l in lines)
+                    {
+                        if (l[2] == 'H')
+                            player2.MyDeck.Add(JsonConvert.DeserializeObject<Minion>(l));
+                        else
+                            player2.MyDeck.Add(JsonConvert.DeserializeObject<Spell>(l));
+                    }
 
-                        string mes1 = "";
-                        string mes2 = "";
-                        
-                        foreach (Card c in player1.CardsInMyHand)
-                        {
-                            if (c is Minion)
-                                mes1 += JsonConvert.SerializeObject((Minion)c);
-                            else
-                                mes1 += JsonConvert.SerializeObject((Spell)c);
-                            mes1 += ';';
-                        }
+                    for (int i = 0; i < 7; i++)
+                    {
+                        int a = rndCard.Next(player1.MyDeck.Count - i);
+                        int b = rndCard.Next(player2.MyDeck.Count - i);
+                        player1.CardsInMyHand.Add(player1.MyDeck[a]);
+                        player2.CardsInMyHand.Add(player2.MyDeck[b]);
+                        player1.MyDeck.RemoveAt(a);
+                        player2.MyDeck.RemoveAt(b);
+                    }
 
-                        foreach (Card c in player2.CardsInMyHand)
-                        {
-                            if (c is Minion)
-                                mes1 += JsonConvert.SerializeObject((Minion)c);
-                            else
-                                mes1 += JsonConvert.SerializeObject((Spell)c);
-                            mes1 += ';';
-                        }
+                    string mes1 = "";
+                    string mes2 = "";
 
-                        foreach (Card c in player2.CardsInMyHand)
-                        {
-                            if (c is Minion)
-                                mes2 += JsonConvert.SerializeObject((Minion)c);
-                            else
-                                mes2 += JsonConvert.SerializeObject((Spell)c);
-                            mes2 += ';';
-                        }
+                    foreach (Card c in player1.CardsInMyHand)
+                    {
+                        if (c is Minion)
+                            mes1 += JsonConvert.SerializeObject((Minion)c);
+                        else
+                            mes1 += JsonConvert.SerializeObject((Spell)c);
+                        mes1 += ';';
+                    }
 
-                        foreach (Card c in player1.CardsInMyHand)
-                        {
-                            if (c is Minion)
-                                mes2 += JsonConvert.SerializeObject((Minion)c);
-                            else
-                                mes2 += JsonConvert.SerializeObject((Spell)c);
-                            mes2 += ';';
-                        }
-                        mes1 += player1.MyDeck.Count.ToString(); mes1 += ';';
-                        mes2 += player2.MyDeck.Count.ToString(); mes2 += ';';
-                        mes1 += "Your step";
-                        mes2 += "DYour step";
-                        msg = System.Text.Encoding.ASCII.GetBytes(mes1);
-                        stream1.Write(msg, 0, msg.Length);
-                        msg = System.Text.Encoding.ASCII.GetBytes(mes2);
-                        stream2.Write(msg, 0, msg.Length);
-                        Step(stream1, stream2, player1, player2, 1);
+                    foreach (Card c in player2.CardsInMyHand)
+                    {
+                        if (c is Minion)
+                            mes1 += JsonConvert.SerializeObject((Minion)c);
+                        else
+                            mes1 += JsonConvert.SerializeObject((Spell)c);
+                        mes1 += ';';
+                    }
+
+                    foreach (Card c in player2.CardsInMyHand)
+                    {
+                        if (c is Minion)
+                            mes2 += JsonConvert.SerializeObject((Minion)c);
+                        else
+                            mes2 += JsonConvert.SerializeObject((Spell)c);
+                        mes2 += ';';
+                    }
+
+                    foreach (Card c in player1.CardsInMyHand)
+                    {
+                        if (c is Minion)
+                            mes2 += JsonConvert.SerializeObject((Minion)c);
+                        else
+                            mes2 += JsonConvert.SerializeObject((Spell)c);
+                        mes2 += ';';
+                    }
+
+                    mes1 += player1.MyDeck.Count.ToString(); mes1 += ';';
+                    mes2 += player2.MyDeck.Count.ToString(); mes2 += ';';
+                    mes1 += "Your step";
+                    mes2 += "DYour step";
+                    msg = System.Text.Encoding.ASCII.GetBytes(mes1);
+                    stream1.Write(msg, 0, msg.Length);
+                    msg = System.Text.Encoding.ASCII.GetBytes(mes2);
+                    stream2.Write(msg, 0, msg.Length);
+                    Step(stream1, stream2, player1, player2, 1);
                     return;
                 }
-            }   
+            }
             catch (SocketException e)
             {
                 Console.WriteLine(">> " + "SocketException: {0}", e);
+            }
+            catch (System.IO.IOException)
+            {
+                Console.WriteLine("Error");
             }
             finally
             {
@@ -185,7 +209,6 @@ namespace Server_v0._1._0
         
         public void Step(NetworkStream stream1, NetworkStream stream2, Player player1,Player player2, int curMana)
         {
-
             int count1, count2;
             int i;
             Byte[] bytes = new Byte[4096];
@@ -225,7 +248,6 @@ namespace Server_v0._1._0
                                     mes += JsonConvert.SerializeObject((Minion)c);
                                 else
                                     mes += JsonConvert.SerializeObject((Spell)c);
-
                             }
 
                             foreach (Card c in player1.CardsInMyHand)
