@@ -366,6 +366,12 @@ namespace Client_v0._1._0
                 {
                     Console.WriteLine();
                 }
+                finally
+                {
+                    client.Close();
+                    stream.Close();
+                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
+                }
             }
             Step();
             return;
