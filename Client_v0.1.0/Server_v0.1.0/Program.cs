@@ -194,6 +194,16 @@ namespace Server_v0._1._0
             }
             catch (System.IO.IOException)
             {
+                try
+                {
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes("Player2Win");
+                    stream1.Write(msg, 0, msg.Length);
+                }
+                catch
+                {
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes("Player2Win");
+                    stream2.Write(msg, 0, msg.Length);
+                }
                 Console.WriteLine("Error");
             }
             finally
