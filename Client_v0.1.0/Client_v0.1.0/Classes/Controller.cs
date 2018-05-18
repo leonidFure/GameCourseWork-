@@ -120,10 +120,11 @@ namespace Client_v0._1._0
 
         public void Step()
         {
-            try
-            {
+            
                 int i;
                 while ((i = stream.Read(d, 0, d.Length)) != 0)
+                {
+                try
                 {
                     responseData = System.Text.Encoding.ASCII.GetString(d, 0, i);
                     string[] lines = responseData.Split(';');
@@ -352,22 +353,23 @@ namespace Client_v0._1._0
                         });
                     }
                 }
-                Step();
-                return;
+                catch (System.IO.IOException)
+                {
+                }
+                catch (ArgumentNullException)
+                {
+                }
+                catch (SocketException)
+                {
+                }
+                catch (StackOverflowException)
+                {
+                    Console.WriteLine();
+                }
             }
-            catch (System.IO.IOException)
-            {
-            }
-            catch (ArgumentNullException)
-            {
-            }
-            catch (SocketException)
-            {
-            }
-            catch (StackOverflowException)
-            {
-                Console.WriteLine();
-            }
+            Step();
+            return;
+
 
         }
 
