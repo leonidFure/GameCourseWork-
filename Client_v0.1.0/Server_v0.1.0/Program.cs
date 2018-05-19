@@ -238,7 +238,11 @@ namespace Server_v0._1._0
                             String mes2 = "Hand;";
                             if (player1.CardsInMyHand[count1] is Minion minion)
                             {
-                                player1.MyCardsOnBord.Add(new Minion(minion.Name, minion.Cost, minion.Health, minion.Damage));
+                                if (minion.IsCharge)
+                                    player1.MyCardsOnBord.Add(new Minion(minion.Name, minion.Cost, minion.Health, minion.Damage,minion.IsTaunt,minion.IsCharge,true));
+                                else
+                                    player1.MyCardsOnBord.Add(new Minion(minion.Name, minion.Cost, minion.Health, minion.Damage, minion.IsTaunt, minion.IsCharge));
+
                                 mes = JsonConvert.SerializeObject((Minion)player1.MyCardsOnBord[player1.MyCardsOnBord.Count - 1]);
                                 mes2 += JsonConvert.SerializeObject((Minion)player1.MyCardsOnBord[player1.MyCardsOnBord.Count - 1]);
                             }

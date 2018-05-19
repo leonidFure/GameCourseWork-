@@ -14,8 +14,10 @@ namespace Client_v0._1._0
 {
     class Controller
     {
+        
         public Controller(string path, string hero, Gameform gameform)
         {
+            
             this.path = path;
             this.hero = hero;
             this.gameform = gameform;
@@ -109,16 +111,25 @@ namespace Client_v0._1._0
             catch (System.IO.IOException)
             {
             }
+            finally
+            {
+                try
+                {
+                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
+                }
+                catch { }
+            }
         }
 
         public void Step()
         {
             
                 int i;
+            try
+            {
                 while ((i = stream.Read(d, 0, d.Length)) != 0)
                 {
-                try
-                {
+                
                     responseData = System.Text.Encoding.ASCII.GetString(d, 0, i);
                     string[] lines = responseData.Split(';');
                     if (responseData[0] == '{')
@@ -345,26 +356,38 @@ namespace Client_v0._1._0
                             gameform.ChangeHandDeck(You.CardsInMyHand, "You", You.Energy, You.MyDeck.Count);
                         });
                     }
-                }
-                catch (System.IO.IOException)
-                {
-                }
-                catch (ArgumentNullException e)
-                {
-                }
-                catch (SocketException)
-                {
-                }
-                finally
-                {
-                    client.Close();
-                    stream.Close();
-                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
-                }
+                
             }
             Step();
             return;
+            }
+            catch (System.IO.IOException)
+            {
+                client.Close();
+                stream.Close();
+                try
+                {
+                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
+                }
+                catch { }
+            }
+            catch (ArgumentNullException e)
+            {
+            }
+            catch (SocketException)
+            {
+                client.Close();
+                stream.Close();
+                try
+                {
+                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
+                }
+                catch { }
+            }
+            finally
+            {
 
+            }
 
         }
 

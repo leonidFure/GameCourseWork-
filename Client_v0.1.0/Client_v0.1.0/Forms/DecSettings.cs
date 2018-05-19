@@ -18,6 +18,7 @@ namespace Client_v0._1._0
         int _cost = 0;
         int _health = 0;
         int _damage = 0;
+        bool _isCharge, _isTaunt;
         int ind = 0;
         List<Card> AllCards = new List<Card>();
         List<Card> MyDeck = new List<Card>();
@@ -66,7 +67,9 @@ namespace Client_v0._1._0
                             _cost = m.Cost;
                             _damage = m.Damage;
                             _health = m.Health;
-                            MyDeck.Add(new Minion(AllCards[count].Name, _cost, _health, _damage));
+                            _isCharge = m.IsCharge;
+                            _isTaunt = m.IsTaunt;
+                            MyDeck.Add(new Minion(AllCards[count].Name, _cost, _health, _damage,_isTaunt,_isTaunt));
                         }
                         count++;
                     } while (AllCards[count-1].Name != a.Substring(0, a.LastIndexOf('H') - 2)) ;
@@ -105,22 +108,22 @@ namespace Client_v0._1._0
         {
             this.ControlBox = false;
 
-            AllCards.Add(new Minion("Earthworm_Jim",7,8,7));
-            AllCards.Add(new Minion("Sonic", 3, 4, 2));
-            AllCards.Add(new Minion("Scorpion", 5, 5, 5));
-            AllCards.Add(new Minion("RoboСop", 6,7, 6));
-            AllCards.Add(new Minion("Obelix", 8, 12, 4));
-            AllCards.Add(new Minion("Red_Octopus", 2, 3, 2));
-            AllCards.Add(new Minion("Michael_Jackson", 4,4, 5));
-            AllCards.Add(new Minion("Knuckles", 4, 5, 4));
-            AllCards.Add(new Minion("Power_Ranger", 6, 8,5));
-            AllCards.Add(new Minion("Bugs_Bunny", 3, 4, 3));
-            AllCards.Add(new Minion("Aladdin", 5, 3, 6));
-            AllCards.Add(new Minion("Vectorman", 1, 2, 1));
-            AllCards.Add(new Minion("Ecco_the_Dolphin", 2, 4, 1));
-            AllCards.Add(new Minion("Altered_Beast", 5, 8, 2));
-            AllCards.Add(new Minion("Chip", 1, 1, 2));
-            AllCards.Add(new Minion("Wily", 1, 3, 1));
+            AllCards.Add(new Minion("Earthworm_Jim",7,8,7,false,false));
+            AllCards.Add(new Minion("Sonic", 3, 4, 2,false,true));
+            AllCards.Add(new Minion("Scorpion", 5, 5, 5,false,false));
+            AllCards.Add(new Minion("RoboСop", 6,7, 6,false,false));
+            AllCards.Add(new Minion("Obelix", 8, 12, 4,true,false));
+            AllCards.Add(new Minion("Red_Octopus", 2, 3, 2,false,false));
+            AllCards.Add(new Minion("Michael_Jackson", 4, 4, 5,true,false));
+            AllCards.Add(new Minion("Knuckles", 4, 5, 4,false,true));
+            AllCards.Add(new Minion("Power_Ranger", 6, 8,5,false,false));
+            AllCards.Add(new Minion("Bugs_Bunny", 3, 4, 3,false,false));
+            AllCards.Add(new Minion("Aladdin", 5, 3, 6,false,true));
+            AllCards.Add(new Minion("Vectorman", 1, 2, 1,true,false));
+            AllCards.Add(new Minion("Ecco_the_Dolphin", 2, 4, 1,true,false));
+            AllCards.Add(new Minion("Altered_Beast", 5, 8, 2,false,false));
+            AllCards.Add(new Minion("Chip", 1, 1, 2,false,false));
+            AllCards.Add(new Minion("Wily", 1, 3, 1,false,false));
 
             //(Название , стоимость , вид(хил/дмг) , кол-во получаемых например: 1-на одно существо (хил/дмг) ,кол-во дамага/хила) 
             AllCards.Add(new TargetSpell("Fireball", 4,"damage",1/*таргет*/, 6));
