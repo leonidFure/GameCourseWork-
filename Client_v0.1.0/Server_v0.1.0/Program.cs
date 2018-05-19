@@ -95,7 +95,6 @@ namespace Server_v0._1._0
                     i2 = stream2.Read(bytes2, 0, bytes2.Length);
                     data1 = System.Text.Encoding.ASCII.GetString(bytes1, 0, i1);
                     data2 = System.Text.Encoding.ASCII.GetString(bytes2, 0, i2);
-                    //добавить отправку хп противника
                     msg1 = System.Text.Encoding.ASCII.GetBytes(player1.Health.ToString() + ';' + data1 + ';' + data2);
                     msg2 = System.Text.Encoding.ASCII.GetBytes(player2.Health.ToString() + ';' + data2 + ';' + data1);
                     stream1.Write(msg1, 0, msg1.Length);

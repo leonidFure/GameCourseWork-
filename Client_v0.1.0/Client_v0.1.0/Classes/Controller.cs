@@ -103,18 +103,11 @@ namespace Client_v0._1._0
             catch (ArgumentNullException e)
             {
             }
-            catch (SocketException e)
+            catch (SocketException )
             {
             }
-            catch (StackOverflowException)
+            catch (System.IO.IOException)
             {
-                Console.WriteLine();
-            }
-            finally
-            {
-                client.Close();
-                stream.Close();
-                gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
             }
         }
 
@@ -356,18 +349,17 @@ namespace Client_v0._1._0
                 catch (System.IO.IOException)
                 {
                 }
-                catch (ArgumentNullException)
+                catch (ArgumentNullException e)
                 {
                 }
                 catch (SocketException)
                 {
                 }
-                catch (StackOverflowException)
-                {
-                    
-                }
                 finally
                 {
+                    client.Close();
+                    stream.Close();
+                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
                 }
             }
             Step();
