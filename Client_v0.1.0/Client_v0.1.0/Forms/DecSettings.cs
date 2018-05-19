@@ -69,7 +69,7 @@ namespace Client_v0._1._0
                             _health = m.Health;
                             _isCharge = m.IsCharge;
                             _isTaunt = m.IsTaunt;
-                            MyDeck.Add(new Minion(AllCards[count].Name, _cost, _health, _damage,_isTaunt,_isTaunt));
+                            MyDeck.Add(new Minion(AllCards[count].Name, _cost, _health, _damage,_isTaunt,_isCharge));
                         }
                         count++;
                     } while (AllCards[count-1].Name != a.Substring(0, a.LastIndexOf('H') - 2)) ;
