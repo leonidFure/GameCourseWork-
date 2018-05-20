@@ -150,6 +150,10 @@ namespace Client_v0._1._0
                     int count = lBCrads1.SelectedIndex;
                     Thread clientThread = new Thread(new ParameterizedThreadStart(controller.SendMSG));
                     clientThread.Start(count);
+                //SoundPlayer sp2 = new SoundPlayer(@"DropOnBoard");
+                //sp2.Load();
+                //sp2.Play();
+                //sp2.Stop();
 
             }
         }
