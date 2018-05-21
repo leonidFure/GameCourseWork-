@@ -51,7 +51,7 @@ namespace Client_v0._1._0
                         if (a is Minion)
                             serializer.Serialize(writer, (Minion)a);
                         else
-                            serializer.Serialize(writer, (Spell)a);
+                            serializer.Serialize(writer, (MassSpell)a);
                         sw.Write(';');
                     }
                 }

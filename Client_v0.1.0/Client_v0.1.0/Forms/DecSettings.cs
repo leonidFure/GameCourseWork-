@@ -126,25 +126,16 @@ namespace Client_v0._1._0
             AllCards.Add(new Minion("Wily", 1, 3, 1,false,false));
 
             //(Название , стоимость , вид(хил/дмг) , кол-во получаемых например: 1-на одно существо (хил/дмг) ,кол-во дамага/хила) 
-            AllCards.Add(new TargetSpell("Fireball", 4,"damage",1/*таргет*/, 6));
-            AllCards.Add(new TargetSpell("Slash", 2, "damage", 1/*таргет*/, 3));
-            AllCards.Add(new TargetSpell("Puk", 1, "damage", 1/*таргет*/, 1));
-            AllCards.Add(new TargetSpell("Pushka", 10, "damage", 1/*таргет*/, 10));
+            //AllCards.Add(new TargetSpell("Fireball", 4,"damage",1/*таргет*/, 6));
+            //AllCards.Add(new TargetSpell("Slash", 2, "damage", 1/*таргет*/, 3));
+            //AllCards.Add(new TargetSpell("Puk", 1, "damage", 1/*таргет*/, 1));
+            //AllCards.Add(new TargetSpell("Pushka", 10, "damage", 1/*таргет*/, 10));
 
-            AllCards.Add(new TargetSpell("Healing", 3, "heal", 1/*таргет*/, 8));
-            AllCards.Add(new TargetSpell("Beam", 2, "heal", 1/*таргет*/, 6));
-            AllCards.Add(new TargetSpell("Sun", 1, "heal", 1/*таргет*/, 4));
+            //AllCards.Add(new TargetSpell("Healing", 3, "heal", 1/*таргет*/, 8));
+            //AllCards.Add(new TargetSpell("Beam", 2, "heal", 1/*таргет*/, 6));
+            //AllCards.Add(new TargetSpell("Sun", 1, "heal", 1/*таргет*/, 4));
 
-            AllCards.Add(new MassSpell("Flamestrice", 7, "damage", 7/*Весь стол противника*/,4));
-            AllCards.Add(new MassSpell("Fireball", 4, "damage", 7/*Весь стол противника*/, 2));
-
-            AllCards.Add(new MassSpell("Purification", 2, "heal", 7/*Весь свой стол*/, 4));
-            AllCards.Add(new MassSpell("Hand of God", 5, "heal", 7/*Весь свой стол*/, 10));
-
-            //(Название , стоимость, Вид(Берете карту), сколько карт)
-            AllCards.Add(new DeckSpell("Sprint", 7, "Draw", 4));
-            AllCards.Add(new DeckSpell("Bribe", 5, "Draw", 3));
-            AllCards.Add(new DeckSpell("Trick", 3, "Draw", 2));
+            AllCards.Add(new MassSpell("Flamestrice", 7, "damage",4));
 
 
 
@@ -157,8 +148,8 @@ namespace Client_v0._1._0
                 }
                 else
                 {
-                    //Spell a = (Spell)c;
-                    //lBAllCard.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                    Spell a = (Spell)c;
+                    lBAllCard.Items.Add(a.Name + " (Cost:" + a.Cost + ")" + " SPELL");
                 }
             }
             string[] dirs = Directory.GetFiles(@"Decks");
@@ -225,8 +216,8 @@ namespace Client_v0._1._0
                     }
                     else
                     {
-                        //Spell a = (Spell)c;
-                        //lBYourDeck.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")"+ " SPELL");
+                        Spell a = (Spell)c;
+                        lBAllCard.Items.Add(a.Name + " (Cost:" + a.Cost + ")" + " SPELL");
                     }
                 }
             }

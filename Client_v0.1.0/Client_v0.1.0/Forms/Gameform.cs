@@ -253,7 +253,7 @@ namespace Client_v0._1._0
                     if (c is Minion)
                     {
                         Minion a = (Minion)c;
-                        lBCards2.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                        lBCards2.Items.Add("Card");
                     }
                     else
                     {
@@ -293,7 +293,7 @@ namespace Client_v0._1._0
                 if (c is Minion)
                 {
                     Minion a = (Minion)c;
-                    lBCards2.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
+                    lBCards2.Items.Add("Card");
                 }
                 else
                 {

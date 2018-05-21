@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
+    <Compile Include="MassSpell.cs" />
     <Compile Include="Minion.cs" />
     <Compile Include="NamesOfCards.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -323,7 +323,7 @@ namespace Server_v0._1._0
                     if (int.TryParse(data, out count1))
                     {
 
-                        if (player1.MyCardsOnBord.Count <= 7)
+                        if (player1.MyCardsOnBord.Count < 7)
                         {
                             if (curMana >= player1.CardsInMyHand[count1].Cost)
                             {
@@ -344,9 +344,27 @@ namespace Server_v0._1._0
                                 else
                                 {
                                     Spell spell = (Spell)player1.CardsInMyHand[count1];
-                                    player1.MyCardsOnBord.Add(new Spell(spell.Name, spell.Cost, spell.MagicDamage));
-                                    mes = JsonConvert.SerializeObject((Spell)player1.MyCardsOnBord[player1.MyCardsOnBord.Count - 1]);
-                                    mes2 += JsonConvert.SerializeObject((Spell)player1.MyCardsOnBord[player1.MyCardsOnBord.Count - 1]);
+                                    if (spell is MassSpell massSpell)
+                                    {
+                                        if (massSpell.Feature == "AOEDamage")
+                                        {
+                                            Byte[] buf;
+                                            AOEDamage(ref player2, massSpell.Points);
+                                            mes = massSpell.Feature + "1";
+                                            mes2 = massSpell.Feature + "2";
+                                            foreach (Card c in player2.MyCardsOnBord)
+                                            {
+                                                mes += ';';
+                                                    mes += JsonConvert.SerializeObject((Minion)c);
+                                                mes2 += JsonConvert.SerializeObject((Minion)c);
+                                            }
+                                            buf = System.Text.Encoding.ASCII.GetBytes(mes);
+                                            stream1.Write(buf, 0, buf.Length);
+                                            buf = System.Text.Encoding.ASCII.GetBytes(mes2);
+                                            stream2.Write(buf, 0, buf.Length);
+                                        }
+
+                                    }
                                 }
                                 player1.CardsInMyHand.RemoveAt(count1);
                                 foreach (Card c in player1.CardsInMyHand)
@@ -367,7 +385,7 @@ namespace Server_v0._1._0
                                         mes2 += JsonConvert.SerializeObject((Spell)c);
                                 }
                                 mes2 += ';' + curMana.ToString();mes2 += ';'+player1.MyDeck.Count.ToString();
-                                mes += ';' + curMana.ToString();
+                                mes += ';' + curMana.ToString(); ; mes += ';' + player1.MyDeck.Count.ToString();
                                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(mes);
                                 stream2.Write(msg, 0, msg.Length);
                                 msg = System.Text.Encoding.ASCII.GetBytes(mes2);
@@ -454,6 +472,24 @@ namespace Server_v0._1._0
                                     client2.Close();
                                     stream1.Close();
                                     stream2.Close();
+                                }
+                                if (counts[0] == "AOEDamage")
+                                {
+                                    AOEDamage(ref player2, int.Parse(counts[1]));
+                                    mes1 = counts[0]+"1";
+                                    mes2 = counts[0] + "2";
+                                    foreach (Card c in player2.MyCardsOnBord)
+                                    {
+                                        mes1 += ';';
+                                        if (c is Minion)
+                                            mes1 += JsonConvert.SerializeObject((Minion)c);
+                                        else
+                                            mes1 += JsonConvert.SerializeObject((Spell)c);
+                                    }
+                                    msg = System.Text.Encoding.ASCII.GetBytes(mes1);
+                                    stream1.Write(msg, 0, msg.Length);
+                                    msg = System.Text.Encoding.ASCII.GetBytes(mes2);
+                                    stream2.Write(msg, 0, msg.Length);
                                 }
                                 if (int.TryParse(counts[1], out count2))
                                 {
@@ -729,6 +765,16 @@ namespace Server_v0._1._0
                 catch
                 {
 
+                }
+            }
+        }
+        public void AOEDamage(ref Player player, int damage)
+        {
+            foreach (Card c in player.MyCardsOnBord)
+            {
+                if (c is Minion minion)
+                {
+                    minion.Health -= damage;
                 }
             }
         }

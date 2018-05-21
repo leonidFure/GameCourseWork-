@@ -76,7 +76,7 @@
             this.lBCards2.FormattingEnabled = true;
             this.lBCards2.Location = new System.Drawing.Point(901, 65);
             this.lBCards2.Name = "lBCards2";
-            this.lBCards2.Size = new System.Drawing.Size(184, 251);
+            this.lBCards2.Size = new System.Drawing.Size(250, 251);
             this.lBCards2.TabIndex = 4;
             // 
             // lBCrads1
@@ -84,16 +84,16 @@
             this.lBCrads1.FormattingEnabled = true;
             this.lBCrads1.Location = new System.Drawing.Point(901, 414);
             this.lBCrads1.Name = "lBCrads1";
-            this.lBCrads1.Size = new System.Drawing.Size(184, 251);
+            this.lBCrads1.Size = new System.Drawing.Size(250, 251);
             this.lBCrads1.TabIndex = 5;
             this.lBCrads1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lBCrads1_MouseDown);
             // 
             // bStep
             // 
             this.bStep.Font = new System.Drawing.Font("Arial", 25.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bStep.Location = new System.Drawing.Point(457, 6);
+            this.bStep.Location = new System.Drawing.Point(901, 322);
             this.bStep.Name = "bStep";
-            this.bStep.Size = new System.Drawing.Size(184, 53);
+            this.bStep.Size = new System.Drawing.Size(250, 49);
             this.bStep.TabIndex = 8;
             this.bStep.Text = "Your Turn";
             this.bStep.UseVisualStyleBackColor = true;
@@ -113,7 +113,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1097, 733);
+            this.ClientSize = new System.Drawing.Size(1181, 733);
             this.Controls.Add(this.bStep);
             this.Controls.Add(this.bExit);
             this.Controls.Add(this.lBCrads1);

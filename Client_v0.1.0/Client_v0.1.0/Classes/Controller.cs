@@ -179,14 +179,16 @@ namespace Client_v0._1._0
 
                         });
                         Enemy.CardsInMyHand.Clear();
-                        for (int i1 = 1; i1 < lines.Length - 1; i1++)
+                        for (int i1 = 1; i1 < lines.Length - 2; i1++)
                         {
                             if (lines[i1][2] == 'H')
                                 Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
                             else
                                 Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
                         }
-                        gameform.Invoke((MethodInvoker)delegate () { gameform.ChangeHandDeck(Enemy.CardsInMyHand, "Enemy", Enemy.Energy, Enemy.MyDeck.Count); });
+                        Enemy.Energy = int.Parse(lines[lines.Length - 2]);
+                        
+                        gameform.Invoke((MethodInvoker)delegate () { gameform.ChangeHandDeck(Enemy.CardsInMyHand, "Enemy", Enemy.Energy, int.Parse(lines[lines.Length - 1])); });
                     }
 
                     if (lines[0] == "Your step")
@@ -228,6 +230,22 @@ namespace Client_v0._1._0
                             }
                             catch { }
                         }
+                    }
+                    if (lines[0] == "AOEDamage1")
+                    {
+                        Enemy.MyCardsOnBord.Clear();
+                        for (int i1 = 1; i1 < lines.Length; i1++)
+                        {
+                            if (lines[i1][2] == 'H')
+                                Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
+                            else
+                                Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                        }
+                        gameform.Invoke((MethodInvoker)delegate ()
+                        {
+                            gameform.AddCardsOnBord(You.MyCardsOnBord, true, "Enemy");
+
+                        });
                     }
 
                     if (lines[0] == "DYour step")
@@ -413,7 +431,6 @@ namespace Client_v0._1._0
             {
                 client.Close();
                 stream.Close();
-                networkStream.Close();
                 try
                 {
                     gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
