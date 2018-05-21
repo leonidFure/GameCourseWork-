@@ -183,6 +183,7 @@ namespace Client_v0._1._0
             Thread clientThread = new Thread(new ParameterizedThreadStart(controller.SendMSG));
             clientThread.Start("End game");
         }
+
         /// <summary>
         /// Сообщает контролеру об атаке картой персонажа соперника
         /// </summary>
@@ -210,6 +211,7 @@ namespace Client_v0._1._0
             foreach (Control c in YourPanel.Controls)
                 c.BackColor = Color.Gray;
         }
+
         /// <summary>
         /// Метод, вызываемый для изменения списка карт 
         /// находящихся в руке одного из игроков
@@ -259,6 +261,7 @@ namespace Client_v0._1._0
                 userPlayer2.Energy = energy;
             }
         }
+
         /// <summary>
         /// Метод, вызываемый для изменения списка карт
         /// находящихся в руке обоих игроков
@@ -297,6 +300,7 @@ namespace Client_v0._1._0
             lOffCard1.Text = "Cards: " + CountCards1;
             lOffCard2.Text = "Cards: " + CountCards1;
         }
+
         /// <summary>
         /// Метод добавления карты на стол
         /// </summary>
@@ -345,6 +349,7 @@ namespace Client_v0._1._0
                 userPlayer2.Energy = energy;
             }
         }
+
         /// <summary>
         /// Метод добавления карт на стол
         /// </summary>
