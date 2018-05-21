@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 
 namespace Client_v0._1._0
@@ -31,6 +32,7 @@ namespace Client_v0._1._0
         static TcpClient client;
         
         NetworkStream stream;
+        NetworkStream networkStream;
         String responseData = String.Empty;
         Player You, Enemy;
         public void Connect()
@@ -102,7 +104,7 @@ namespace Client_v0._1._0
                         });
                     }
 
-                    Step();
+                        Step();
                     
                 }
                 else
@@ -113,20 +115,31 @@ namespace Client_v0._1._0
             }
             catch (ArgumentNullException e)
             {
+                try
+                {
+                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
+                }
+                catch { }
             }
             catch (SocketException )
-            {
-            }
-            catch (System.IO.IOException)
-            {
-            }
-            finally
             {
                 try
                 {
                     gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
                 }
                 catch { }
+            }
+            catch (System.IO.IOException)
+            {
+                try
+                {
+                    gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
+                }
+                catch { }
+            }
+            finally
+            {
+                
             }
         }
 
@@ -138,7 +151,7 @@ namespace Client_v0._1._0
             {
                 while ((i = stream.Read(d, 0, d.Length)) != 0)
                 {
-                
+
                     responseData = System.Text.Encoding.ASCII.GetString(d, 0, i);
                     string[] lines = responseData.Split(';');
                     if (responseData[0] == '{')
@@ -178,12 +191,16 @@ namespace Client_v0._1._0
 
                     if (lines[0] == "Your step")
                     {
-
-                        gameform.Invoke((MethodInvoker)delegate ()
+                        try
                         {
-                            gameform.ChangeTurn(true, "Your Turn");
 
-                        });
+                            gameform.Invoke((MethodInvoker)delegate ()
+                            {
+                                gameform.ChangeTurn(true, "Your Turn");
+
+                            });
+                        }
+                        catch { }
                         if (lines.Length > 2)
                         {
                             int next = 0;
@@ -200,12 +217,16 @@ namespace Client_v0._1._0
                                 else
                                     You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
                             }
-                            gameform.Invoke((MethodInvoker)delegate ()
+                            try
                             {
-                                int countCards = lines.Length - next - 2;
-                                You.Energy = int.Parse(lines[lines.Length - 1]);
-                                gameform.ChangeHandDeck(You.CardsInMyHand, "You", int.Parse(lines[lines.Length - 1]), countCards);
-                            });
+                                gameform.Invoke((MethodInvoker)delegate ()
+                                {
+                                    int countCards = lines.Length - next - 2;
+                                    You.Energy = int.Parse(lines[lines.Length - 1]);
+                                    gameform.ChangeHandDeck(You.CardsInMyHand, "You", int.Parse(lines[lines.Length - 1]), countCards);
+                                });
+                            }
+                            catch { }
                         }
                     }
 
@@ -324,6 +345,24 @@ namespace Client_v0._1._0
                     {
                         client.Close();
                         stream.Close();
+                        try
+                        {
+                            gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame(responseData); });
+                        }
+                        catch { }
+                        return;
+                    }
+                    if (responseData == "You win")
+                    {
+                        client.Close();
+                        stream.Close();
+                        gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame(responseData); });
+                        return;
+                    }
+                    if (responseData == "You lose")
+                    {
+                        client.Close();
+                        stream.Close();
                         gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame(responseData); });
                         return;
                     }
@@ -344,7 +383,7 @@ namespace Client_v0._1._0
                     if (lines[0][0] == 'H')
                     {
                         You.CardsInMyHand.Clear();
-                        for (int i1 = 2; i1 < lines.Length - 1; i1++)
+                        for (int i1 = 2; i1 < lines.Length - 2; i1++)
                         {
                             if (lines[i1][2] == 'H')
                                 You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
@@ -359,21 +398,22 @@ namespace Client_v0._1._0
                             {
                                 gameform.AddCardOnBord(m, CountCarde, int.Parse(lines[lines.Length - 1]), "You");
 
-                                You.Energy = int.Parse(lines[lines.Length - 1]);
+                                You.Energy = int.Parse(lines[lines.Length - 2]);
                                 CountCarde++;
                             }
-                            gameform.ChangeHandDeck(You.CardsInMyHand, "You", You.Energy, You.MyDeck.Count);
+                            gameform.ChangeHandDeck(You.CardsInMyHand, "You", You.Energy, int.Parse(lines[lines.Length - 1]));
                         });
                     }
-                
-            }
-            Step();
-            return;
+
+                }
+                Step();
+                return;
             }
             catch (System.IO.IOException)
             {
                 client.Close();
                 stream.Close();
+                networkStream.Close();
                 try
                 {
                     gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
@@ -383,10 +423,11 @@ namespace Client_v0._1._0
             catch (ArgumentNullException e)
             {
             }
+            catch (ObjectDisposedException) { }
             catch (SocketException)
             {
                 client.Close();
-                stream.Close();
+                networkStream.Close();
                 try
                 {
                     gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });
@@ -399,6 +440,8 @@ namespace Client_v0._1._0
             }
 
         }
+
+        
 
         public void SendMSG(object count)
         {

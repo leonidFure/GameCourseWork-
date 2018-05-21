@@ -180,10 +180,8 @@ namespace Client_v0._1._0
 
         private void bExit_Click(object sender, EventArgs e)
         {
-            //Добавить отправку контролеру сообщения об окончании партии
-            Application.Exit();
-            MainMenu mainMenu = new MainMenu();
-            mainMenu.Show();
+            Thread clientThread = new Thread(new ParameterizedThreadStart(controller.SendMSG));
+            clientThread.Start("End game");
         }
         /// <summary>
         /// Сообщает контролеру об атаке картой персонажа соперника
