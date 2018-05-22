@@ -142,26 +142,39 @@ namespace Client_v0._1._0
             else
                 e.Effect = DragDropEffects.None;
         }
-
+        private void Carde_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Text))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
         private void YourPanel_DragDrop(object sender, DragEventArgs e)
         {
             if (sStep)
             {
+                if (lBCrads1.SelectedIndex >= 0)
+                {
                     int count = lBCrads1.SelectedIndex;
                     Thread clientThread = new Thread(new ParameterizedThreadStart(controller.SendMSG));
                     clientThread.Start(count);
-                //SoundPlayer sp2 = new SoundPlayer(@"DropOnBoard");
-                //sp2.Load();
-                //sp2.Play();
-                //sp2.Stop();
-
+                }
             }
         }
 
         private void Gameform_Load(object sender, EventArgs e)
         {
+
             Thread clientThread = new Thread(new ThreadStart(controller.Connect));
             clientThread.Start();
+            foreach (Control c in Controls)
+            {
+                if (c.Tag != "11")
+                {
+                    c.Visible = false;
+                }
+            }
+                
             this.ControlBox = false;
             List<Card> MyDeck = new List<Card>();
             bStep.Enabled = false;
@@ -212,13 +225,7 @@ namespace Client_v0._1._0
 
         private void YourPanel_Click(object sender, EventArgs e)
         {
-            bSelectedCard = false;
-            foreach (Control c in YourPanel.Controls)
-            {
-                c.BackColor = Color.Gray;
-                c.BackgroundImage = Picture.Card;
-                lBCrads1.Enabled = true;
-            }
+            
         }
 
         /// <summary>
@@ -243,11 +250,11 @@ namespace Client_v0._1._0
                     }
                     if (c is MassSpell massSpell)
                     {
-                        lBCrads1.Items.Add(massSpell.Name + " (Cost:" + massSpell.Cost + ", Feat:" + massSpell.Feature + ")");
+                        lBCrads1.Items.Add(massSpell.Name + " (Cost:" + massSpell.Cost + ", Feat:" + massSpell.Feature + ")"+"MASS");
                     }
                     if (c is TargetSpell targetSpell)
                     {
-                        lBCrads1.Items.Add(targetSpell.Name + " (Cost:" + targetSpell.Cost + ", Feat:" + targetSpell.Feature + ", Points:" + targetSpell.Points + ")");
+                        lBCrads1.Items.Add(targetSpell.Name + " (Cost:" + targetSpell.Cost + ", Feat:" + targetSpell.Feature + ", Points:" + targetSpell.Points + ")"+"TARGET");
                     }
                 }
                 lOffCard1.Text = "Cards: " + countCards.ToString();
@@ -283,11 +290,11 @@ namespace Client_v0._1._0
                 }
                 if (c is MassSpell massSpell)
                 {
-                    lBCrads1.Items.Add(massSpell.Name + " (Cost:" + massSpell.Cost + ", Feat:" + massSpell.Feature + ")");
+                    lBCrads1.Items.Add(massSpell.Name + " (Cost:" + massSpell.Cost + ", Feat:" + massSpell.Feature + ")"+"MASS");
                 }
                 if (c is TargetSpell targetSpell)
                 {
-                    lBCrads1.Items.Add(targetSpell.Name + " (Cost:" + targetSpell.Cost + ", Feat:" + targetSpell.Feature + ", Points:" + targetSpell.Points + ")");
+                    lBCrads1.Items.Add(targetSpell.Name + " (Cost:" + targetSpell.Cost + ", Feat:" + targetSpell.Feature + ", Points:" + targetSpell.Points + ")"+"TARGET");
                 }
             }
             foreach (Card c in cards2)
@@ -298,7 +305,31 @@ namespace Client_v0._1._0
             lOffCard1.Text = "Cards: " + CountCards1;
             lOffCard2.Text = "Cards: " + CountCards1;
         }
-
+        private void Carde_DragDrop(object sender, DragEventArgs e)
+        {
+            if (lBCrads1.SelectedIndex > 0)
+            {
+                string a = e.Data.GetData(DataFormats.Text).ToString();
+                if (a[a.Length - 1] == 'T')
+                {
+                    Carde c = (Carde)sender;
+                    int i;
+                    string messege;
+                    if (c.EnIndex == -1)
+                    {
+                        i = c.Index;
+                        messege = lBCrads1.SelectedIndex.ToString() + ";" + i.ToString() + ";you";
+                    }
+                    else
+                    {
+                        i = c.EnIndex;
+                        messege = lBCrads1.SelectedIndex.ToString() + ";" + i.ToString() + ";enemy";
+                    }
+                    Thread clientThread = new Thread(new ParameterizedThreadStart(controller.SendMSG));
+                    clientThread.Start(messege);
+                }
+            }
+        }
         /// <summary>
         /// Метод добавления карты на стол
         /// </summary>
@@ -320,9 +351,22 @@ namespace Client_v0._1._0
                     Health = m.Health,
                     image = (Image)Picture.ResourceManager.GetObject(m.Name),
                     Index = index,
-                    EnIndex = -1
+                    EnIndex = -1,
+                    AllowDrop = true
+                    
                 };
+                if (m.IsCharge && m.IsTaunt)
+                    c.Vid = "Ch and Ta";
+                else
+                {
+                    if (m.IsTaunt)
+                        c.Vid = "Taunt";
+                    if (m.IsCharge)
+                        c.Vid = "Charge";
 
+                }
+                c.DragEnter += new DragEventHandler(Carde_DragEnter);
+                c.DragDrop += new DragEventHandler(Carde_DragDrop);
                 YourPanel.Controls.Add(c);
                 c.Click += new System.EventHandler(this.MouseClickNew);
                 cardX += 125;
@@ -339,8 +383,21 @@ namespace Client_v0._1._0
                     image = (Image)Picture.ResourceManager.GetObject(m.Name),
                     Index = -1,
                     EnIndex = index,
-                    Tag = "Enemy"
+                    Tag = "Enemy",
+                    AllowDrop = true
                 };
+                if (m.IsCharge && m.IsTaunt)
+                    c.Vid = "Ch and Ta";
+                else
+                {
+                    if (m.IsTaunt)
+                        c.Vid = "Taunt";
+                    if (m.IsCharge)
+                        c.Vid = "Charge";
+
+                }
+                c.DragEnter += new DragEventHandler(Carde_DragEnter);
+                c.DragDrop += new DragEventHandler(Carde_DragDrop);
                 cardX2 += 125;
                 YourPanel.Controls.Add(c);
                 c.Click += new System.EventHandler(this.MouseEnemyClickNew);
@@ -372,8 +429,21 @@ namespace Client_v0._1._0
                             Health = m.Health,
                             image = (Image)Picture.ResourceManager.GetObject(m.Name),
                             Index = j,
-                            EnIndex = -1
+                            EnIndex = -1,
+                        AllowDrop = true
                         };
+                        if (m.IsCharge && m.IsTaunt)
+                            c.Vid = "Ch and Ta";
+                        else
+                        {
+                            if (m.IsTaunt)
+                                c.Vid = "Taunt";
+                            if (m.IsCharge)
+                                c.Vid = "Charge";
+
+                        }
+                        c.DragEnter += new DragEventHandler(Carde_DragEnter);
+                        c.DragDrop += new DragEventHandler(Carde_DragDrop);
                         YourPanel.Controls.Add(c);
                         c.Click += new System.EventHandler(this.MouseClickNew);
                         cardX += 125;
@@ -399,8 +469,21 @@ namespace Client_v0._1._0
                             image = (Image)Picture.ResourceManager.GetObject(m.Name),
                             Index = -1,
                             EnIndex = j,
-                            Tag = "Enemy"
+                            Tag = "Enemy",
+                        AllowDrop = true
                         };
+                        if (m.IsCharge && m.IsTaunt)
+                            c.Vid = "Ch and Ta";
+                        else
+                        {
+                            if (m.IsTaunt)
+                                c.Vid = "Taunt";
+                            if (m.IsCharge)
+                                c.Vid = "Charge";
+
+                        }
+                        c.DragEnter += new DragEventHandler(Carde_DragEnter);
+                        c.DragDrop += new DragEventHandler(Carde_DragDrop);
                         YourPanel.Controls.Add(c);
                         c.Click += new System.EventHandler(this.MouseEnemyClickNew);
                         cardX2 += 125;
@@ -432,6 +515,7 @@ namespace Client_v0._1._0
         {
             sStep = step;
             bStep.Enabled = step;
+            bExit.Enabled = step;
             bStep.Text = turn;
         }
 

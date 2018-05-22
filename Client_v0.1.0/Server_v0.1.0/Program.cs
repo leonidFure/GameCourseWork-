@@ -383,95 +383,130 @@ namespace Server_v0._1._0
                         {
                             if (curMana >= player1.CardsInMyHand[count1].Cost)
                             {
-                                curMana -= player1.CardsInMyHand[count1].Cost;
-                                String mes = "";
-                                String mes2 = "Hand;";
-                                if (player1.CardsInMyHand[count1] is Minion minion)
+                                if (player1.CardsInMyHand[count1] is TargetSpell)
                                 {
-                                    if (minion.IsCharge)
-                                        player1.MyCardsOnBord.Add(new Minion(minion.Name, minion.Cost, minion.Health, minion.Damage, minion.IsTaunt, minion.IsCharge, true));
-                                    else
-                                        player1.MyCardsOnBord.Add(new Minion(minion.Name, minion.Cost, minion.Health, minion.Damage, minion.IsTaunt, minion.IsCharge));
-                                    if (minion.IsTaunt)
-                                        player1.HaveTaunt++;
-                                    mes = JsonConvert.SerializeObject((Minion)player1.MyCardsOnBord[player1.MyCardsOnBord.Count - 1]);
-                                    mes2 += JsonConvert.SerializeObject((Minion)player1.MyCardsOnBord[player1.MyCardsOnBord.Count - 1]);
+                                    byte[] msg = System.Text.Encoding.ASCII.GetBytes("Please, choose card.");
+                                    stream1.Write(msg, 0, msg.Length);
                                 }
-                                if (player1.CardsInMyHand[count1] is MassSpell mass)
+                                else
                                 {
-                                    if (mass.Feature == "damage")
+                                    curMana -= player1.CardsInMyHand[count1].Cost;
+                                    String mes = "";
+                                    String mes2 = "Hand;";
+                                    if (player1.CardsInMyHand[count1] is Minion minion)
                                     {
-                                        mes = "AOESpell";
-                                        mes2 = "AOEEnemySpell";
-                                        List<Minion> Minions = new List<Minion>();
-                                        foreach (Card c in player2.MyCardsOnBord)
+                                        if (minion.IsCharge)
+                                            player1.MyCardsOnBord.Add(new Minion(minion.Name, minion.Cost, minion.Health, minion.Damage, minion.IsTaunt, minion.IsCharge, true));
+                                        else
+                                            player1.MyCardsOnBord.Add(new Minion(minion.Name, minion.Cost, minion.Health, minion.Damage, minion.IsTaunt, minion.IsCharge));
+                                        if (minion.IsTaunt)
+                                            player1.HaveTaunt++;
+                                        mes = JsonConvert.SerializeObject((Minion)player1.MyCardsOnBord[player1.MyCardsOnBord.Count - 1]);
+                                        mes2 += JsonConvert.SerializeObject((Minion)player1.MyCardsOnBord[player1.MyCardsOnBord.Count - 1]);
+                                    }
+                                    if (player1.CardsInMyHand[count1] is MassSpell mass)
+                                    {
+                                        if (mass.Feature == "damage")
                                         {
-                                            if (c is Minion m)
+                                            mes = "AOESpell";
+                                            mes2 = "AOEEnemySpell";
+                                            List<Minion> Minions = new List<Minion>();
+                                            foreach (Card c in player2.MyCardsOnBord)
                                             {
-                                                m.Health -= mass.Drow;
-                                                if (m.Health > 0)
+                                                if (c is Minion m)
                                                 {
-                                                    Minions.Add(m);
+                                                    m.Health -= mass.Drow;
+                                                    if (m.Health > 0)
+                                                    {
+                                                        Minions.Add(m);
+                                                    }
                                                 }
                                             }
+                                            player2.MyCardsOnBord.Clear();
+                                            foreach (Minion min in Minions)
+                                            {
+                                                player2.MyCardsOnBord.Add(min);
+                                            }
+                                            foreach (Card c in player2.MyCardsOnBord)
+                                            {
+                                                mes += ';';
+                                                if (c is Minion)
+                                                    mes += JsonConvert.SerializeObject((Minion)c);
+                                            }
+                                            mes += ";next";
+                                            foreach (Card c in player2.MyCardsOnBord)
+                                            {
+                                                mes2 += ';';
+                                                if (c is Minion)
+                                                    mes2 += JsonConvert.SerializeObject((Minion)c);
+                                            }
+                                            mes2 += ";next";
                                         }
-                                        player2.MyCardsOnBord.Clear();
-                                        foreach (Minion min in Minions)
+                                        if (mass.Feature == "heal")
                                         {
-                                            player2.MyCardsOnBord.Add(min);
+                                            mes2 = "AOESpell";
+                                            mes = "AOEEnemySpell";
+                                            foreach (Card c in player1.MyCardsOnBord)
+                                            {
+                                                if (c is Minion m)
+                                                {
+                                                    m.Health += mass.Drow;
+                                                }
+                                            }
+                                            foreach (Card c in player1.MyCardsOnBord)
+                                            {
+                                                mes += ';';
+                                                if (c is Minion)
+                                                    mes += JsonConvert.SerializeObject((Minion)c);
+                                            }
+                                            mes += ";next";
+                                            foreach (Card c in player1.MyCardsOnBord)
+                                            {
+                                                mes2 += ';';
+                                                if (c is Minion)
+                                                    mes2 += JsonConvert.SerializeObject((Minion)c);
+                                            }
+                                            mes2 += ";next";
                                         }
                                     }
-
-                                    foreach (Card c in player2.MyCardsOnBord)
+                                    player1.CardsInMyHand.RemoveAt(count1);
+                                    foreach (Card c in player1.CardsInMyHand)
                                     {
                                         mes += ';';
                                         if (c is Minion)
                                             mes += JsonConvert.SerializeObject((Minion)c);
+                                        if (c is MassSpell mas)
+                                            mes += JsonConvert.SerializeObject(mas);
+                                        if (c is TargetSpell target)
+                                            mes += JsonConvert.SerializeObject(target);
                                     }
-                                    mes += ";next";
-                                    foreach (Card c in player2.MyCardsOnBord)
+
+                                    foreach (Card c in player1.CardsInMyHand)
                                     {
                                         mes2 += ';';
                                         if (c is Minion)
                                             mes2 += JsonConvert.SerializeObject((Minion)c);
+                                        if (c is MassSpell mas)
+                                            mes2 += JsonConvert.SerializeObject(mas);
+                                        if (c is TargetSpell target)
+                                            mes2 += JsonConvert.SerializeObject(target);
                                     }
-                                    mes2 += ";next";
-                                }
-                                player1.CardsInMyHand.RemoveAt(count1);
-                                foreach (Card c in player1.CardsInMyHand)
-                                {
-                                    mes += ';';
-                                    if (c is Minion)
-                                        mes += JsonConvert.SerializeObject((Minion)c);
-                                    if (c is MassSpell mas)
-                                        mes += JsonConvert.SerializeObject(mas);
-                                    if (c is TargetSpell target)
-                                        mes += JsonConvert.SerializeObject(target);
-                                }
 
-                                foreach (Card c in player1.CardsInMyHand)
-                                {
-                                    mes2 += ';';
-                                    if (c is Minion)
-                                        mes2 += JsonConvert.SerializeObject((Minion)c);
-                                    if (c is MassSpell mas)
-                                        mes2 += JsonConvert.SerializeObject(mas);
-                                    if (c is TargetSpell target)
-                                        mes2 += JsonConvert.SerializeObject(target);
-                                }
-                                mes2 += ';' + curMana.ToString();mes2 += ';'+player1.MyDeck.Count.ToString();
-                                mes += ';' + curMana.ToString(); ; mes += ';' + player1.MyDeck.Count.ToString();
-                                byte[] msg = System.Text.Encoding.ASCII.GetBytes(mes);
-                                stream2.Write(msg, 0, msg.Length);
-                                msg = System.Text.Encoding.ASCII.GetBytes(mes2);
-                                stream1.Write(msg, 0, msg.Length);
+                                    mes2 += ';' + curMana.ToString(); mes2 += ';' + player1.MyDeck.Count.ToString();
+                                    mes += ';' + curMana.ToString(); ; mes += ';' + player1.MyDeck.Count.ToString();
+                                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(mes);
+                                    stream2.Write(msg, 0, msg.Length);
+                                    msg = System.Text.Encoding.ASCII.GetBytes(mes2);
+                                    stream1.Write(msg, 0, msg.Length);
 
+                                }
                             }
                             else
                             {
                                 byte[] msg = System.Text.Encoding.ASCII.GetBytes("Not enough energy.");
                                 stream1.Write(msg, 0, msg.Length);
                             }
+                            
                         }
                         else
                         {
@@ -552,26 +587,41 @@ namespace Server_v0._1._0
                                 {
                                     count1 = int.Parse(counts[0]);
                                     count2 = int.Parse(counts[1]);
-                                    Minion m1 = (Minion)player1.MyCardsOnBord[count1];
-                                    Minion m2 = (Minion)player2.MyCardsOnBord[count2];
-                                    if (m1.CanAttack)
+                                    ///
+                                    ///исправить ошибкуx
+                                    ///
+                                    if (counts.Length == 3)
                                     {
-                                        if (player2.HaveTaunt == 0)
+                                        if (player1.CardsInMyHand[count1] is TargetSpell target)
                                         {
-                                            m1.Health -= m2.Damage;
-                                            m2.Health -= m1.Damage;
-                                            if (m1.Health > 0)
-                                                player1.MyCardsOnBord[count1] = m1;
+                                            curMana -= target.Cost;
+                                            Minion minion;
+                                            if (counts[2] == "you")
+                                            {
+                                                minion = (Minion)player1.MyCardsOnBord[count2];
+                                                if (target.Feature == "heal")
+                                                    minion.Health += target.Points;
+                                                if (target.Feature == "damage")
+                                                    minion.Health -= target.Points;
+                                                if (minion.Health > 0)
+                                                    player1.MyCardsOnBord[count2] = minion;
+                                                else
+                                                    player1.MyCardsOnBord.RemoveAt(count2);
+                                            }
                                             else
-                                                player1.MyCardsOnBord.RemoveAt(count1);
-                                            if (m2.Health > 0)
-                                                player2.MyCardsOnBord[count2] = m2;
-                                            else
-                                                player2.MyCardsOnBord.RemoveAt(count2);
-                                            m1.CanAttack = false;
-                                            mes1 += "Attac";
-                                            mes2 += "Attac";
-
+                                            {
+                                                minion = (Minion)player2.MyCardsOnBord[count2];
+                                                if (target.Feature == "heal")
+                                                    minion.Health += target.Points;
+                                                if (target.Feature == "damage")
+                                                    minion.Health -= target.Points;
+                                                if (minion.Health > 0)
+                                                    player2.MyCardsOnBord[count2] = minion;
+                                                else
+                                                    player2.MyCardsOnBord.RemoveAt(count2);
+                                            }
+                                            mes1 = "Spell1";
+                                            mes2 = "Spell2";
                                             foreach (Card c in player1.MyCardsOnBord)
                                             {
                                                 mes1 += ';';
@@ -612,14 +662,45 @@ namespace Server_v0._1._0
                                                     mes2 += JsonConvert.SerializeObject((Spell)c);
 
                                             }
+                                            player1.CardsInMyHand.RemoveAt(count2);
+                                            mes1 += ";hand";
+                                            foreach (Card c in player1.CardsInMyHand)
+                                            {
+                                                mes1 += ';';
+                                                if (c is Minion)
+                                                    mes1 += JsonConvert.SerializeObject((Minion)c);
+                                                if (c is MassSpell mas)
+                                                    mes1 += JsonConvert.SerializeObject(mas);
+                                                if (c is TargetSpell t)
+                                                    mes1 += JsonConvert.SerializeObject(t);
+                                            }
+                                            mes2 += ";hand";
+                                            foreach (Card c in player1.CardsInMyHand)
+                                            {
+                                                mes2 += ';';
+                                                if (c is Minion)
+                                                    mes2 += JsonConvert.SerializeObject((Minion)c);
+                                                if (c is MassSpell mas)
+                                                    mes2 += JsonConvert.SerializeObject(mas);
+                                                if (c is TargetSpell t)
+                                                    mes2 += JsonConvert.SerializeObject(t);
+                                            }
+                                            
+                                            mes2 += ';' + curMana.ToString(); mes2 += ';' + player1.MyDeck.Count.ToString();
+                                            mes1 += ';' + curMana.ToString(); ; mes1 += ';' + player1.MyDeck.Count.ToString();
                                             msg = System.Text.Encoding.ASCII.GetBytes(mes1);
                                             stream1.Write(msg, 0, msg.Length);
                                             msg = System.Text.Encoding.ASCII.GetBytes(mes2);
                                             stream2.Write(msg, 0, msg.Length);
                                         }
-                                        else
+                                    }
+                                    else
+                                    {
+                                        Minion m1 = (Minion)player1.MyCardsOnBord[count1];
+                                        Minion m2 = (Minion)player2.MyCardsOnBord[count2];
+                                        if (m1.CanAttack)
                                         {
-                                            if (m2.IsTaunt)
+                                            if (player2.HaveTaunt == 0)
                                             {
                                                 m1.Health -= m2.Damage;
                                                 m2.Health -= m1.Damage;
@@ -630,13 +711,10 @@ namespace Server_v0._1._0
                                                 if (m2.Health > 0)
                                                     player2.MyCardsOnBord[count2] = m2;
                                                 else
-                                                {
                                                     player2.MyCardsOnBord.RemoveAt(count2);
-                                                    player2.HaveTaunt--;
-                                                }
                                                 m1.CanAttack = false;
-                                                mes1 += "Attac";
-                                                mes2 += "Attac";
+                                                mes1 = "Attac";
+                                                mes2 = "Attac";
 
                                                 foreach (Card c in player1.MyCardsOnBord)
                                                 {
@@ -685,15 +763,82 @@ namespace Server_v0._1._0
                                             }
                                             else
                                             {
-                                                msg = System.Text.Encoding.ASCII.GetBytes("Card can not attack.");
-                                                stream1.Write(msg, 0, msg.Length);
+                                                if (m2.IsTaunt)
+                                                {
+                                                    m1.Health -= m2.Damage;
+                                                    m2.Health -= m1.Damage;
+                                                    if (m1.Health > 0)
+                                                        player1.MyCardsOnBord[count1] = m1;
+                                                    else
+                                                        player1.MyCardsOnBord.RemoveAt(count1);
+                                                    if (m2.Health > 0)
+                                                        player2.MyCardsOnBord[count2] = m2;
+                                                    else
+                                                    {
+                                                        player2.MyCardsOnBord.RemoveAt(count2);
+                                                        player2.HaveTaunt--;
+                                                    }
+                                                    m1.CanAttack = false;
+                                                    mes1 += "Attac";
+                                                    mes2 += "Attac";
+
+                                                    foreach (Card c in player1.MyCardsOnBord)
+                                                    {
+                                                        mes1 += ';';
+                                                        if (c is Minion)
+                                                            mes1 += JsonConvert.SerializeObject((Minion)c);
+                                                        else
+                                                            mes1 += JsonConvert.SerializeObject((Spell)c);
+
+                                                    }
+                                                    mes1 += ";next";
+
+                                                    foreach (Card c in player2.MyCardsOnBord)
+                                                    {
+                                                        mes1 += ';';
+                                                        if (c is Minion)
+                                                            mes1 += JsonConvert.SerializeObject((Minion)c);
+                                                        else
+                                                            mes1 += JsonConvert.SerializeObject((Spell)c);
+
+                                                    }
+
+                                                    foreach (Card c in player2.MyCardsOnBord)
+                                                    {
+                                                        mes2 += ';';
+                                                        if (c is Minion)
+                                                            mes2 += JsonConvert.SerializeObject((Minion)c);
+                                                        else
+                                                            mes2 += JsonConvert.SerializeObject((Spell)c);
+
+                                                    }
+                                                    mes2 += ";next";
+                                                    foreach (Card c in player1.MyCardsOnBord)
+                                                    {
+                                                        mes2 += ';';
+                                                        if (c is Minion)
+                                                            mes2 += JsonConvert.SerializeObject((Minion)c);
+                                                        else
+                                                            mes2 += JsonConvert.SerializeObject((Spell)c);
+
+                                                    }
+                                                    msg = System.Text.Encoding.ASCII.GetBytes(mes1);
+                                                    stream1.Write(msg, 0, msg.Length);
+                                                    msg = System.Text.Encoding.ASCII.GetBytes(mes2);
+                                                    stream2.Write(msg, 0, msg.Length);
+                                                }
+                                                else
+                                                {
+                                                    msg = System.Text.Encoding.ASCII.GetBytes("Card can not attack.");
+                                                    stream1.Write(msg, 0, msg.Length);
+                                                }
                                             }
                                         }
-                                    }
-                                    else
-                                    {
-                                        msg = System.Text.Encoding.ASCII.GetBytes("Card can not attack.");
-                                        stream1.Write(msg, 0, msg.Length);
+                                        else
+                                        {
+                                            msg = System.Text.Encoding.ASCII.GetBytes("Card can not attack.");
+                                            stream1.Write(msg, 0, msg.Length);
+                                        }
                                     }
                                 }
                                 else

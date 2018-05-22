@@ -41,6 +41,7 @@ namespace Client_v0._1._0
             lName.Font = myFont1;
             lDamage.Font = myFont2;
             lHealth.Font = myFont2;
+            label1.Font = myFont1;
         }
 
         int index;
@@ -67,6 +68,11 @@ namespace Client_v0._1._0
         {
             get { return lName.Text; }
             set { lName.Text = value; }
+        }
+        public string Vid
+        {
+            get { return label1.Text; }
+            set { label1.Text = value; }
         }
 
         public int Index { get => index; set => index = value; }

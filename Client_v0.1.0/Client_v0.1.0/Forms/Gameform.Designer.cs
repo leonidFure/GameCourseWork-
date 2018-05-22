@@ -35,6 +35,7 @@
             this.lBCrads1 = new System.Windows.Forms.ListBox();
             this.bStep = new System.Windows.Forms.Button();
             this.bExit = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // YourPanel
@@ -101,6 +102,7 @@
             // 
             // bExit
             // 
+            this.bExit.Enabled = false;
             this.bExit.Location = new System.Drawing.Point(13, 13);
             this.bExit.Name = "bExit";
             this.bExit.Size = new System.Drawing.Size(105, 46);
@@ -109,11 +111,23 @@
             this.bExit.UseVisualStyleBackColor = true;
             this.bExit.Click += new System.EventHandler(this.bExit_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 40.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(300, 352);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(596, 63);
+            this.label1.TabIndex = 10;
+            this.label1.Tag = "11";
+            this.label1.Text = "Waiting second player.";
+            // 
             // Gameform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1181, 733);
+            this.ClientSize = new System.Drawing.Size(1180, 733);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.bStep);
             this.Controls.Add(this.bExit);
             this.Controls.Add(this.lBCrads1);
@@ -141,6 +155,7 @@
         private System.Windows.Forms.ListBox lBCrads1;
         private System.Windows.Forms.Button bStep;
         private System.Windows.Forms.Button bExit;
+        private System.Windows.Forms.Label label1;
     }
 }
 
