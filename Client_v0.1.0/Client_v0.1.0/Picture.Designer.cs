@@ -233,9 +233,9 @@ namespace Client_v0._1._0 {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap RoboСop {
+        internal static System.Drawing.Bitmap Robocop {
             get {
-                object obj = ResourceManager.GetObject("RoboСop", resourceCulture);
+                object obj = ResourceManager.GetObject("Robocop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

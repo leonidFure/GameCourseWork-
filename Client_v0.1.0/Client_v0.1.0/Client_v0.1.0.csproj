@@ -135,6 +135,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Picture.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Picture.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -181,7 +182,7 @@
     <Content Include="Resurses\obelix.jpg" />
     <Content Include="Resurses\Player.png" />
     <Content Include="Resurses\RedChel.jpg" />
-    <Content Include="Resurses\Robokop.jpg" />
+    <Content Include="Resurses\Robocop.jpg" />
     <Content Include="Resurses\sekond_khiro.jpg" />
     <Content Include="Resurses\SelectedCard.png" />
     <Content Include="Resurses\Skorpion.jpg" />

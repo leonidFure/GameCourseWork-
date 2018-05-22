@@ -403,9 +403,23 @@ namespace Server_v0._1._0
                                     {
                                         mes = "AOESpell";
                                         mes2 = "AOEEnemySpell";
+                                        List<Minion> Minions = new List<Minion>();
                                         foreach (Card c in player2.MyCardsOnBord)
+                                        {
                                             if (c is Minion m)
+                                            {
                                                 m.Health -= mass.Drow;
+                                                if (m.Health > 0)
+                                                {
+                                                    Minions.Add(m);
+                                                }
+                                            }
+                                        }
+                                        player2.MyCardsOnBord.Clear();
+                                        foreach (Minion min in Minions)
+                                        {
+                                            player2.MyCardsOnBord.Add(min);
+                                        }
                                     }
 
                                     foreach (Card c in player2.MyCardsOnBord)
