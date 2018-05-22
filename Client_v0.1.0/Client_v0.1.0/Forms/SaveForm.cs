@@ -48,10 +48,12 @@ namespace Client_v0._1._0
                 {
                     foreach (Card a in MyDeck)
                     {
-                        if (a is Minion)
-                            serializer.Serialize(writer, (Minion)a);
-                        else
-                            serializer.Serialize(writer, (MassSpell)a);
+                        if (a is Minion minion)
+                            serializer.Serialize(writer, minion);
+                        if(a is MassSpell massSpell)
+                            serializer.Serialize(writer, massSpell);
+                        if (a is TargetSpell targetSpell)
+                            serializer.Serialize(writer, targetSpell);
                         sw.Write(';');
                     }
                 }

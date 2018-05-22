@@ -32,7 +32,6 @@ namespace Client_v0._1._0
         static TcpClient client;
         
         NetworkStream stream;
-        NetworkStream networkStream;
         String responseData = String.Empty;
         Player You, Enemy;
         public void Connect()
@@ -80,20 +79,19 @@ namespace Client_v0._1._0
                 {
                     for (int i1 = 0; i1 < 7; i1++)
                     {
-                        if (lines[i1][2] == 'H')
-                            You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                        else
-                            You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                        
                     }
 
                     for (int i1 = 7; i1 < 14; i1++)
                     {
                         if (lines[i1][2] == 'H')
                             Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                        else
-                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                        if (lines[i1][2] == 'P')
+                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
+                        if (lines[i1][2] == 'F')
+                            Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
                     }
-
+                    
                     gameform.Invoke((MethodInvoker)delegate () { gameform.ChangeHandDeck(You.CardsInMyHand, Enemy.CardsInMyHand, lines[14]); });
 
                     if (lines[15] == "Your step")
@@ -158,15 +156,12 @@ namespace Client_v0._1._0
                     {
 
                         if (lines[0][2] == 'H')
-                        {
-                            Minion minion = JsonConvert.DeserializeObject<Minion>(lines[0]);
-                            Enemy.MyCardsOnBord.Add(minion);
-                        }
-                        else
-                        {
-                            Spell spell = JsonConvert.DeserializeObject<Spell>(lines[0]);
-                            Enemy.MyCardsOnBord.Add(spell);
-                        }
+                            Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(lines[0]));
+                        if (lines[0][2] == 'P')
+                            Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[0]));
+                        if (lines[0][2] == 'F')
+                            Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[0]));
+                        
                         gameform.Invoke((MethodInvoker)delegate ()
                         {
 
@@ -183,8 +178,10 @@ namespace Client_v0._1._0
                         {
                             if (lines[i1][2] == 'H')
                                 Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                            else
-                                Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                            if (lines[i1][2] == 'P')
+                                Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
+                            if (lines[i1][2] == 'F')
+                                Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
                         }
                         Enemy.Energy = int.Parse(lines[lines.Length - 2]);
                         
@@ -216,8 +213,10 @@ namespace Client_v0._1._0
                             {
                                 if (lines[i1][2] == 'H')
                                     You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                                else
-                                    You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                                if (lines[i1][2] == 'P')
+                                    You.CardsInMyHand.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
+                                if (lines[i1][2] == 'F')
+                                    You.CardsInMyHand.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
                             }
                             try
                             {
@@ -231,22 +230,22 @@ namespace Client_v0._1._0
                             catch { }
                         }
                     }
-                    if (lines[0] == "AOEDamage1")
-                    {
-                        Enemy.MyCardsOnBord.Clear();
-                        for (int i1 = 1; i1 < lines.Length; i1++)
-                        {
-                            if (lines[i1][2] == 'H')
-                                Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                            else
-                                Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
-                        }
-                        gameform.Invoke((MethodInvoker)delegate ()
-                        {
-                            gameform.AddCardsOnBord(You.MyCardsOnBord, true, "Enemy");
+                    //if (lines[0] == "AOEDamage1")
+                    //{
+                    //    Enemy.MyCardsOnBord.Clear();
+                    //    for (int i1 = 1; i1 < lines.Length; i1++)
+                    //    {
+                    //        if (lines[i1][2] == 'H')
+                    //            Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
+                    //        else
+                    //            Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                    //    }
+                    //    gameform.Invoke((MethodInvoker)delegate ()
+                    //    {
+                    //        gameform.AddCardsOnBord(You.MyCardsOnBord, true, "Enemy");
 
-                        });
-                    }
+                    //    });
+                    //}
 
                     if (lines[0] == "DYour step")
                     {
@@ -268,8 +267,10 @@ namespace Client_v0._1._0
                             {
                                 if (lines[i1][2] == 'H')
                                     Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                                else
-                                    Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                                if (lines[i1][2] == 'P')
+                                    Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
+                                if (lines[i1][2] == 'F')
+                                    Enemy.CardsInMyHand.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
                             }
                             gameform.Invoke((MethodInvoker)delegate ()
                             {
@@ -303,8 +304,10 @@ namespace Client_v0._1._0
                             {
                                 if (lines[i1][2] == 'H')
                                     You.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                                else
-                                    You.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                                if (lines[i1][2] == 'P')
+                                    You.MyCardsOnBord.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
+                                if (lines[i1][2] == 'F')
+                                    You.MyCardsOnBord.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
                             }
                             gameform.Invoke((MethodInvoker)delegate ()
                             {
@@ -328,8 +331,10 @@ namespace Client_v0._1._0
                             {
                                 if (lines[i1][2] == 'H')
                                     Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                                else
-                                    Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                                if (lines[i1][2] == 'P')
+                                    Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
+                                if (lines[i1][2] == 'F')
+                                    Enemy.MyCardsOnBord.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
                             }
 
                             gameform.Invoke((MethodInvoker)delegate ()
@@ -405,8 +410,10 @@ namespace Client_v0._1._0
                         {
                             if (lines[i1][2] == 'H')
                                 You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Minion>(lines[i1]));
-                            else
-                                You.CardsInMyHand.Add(JsonConvert.DeserializeObject<Spell>(lines[i1]));
+                            if (lines[i1][2] == 'P')
+                                You.CardsInMyHand.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
+                            if (lines[i1][2] == 'F')
+                                You.CardsInMyHand.Add(JsonConvert.DeserializeObject<TargetSpell>(lines[i1]));
                         }
                         You.MyCardsOnBord.Add(JsonConvert.DeserializeObject<Minion>(lines[1]));
                         gameform.Invoke((MethodInvoker)delegate ()
@@ -444,7 +451,6 @@ namespace Client_v0._1._0
             catch (SocketException)
             {
                 client.Close();
-                networkStream.Close();
                 try
                 {
                     gameform.Invoke((MethodInvoker)delegate () { gameform.EndGame("sorry, server dead :("); });

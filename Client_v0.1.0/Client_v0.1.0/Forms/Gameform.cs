@@ -145,8 +145,6 @@ namespace Client_v0._1._0
         {
             if (sStep)
             {
-                    string a;
-                    a = e.Data.GetData(DataFormats.Text).ToString();
                     int count = lBCrads1.SelectedIndex;
                     Thread clientThread = new Thread(new ParameterizedThreadStart(controller.SendMSG));
                     clientThread.Start(count);

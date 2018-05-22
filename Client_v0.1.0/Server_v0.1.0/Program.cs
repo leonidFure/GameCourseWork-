@@ -349,7 +349,7 @@ namespace Server_v0._1._0
                                         if (massSpell.Feature == "AOEDamage")
                                         {
                                             Byte[] buf;
-                                            AOEDamage(ref player2, massSpell.Points);
+                                            //AOEDamage(ref player2, massSpell.Points);
                                             mes = massSpell.Feature + "1";
                                             mes2 = massSpell.Feature + "2";
                                             foreach (Card c in player2.MyCardsOnBord)

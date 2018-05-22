@@ -69,7 +69,6 @@
     <Compile Include="User Controls\Carde.Designer.cs">
       <DependentUpon>Carde.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\DeckSpell.cs" />
     <Compile Include="Forms\DecSettings.cs">
       <SubType>Form</SubType>
     </Compile>

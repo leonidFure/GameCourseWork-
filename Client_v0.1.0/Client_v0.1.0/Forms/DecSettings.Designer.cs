@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DecSettings));
             this.lBYourDeck = new System.Windows.Forms.ListBox();
             this.lBAllCard = new System.Windows.Forms.ListBox();
             this.lAllDeck = new System.Windows.Forms.Label();
@@ -37,7 +36,6 @@
             this.cBDecks = new System.Windows.Forms.ComboBox();
             this.lMyDeck = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.carde1 = new Client_v0._1._0.Carde();
             this.SuspendLayout();
             // 
             // lBYourDeck
@@ -48,7 +46,6 @@
             this.lBYourDeck.Name = "lBYourDeck";
             this.lBYourDeck.Size = new System.Drawing.Size(231, 342);
             this.lBYourDeck.TabIndex = 0;
-            this.lBYourDeck.Click += new System.EventHandler(this.lBYourDeck_Click);
             this.lBYourDeck.DragDrop += new System.Windows.Forms.DragEventHandler(this.lBYourDeck_DragDrop);
             this.lBYourDeck.DragEnter += new System.Windows.Forms.DragEventHandler(this.lBYourDeck_DragEnter);
             this.lBYourDeck.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lBYourDeck_MouseDown);
@@ -108,9 +105,9 @@
             this.lMyDeck.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lMyDeck.Location = new System.Drawing.Point(271, 8);
             this.lMyDeck.Name = "lMyDeck";
-            this.lMyDeck.Size = new System.Drawing.Size(158, 39);
+            this.lMyDeck.Size = new System.Drawing.Size(148, 39);
             this.lMyDeck.TabIndex = 8;
-            this.lMyDeck.Text = "Set Deck";
+            this.lMyDeck.Text = "Cards: 0";
             // 
             // label1
             // 
@@ -122,26 +119,11 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Decks";
             // 
-            // carde1
-            // 
-            this.carde1.BackColor = System.Drawing.Color.Gray;
-            this.carde1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("carde1.BackgroundImage")));
-            this.carde1.Damage = 11;
-            this.carde1.EnIndex = 0;
-            this.carde1.Health = 11;
-            this.carde1.Index = 0;
-            this.carde1.Location = new System.Drawing.Point(645, 50);
-            this.carde1.Name = "carde1";
-            this.carde1.Namee = "dsdsdsads";
-            this.carde1.Size = new System.Drawing.Size(114, 163);
-            this.carde1.TabIndex = 10;
-            // 
             // DecSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(771, 444);
-            this.Controls.Add(this.carde1);
+            this.ClientSize = new System.Drawing.Size(659, 444);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lMyDeck);
             this.Controls.Add(this.cBDecks);
@@ -169,6 +151,5 @@
         private System.Windows.Forms.ComboBox cBDecks;
         private System.Windows.Forms.Label lMyDeck;
         private System.Windows.Forms.Label label1;
-        private Carde carde1;
     }
 }
