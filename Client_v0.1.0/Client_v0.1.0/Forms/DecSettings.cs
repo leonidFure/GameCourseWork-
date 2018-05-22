@@ -95,7 +95,7 @@ namespace Client_v0._1._0
             AllCards.Add(new TargetSpell("Beam", 2, "heal",4));
             AllCards.Add(new TargetSpell("Sun", 1, "heal",2));
 
-            AllCards.Add(new MassSpell("Flamestrike", 3, "damage"));
+            AllCards.Add(new MassSpell("Flamestrike", 3, "damage",2));
 
             foreach (Card c in AllCards)
             {
@@ -106,7 +106,7 @@ namespace Client_v0._1._0
                 }
                 if (c is MassSpell massSpell)
                 {
-                    lBAllCard.Items.Add(massSpell.Name + " (Cost:" + massSpell.Cost + ", Feat:" + massSpell.Feature + ")");
+                    lBAllCard.Items.Add(massSpell.Name + " (Cost:" + massSpell.Cost + ", Feat:" + massSpell.Feature + ", Drow:" + massSpell.Drow + ")");
                 }
                 if (c is TargetSpell targetSpell)
                 {
@@ -167,8 +167,8 @@ namespace Client_v0._1._0
                         MyDeck.Add(JsonConvert.DeserializeObject<Minion>(l));
                     if (l[2] == 'P')
                         MyDeck.Add(JsonConvert.DeserializeObject<TargetSpell>(l));
-                    if (l[2] == 'F')
-                        MyDeck.Add(JsonConvert.DeserializeObject<TargetSpell>(l));
+                    if (l[2] == 'D')
+                        MyDeck.Add(JsonConvert.DeserializeObject<MassSpell>(l));
                 }
                 foreach (Card c in MyDeck)
                 {
@@ -179,7 +179,7 @@ namespace Client_v0._1._0
                     }
                     if (c is MassSpell massSpell)
                     {
-                        lBYourDeck.Items.Add(massSpell.Name + " (Cost:" + massSpell.Cost + ", Feat:" + massSpell.Feature + ")");
+                        lBYourDeck.Items.Add(massSpell.Name + " (Cost:" + massSpell.Cost + ", Feat:" + massSpell.Feature +", Drow:"+massSpell.Drow+ ")");
                     }
                     if (c is TargetSpell targetSpell)
                     {

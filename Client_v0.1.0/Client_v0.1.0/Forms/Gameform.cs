@@ -81,6 +81,7 @@ namespace Client_v0._1._0
                         carde.BackgroundImage = Picture.SelectedCard;
                         sAttac = carde.Index.ToString() + ";";
                         bSelectedCard = true;
+                        lBCrads1.Enabled = false;
                     }
                     else
                     {
@@ -93,7 +94,7 @@ namespace Client_v0._1._0
                             }
                         }
                         bSelectedCard = false;
-
+                        lBCrads1.Enabled = true;
                     }
                 }));
             }
@@ -122,13 +123,14 @@ namespace Client_v0._1._0
                         }
                         bSelectedCard = false;
                         sAttac += carde.EnIndex.ToString();
-
+                        lBCrads1.Enabled = true;
 
                     }));
 
                     Thread clientThread = new Thread(new ParameterizedThreadStart(controller.SendMSG));
                     clientThread.Start(sAttac);
                     sAttac = "";
+                    
                 }
             }
         }
@@ -203,6 +205,7 @@ namespace Client_v0._1._0
                     Thread clientThread = new Thread(new ParameterizedThreadStart(controller.SendMSG));
                     clientThread.Start(sAttac);
                     sAttac = "";
+                    
                 }
             }
         }
@@ -211,7 +214,11 @@ namespace Client_v0._1._0
         {
             bSelectedCard = false;
             foreach (Control c in YourPanel.Controls)
+            {
                 c.BackColor = Color.Gray;
+                c.BackgroundImage = Picture.Card;
+                lBCrads1.Enabled = true;
+            }
         }
 
         /// <summary>
@@ -234,10 +241,13 @@ namespace Client_v0._1._0
                         Minion a = (Minion)c;
                         lBCrads1.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
                     }
-                    else
+                    if (c is MassSpell massSpell)
                     {
-                        //Spell a = (Spell)c;
-                        //lBCards2.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                        lBCrads1.Items.Add(massSpell.Name + " (Cost:" + massSpell.Cost + ", Feat:" + massSpell.Feature + ")");
+                    }
+                    if (c is TargetSpell targetSpell)
+                    {
+                        lBCrads1.Items.Add(targetSpell.Name + " (Cost:" + targetSpell.Cost + ", Feat:" + targetSpell.Feature + ", Points:" + targetSpell.Points + ")");
                     }
                 }
                 lOffCard1.Text = "Cards: " + countCards.ToString();
@@ -248,16 +258,7 @@ namespace Client_v0._1._0
                 lBCards2.Items.Clear();
                 foreach (Card c in cards)
                 {
-                    if (c is Minion)
-                    {
-                        Minion a = (Minion)c;
-                        lBCards2.Items.Add("Card");
-                    }
-                    else
-                    {
-                        //Spell a = (Spell)c;
-                        //lBCards2.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
-                    }
+                    lBCards2.Items.Add("Card");
                 }
                 lOffCard2.Text = "Cards: " + countCards.ToString();
                 userPlayer2.Energy = energy;
@@ -280,24 +281,19 @@ namespace Client_v0._1._0
                     Minion a = (Minion)c;
                     lBCrads1.Items.Add(a.Name + " (HP:" + a.Health + ", DMG:" + a.Damage + ", Cost:" + a.Cost + ")" + " MINION");
                 }
-                else
+                if (c is MassSpell massSpell)
                 {
-                    //Spell a = (Spell)c;
-                    //lBCrads1.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
+                    lBCrads1.Items.Add(massSpell.Name + " (Cost:" + massSpell.Cost + ", Feat:" + massSpell.Feature + ")");
+                }
+                if (c is TargetSpell targetSpell)
+                {
+                    lBCrads1.Items.Add(targetSpell.Name + " (Cost:" + targetSpell.Cost + ", Feat:" + targetSpell.Feature + ", Points:" + targetSpell.Points + ")");
                 }
             }
             foreach (Card c in cards2)
             {
-                if (c is Minion)
-                {
-                    Minion a = (Minion)c;
                     lBCards2.Items.Add("Card");
-                }
-                else
-                {
-                    //Spell a = (Spell)c;
-                    //lBCards2.Items.Add(a.Name + " (DMG:" + a.MagicDamage + ", Cost:" + a.Cost + ")" + " SPELL");
-                }
+                
             }
             lOffCard1.Text = "Cards: " + CountCards1;
             lOffCard2.Text = "Cards: " + CountCards1;
@@ -438,6 +434,7 @@ namespace Client_v0._1._0
             bStep.Enabled = step;
             bStep.Text = turn;
         }
+
         /// <summary>
         /// Метод добавления персонажей на игровое поле
         /// </summary>

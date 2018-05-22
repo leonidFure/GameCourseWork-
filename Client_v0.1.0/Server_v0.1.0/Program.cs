@@ -114,8 +114,10 @@ namespace Server_v0._1._0
                     {
                         if (l[2] == 'H')
                             player1.MyDeck.Add(JsonConvert.DeserializeObject<Minion>(l));
-                        else
-                            player1.MyDeck.Add(JsonConvert.DeserializeObject<Spell>(l));
+                        if (l[2] == 'P')
+                            player1.MyDeck.Add(JsonConvert.DeserializeObject<TargetSpell>(l));
+                        if (l[2] == 'D')
+                            player1.MyDeck.Add(JsonConvert.DeserializeObject<MassSpell>(l));
                     }
 
                     data2 = System.Text.Encoding.ASCII.GetString(bytes2, 0, i2);
@@ -126,8 +128,10 @@ namespace Server_v0._1._0
                     {
                         if (l[2] == 'H')
                             player2.MyDeck.Add(JsonConvert.DeserializeObject<Minion>(l));
-                        else
-                            player2.MyDeck.Add(JsonConvert.DeserializeObject<Spell>(l));
+                        if (l[2] == 'P')
+                            player2.MyDeck.Add(JsonConvert.DeserializeObject<TargetSpell>(l));
+                        if (l[2] == 'D')
+                            player2.MyDeck.Add(JsonConvert.DeserializeObject<MassSpell>(l));
                     }
                     if (player1.MyDeck.Count == 30 && player2.MyDeck.Count == 30)
                     {
@@ -145,6 +149,28 @@ namespace Server_v0._1._0
                                 }
 
                             }
+                            if (c is MassSpell spell)
+                            {
+                                if (spell.Cost < 0 || spell.Feature.Length <= 0 || spell.Name.Length <= 0)
+                                {
+                                    testDecks1 = false;
+                                }
+                                if (spell.Cost > int.MaxValue)
+                                {
+                                    testDecks1 = false;
+                                }
+                            }
+                            if (c is TargetSpell target)
+                            {
+                                if (target.Cost < 0 || target.Feature.Length <= 0 || target.Name.Length <= 0|| target.Points < 0)
+                                {
+                                    testDecks1 = false;
+                                }
+                                if (target.Cost > int.MaxValue || target.Points > int.MaxValue)
+                                {
+                                    testDecks1 = false;
+                                }
+                            }
                         }
                         foreach (Card c in player2.MyDeck)
                         {
@@ -155,6 +181,28 @@ namespace Server_v0._1._0
                                     testDecks1 = false;
                                 }
                                 if (minion.Cost > int.MaxValue || minion.Health > int.MaxValue || minion.Damage > int.MaxValue)
+                                {
+                                    testDecks1 = false;
+                                }
+                            }
+                            if (c is MassSpell spell)
+                            {
+                                if (spell.Cost < 0 || spell.Feature.Length <= 0 || spell.Name.Length <= 0)
+                                {
+                                    testDecks1 = false;
+                                }
+                                if (spell.Cost > int.MaxValue)
+                                {
+                                    testDecks1 = false;
+                                }
+                            }
+                            if (c is TargetSpell target)
+                            {
+                                if (target.Cost < 0 || target.Feature.Length <= 0 || target.Name.Length <= 0 || target.Points < 0)
+                                {
+                                    testDecks1 = false;
+                                }
+                                if (target.Cost > int.MaxValue || target.Points > int.MaxValue)
                                 {
                                     testDecks1 = false;
                                 }
@@ -180,8 +228,10 @@ namespace Server_v0._1._0
                             {
                                 if (c is Minion)
                                     mes1 += JsonConvert.SerializeObject((Minion)c);
-                                else
-                                    mes1 += JsonConvert.SerializeObject((Spell)c);
+                                if(c is MassSpell mass)
+                                    mes1+= JsonConvert.SerializeObject(mass);
+                                if (c is TargetSpell target)
+                                    mes1 += JsonConvert.SerializeObject(target);
                                 mes1 += ';';
                             }
 
@@ -189,8 +239,10 @@ namespace Server_v0._1._0
                             {
                                 if (c is Minion)
                                     mes1 += JsonConvert.SerializeObject((Minion)c);
-                                else
-                                    mes1 += JsonConvert.SerializeObject((Spell)c);
+                                if (c is MassSpell mass)
+                                    mes1 += JsonConvert.SerializeObject(mass);
+                                if (c is TargetSpell target)
+                                    mes1 += JsonConvert.SerializeObject(target);
                                 mes1 += ';';
                             }
 
@@ -198,8 +250,10 @@ namespace Server_v0._1._0
                             {
                                 if (c is Minion)
                                     mes2 += JsonConvert.SerializeObject((Minion)c);
-                                else
-                                    mes2 += JsonConvert.SerializeObject((Spell)c);
+                                if (c is MassSpell mass)
+                                    mes2 += JsonConvert.SerializeObject(mass);
+                                if (c is TargetSpell target)
+                                    mes2 += JsonConvert.SerializeObject(target);
                                 mes2 += ';';
                             }
 
@@ -207,8 +261,10 @@ namespace Server_v0._1._0
                             {
                                 if (c is Minion)
                                     mes2 += JsonConvert.SerializeObject((Minion)c);
-                                else
-                                    mes2 += JsonConvert.SerializeObject((Spell)c);
+                                if (c is MassSpell mass)
+                                    mes2 += JsonConvert.SerializeObject(mass);
+                                if (c is TargetSpell target)
+                                    mes2 += JsonConvert.SerializeObject(target);
                                 mes2 += ';';
                             }
 
@@ -341,30 +397,31 @@ namespace Server_v0._1._0
                                     mes = JsonConvert.SerializeObject((Minion)player1.MyCardsOnBord[player1.MyCardsOnBord.Count - 1]);
                                     mes2 += JsonConvert.SerializeObject((Minion)player1.MyCardsOnBord[player1.MyCardsOnBord.Count - 1]);
                                 }
-                                else
+                                if (player1.CardsInMyHand[count1] is MassSpell mass)
                                 {
-                                    Spell spell = (Spell)player1.CardsInMyHand[count1];
-                                    if (spell is MassSpell massSpell)
+                                    if (mass.Feature == "damage")
                                     {
-                                        if (massSpell.Feature == "AOEDamage")
-                                        {
-                                            Byte[] buf;
-                                            //AOEDamage(ref player2, massSpell.Points);
-                                            mes = massSpell.Feature + "1";
-                                            mes2 = massSpell.Feature + "2";
-                                            foreach (Card c in player2.MyCardsOnBord)
-                                            {
-                                                mes += ';';
-                                                    mes += JsonConvert.SerializeObject((Minion)c);
-                                                mes2 += JsonConvert.SerializeObject((Minion)c);
-                                            }
-                                            buf = System.Text.Encoding.ASCII.GetBytes(mes);
-                                            stream1.Write(buf, 0, buf.Length);
-                                            buf = System.Text.Encoding.ASCII.GetBytes(mes2);
-                                            stream2.Write(buf, 0, buf.Length);
-                                        }
-
+                                        mes = "AOESpell";
+                                        mes2 = "AOEEnemySpell";
+                                        foreach (Card c in player2.MyCardsOnBord)
+                                            if (c is Minion m)
+                                                m.Health -= mass.Drow;
                                     }
+
+                                    foreach (Card c in player2.MyCardsOnBord)
+                                    {
+                                        mes += ';';
+                                        if (c is Minion)
+                                            mes += JsonConvert.SerializeObject((Minion)c);
+                                    }
+                                    mes += ";next";
+                                    foreach (Card c in player2.MyCardsOnBord)
+                                    {
+                                        mes2 += ';';
+                                        if (c is Minion)
+                                            mes2 += JsonConvert.SerializeObject((Minion)c);
+                                    }
+                                    mes2 += ";next";
                                 }
                                 player1.CardsInMyHand.RemoveAt(count1);
                                 foreach (Card c in player1.CardsInMyHand)
@@ -372,8 +429,10 @@ namespace Server_v0._1._0
                                     mes += ';';
                                     if (c is Minion)
                                         mes += JsonConvert.SerializeObject((Minion)c);
-                                    else
-                                        mes += JsonConvert.SerializeObject((Spell)c);
+                                    if (c is MassSpell mas)
+                                        mes += JsonConvert.SerializeObject(mas);
+                                    if (c is TargetSpell target)
+                                        mes += JsonConvert.SerializeObject(target);
                                 }
 
                                 foreach (Card c in player1.CardsInMyHand)
@@ -381,8 +440,10 @@ namespace Server_v0._1._0
                                     mes2 += ';';
                                     if (c is Minion)
                                         mes2 += JsonConvert.SerializeObject((Minion)c);
-                                    else
-                                        mes2 += JsonConvert.SerializeObject((Spell)c);
+                                    if (c is MassSpell mas)
+                                        mes2 += JsonConvert.SerializeObject(mas);
+                                    if (c is TargetSpell target)
+                                        mes2 += JsonConvert.SerializeObject(target);
                                 }
                                 mes2 += ';' + curMana.ToString();mes2 += ';'+player1.MyDeck.Count.ToString();
                                 mes += ';' + curMana.ToString(); ; mes += ';' + player1.MyDeck.Count.ToString();
@@ -472,24 +533,6 @@ namespace Server_v0._1._0
                                     client2.Close();
                                     stream1.Close();
                                     stream2.Close();
-                                }
-                                if (counts[0] == "AOEDamage")
-                                {
-                                    AOEDamage(ref player2, int.Parse(counts[1]));
-                                    mes1 = counts[0]+"1";
-                                    mes2 = counts[0] + "2";
-                                    foreach (Card c in player2.MyCardsOnBord)
-                                    {
-                                        mes1 += ';';
-                                        if (c is Minion)
-                                            mes1 += JsonConvert.SerializeObject((Minion)c);
-                                        else
-                                            mes1 += JsonConvert.SerializeObject((Spell)c);
-                                    }
-                                    msg = System.Text.Encoding.ASCII.GetBytes(mes1);
-                                    stream1.Write(msg, 0, msg.Length);
-                                    msg = System.Text.Encoding.ASCII.GetBytes(mes2);
-                                    stream2.Write(msg, 0, msg.Length);
                                 }
                                 if (int.TryParse(counts[1], out count2))
                                 {
